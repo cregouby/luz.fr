@@ -1,0 +1,133 @@
+title:
+  original: Evaluates a fitted model on a dataset
+  translation: Évalue un modèle entraîné sur un jeu de données
+arguments:
+  object:
+    original: A fitted model to evaluate.
+    translation: Un modèle entraîné.
+  data:
+    original: |-
+      (dataloader, dataset or list) A dataloader created with
+      \code{\link[torch:dataloader]{torch::dataloader()}} used for training the model, or a dataset created
+      with \code{\link[torch:dataset]{torch::dataset()}} or a list. Dataloaders and datasets must return a
+      list with at most 2 items. The first item will be used as input for the
+      module and the second will be used as a target for the loss function.
+    translation: |-
+      (dataloader, dataset ou liste) Un dataloader créé avec 
+      \code{\link[torch:dataloader]{torch::dataloader()}} utilisé pour l'entraînement du modèle, ou un dataset
+      créé avec \code{\link[torch:dataset]{torch::dataset()}} ou une liste. Les dataloaders
+      et les datasets doivent retourner une liste avec au plus 2 items. 
+      Le premier sera utilisé comme prédicteurs pour le module et le second 
+      sera utilisé comme variable à prédire pour la fonction de perte.
+  '...':
+    original: Currently unused.
+    translation: ~
+  metrics:
+    original: |-
+      A list of luz metrics to be tracked during evaluation. If \code{NULL}
+      (default) then the same metrics that were used during training are tracked.
+    translation: |-
+      Une liste de métriques de luz à appliquer pendant l'évaluation. Si \code{NULL}
+      (par défaut) alors les mêmes métriques que les métriques d'entraînement sont évaluées.
+  callbacks:
+    original: |-
+      (list, optional) A list of callbacks defined with
+      \code{\link[=luz_callback]{luz_callback()}} that will be called during the training procedure. The
+      callbacks \code{\link[=luz_callback_metrics]{luz_callback_metrics()}}, \code{\link[=luz_callback_progress]{luz_callback_progress()}} and
+      \code{\link[=luz_callback_train_valid]{luz_callback_train_valid()}} are always added by default.
+    translation: |-
+      (liste, facultatif) Une liste de callbacks définis avec
+      \code{\link[=luz_callback]{luz_callback()}} qui seront appelés pendant la procédure d'entraînement. Les callbacks 
+      \code{\link[=luz_callback_metrics]{luz_callback_metrics()}}, \code{\link[=luz_callback_progress]{luz_callback_progress()}} et
+      \code{\link[=luz_callback_train_valid]{luz_callback_train_valid()}} sont toujours ajoutés par défaut.
+  accelerator:
+    original: |-
+      (accelerator, optional) An optional \code{\link[=accelerator]{accelerator()}} object
+      used to configure device placement of the components like \link{nn_module}s,
+      optimizers and batches of data.
+    translation: |-
+      (accélérateur, facultatif) Un accélérateur \code{\link[=accelerator]{accelerator()}} à utiliser 
+      pour le calcul des objets tels que les modules \verb{nn}, les optimiseurs et les batch de données.
+  verbose:
+    original: |-
+      (logical, optional) An optional boolean value indicating if
+      the fitting procedure should emit output to the console during training.
+      By default, it will produce output if \code{\link[=interactive]{interactive()}} is \code{TRUE}, otherwise
+      it won't print to the console.
+    translation: |-
+      (valeur logique, facultative) Une valeur indiquant si la procédure d'entraînement doit produire des messages
+      dans la console. Par défaut, elle produira des messages s'il y a une interface graphique 
+      (c'est-à-dire si \code{\link[=interactive]{interactive()}} est vrai), sinon elle ne produira pas de messages.
+  dataloader_options:
+    original: |-
+      Options used when creating a dataloader. See
+      \code{\link[torch:dataloader]{torch::dataloader()}}. \code{shuffle=TRUE} by default for the training data and
+      \code{batch_size=32} by default. It will error if not \code{NULL} and \code{data} is
+      already a dataloader.
+    translation: |-
+      Des options utilisées lors de la création d'un dataloader. Voir 
+      \code{\link[torch:dataloader]{torch::dataloader()}}. Par défaut\code{shuffle=TRUE} pour les données d'entraînement 
+      et \code{batch_size=32}. Il y aura une erreur si non \code{NULL} et si \code{data} est déja un dataloader.
+description:
+  original: |
+    Evaluates a fitted model on a dataset
+  translation: |
+    Évalue un modèle entraîné sur un jeu de données
+details:
+  original: |
+    Once a model has been trained you might want to evaluate its performance
+    on a different dataset. For that reason, luz provides the \code{?evaluate}
+    function that takes a fitted model and a dataset and computes the
+    metrics attached to the model.
+
+    Evaluate returns a \code{luz_module_evaluation} object that you can query for
+    metrics using the \code{get_metrics} function or simply \code{print} to see the
+    results.
+
+    For example:
+
+    \if{html}{\out{<div class="sourceCode r">}}\preformatted{evaluation <- fitted \%>\% evaluate(data = valid_dl)
+    metrics <- get_metrics(evaluation)
+    print(evaluation)
+    }\if{html}{\out{</div>}}
+
+    \if{html}{\out{<div class="sourceCode">}}\preformatted{## A `luz_module_evaluation`
+    ## -- Results ---------------------------------------------------------------------
+    ## loss: 1.5146
+    ## mae: 1.0251
+    ## mse: 1.5159
+    ## rmse: 1.2312
+    }\if{html}{\out{</div>}}
+  translation: |-
+    Une fois que vous avez entraîné un modèle, vous pouvez évaluer sa performance
+    sur un autre jeu de données. Pour cela, luz fournit la 
+    fonction \code{?evaluate}. Cette dernière prend en argument un modèle entraîné 
+    et un jeu de données, puis calcule les métriques liées au modèle.
+
+    La fonction \code{evaluate} retourne un objet \code{luz_module_evaluation}, que vous pouvez consulter
+    grâce à la fonction \code{get_metrics()} ou simplement \code{print} pour voir les résultats. 
+
+    Par exemple:
+    
+    \if{html}{\out{<div class="sourceCode r">}}\preformatted{evaluation <- fitted \%>\% evaluate(data = valid_dl)
+    metrics <- get_metrics(evaluation)
+    print(evaluation)
+    }\if{html}{\out{</div>}}
+
+    \if{html}{\out{<div class="sourceCode">}}\preformatted{## A `luz_module_evaluation`
+    ## -- Results ---------------------------------------------------------------------
+    ## loss: 1.5146
+    ## mae: 1.0251
+    ## mse: 1.5159
+    ## rmse: 1.2312
+    }\if{html}{\out{</div>}}
+
+seealso:
+  original: "Other training: \n\\code{\\link{fit.luz_module_generator}()},\n\\code{\\link{predict.luz_module_fitted}()},\n\\code{\\link{setup}()}\n"
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

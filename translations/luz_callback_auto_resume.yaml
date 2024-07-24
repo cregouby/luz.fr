@@ -1,0 +1,96 @@
+title:
+  original: Resume training callback
+  translation: ~
+arguments:
+  path:
+    original: Path to save state files for the model.
+    translation: ~
+description:
+  original: |
+    This callback allows you to resume training a model.
+  translation: ~
+details:
+  original: |
+    When using it, model weights, optimizer state are serialized at the end of
+    each epoch. If something fails during training simply re-running the same
+    script will restart the model training from the epoch right after the last
+    epoch that was serialized.
+  translation: ~
+note:
+  original: |
+    In general you will want to add this callback as the last in the callbacks
+    list, this way, the serialized state is likely to contain all possible changes
+    that other callbacks could have made at \code{'on_epoch_end'}. The default \code{weight}
+    attribute of this callback is \code{Inf}.
+
+    Read the checkpointing article in the pkgdown website for more
+    information.
+  translation: ~
+section{Customizing serialization}:
+  original: |
+    By default model, optimizer state and records are serialized. Callbacks can
+    be used to customize serialization by implementing the \code{state_dict()} and
+    \code{load_state_dict()} methods.
+    If those methods are implemented, then \code{state_dict()} is called at the end of
+    each epoch and \code{load_state_dict()} is called when the model is resumed.
+  translation: ~
+examples:
+  original: |
+    if (torch::torch_is_installed()) {
+    library(torch)
+    library(luz)
+
+    x <- torch_randn(1000, 10)
+    y <- torch_randn(1000, 1)
+
+    model <- nn_linear %>%
+      setup(optimizer = optim_sgd, loss = nnf_mse_loss) %>%
+      set_hparams(in_features = 10, out_features = 1) %>%
+      set_opt_hparams(lr = 0.01)
+
+
+    # simulate a failure in the middle of epoch 5 happening only once.
+    callback_stop <- luz_callback(
+      "interrupt",
+      failed = FALSE,
+      on_epoch_end = function() {
+        if (ctx$epoch == 5 && !self$failed) {
+          self$failed <- TRUE
+          stop("Error on epoch 5")
+        }
+      }
+    )
+
+    path <- tempfile()
+    autoresume <- luz_callback_auto_resume(path = path)
+    interrupt <- callback_stop()
+
+    # try once and the model fails
+    try({
+      results <- model %>% fit(
+        list(x, y),
+        callbacks = list(autoresume, interrupt),
+        verbose = FALSE
+      )
+    })
+
+    # model resumes and completes
+    results <- model %>% fit(
+      list(x, y),
+      callbacks = list(autoresume, interrupt),
+      verbose = FALSE
+    )
+
+    get_metrics(results)
+
+    }
+  translation: ~
+seealso:
+  original: "Other luz_callbacks: \n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_interrupt}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

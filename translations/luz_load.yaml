@@ -1,0 +1,20 @@
+title:
+  original: Load trained model
+  translation: ~
+arguments:
+  path:
+    original: path in file system so save the object.
+    translation: ~
+description:
+  original: |
+    Loads a fitted model. See documentation in \code{\link[=luz_save]{luz_save()}}.
+  translation: ~
+seealso:
+  original: "Other luz_save: \n\\code{\\link{luz_save}()}\n"
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

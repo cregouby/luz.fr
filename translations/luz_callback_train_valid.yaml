@@ -1,0 +1,37 @@
+title:
+  original: Train-eval callback
+  translation: ~
+value:
+  original: |
+    A \code{luz_callback}
+  translation: ~
+description:
+  original: |
+    Switches important flags for training and evaluation modes.
+  translation: ~
+details:
+  original: |
+    It takes care of the three \code{ctx} attributes:
+    \itemize{
+    \item \code{ctx$model}: Responsible for calling \code{ctx$model$train()} and \code{ctx$model$eval()},
+    when appropriate.
+    \item \code{ctx$training}: Sets this flag to \code{TRUE} when training and \code{FALSE} when in
+    validation mode.
+    \item \code{ctx$loss}: Resets the \code{loss} attribute to \code{list()} when finished training/ or
+    validating.
+    }
+  translation: ~
+note:
+  original: |
+    In general you won't need to explicitly use the metrics callback as it's
+    used by default in \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}.
+  translation: ~
+seealso:
+  original: "Other luz_callbacks: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_interrupt}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback}()}\n"
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

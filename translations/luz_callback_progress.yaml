@@ -1,0 +1,27 @@
+title:
+  original: Progress callback
+  translation: ~
+value:
+  original: |
+    A \code{luz_callback}
+  translation: ~
+description:
+  original: |
+    Responsible for printing progress during training.
+  translation: ~
+note:
+  original: |
+    In general you don't need to use these callback by yourself because it's always
+    included by default in \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}.
+
+    Printing can be disabled by passing \code{verbose=FALSE} to \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}.
+  translation: ~
+seealso:
+  original: "Other luz_callbacks: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_interrupt}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

@@ -1,0 +1,55 @@
+title:
+  original: Create predictions for a fitted model
+  translation: ~
+arguments:
+  object:
+    original: (fitted model) the fitted model object returned from \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}
+    translation: ~
+  newdata:
+    original: |-
+      (dataloader, dataset, list or array) returning a list with at
+      least 1 element. The other elements aren't used.
+    translation: ~
+  '...':
+    original: Currently unused.
+    translation: ~
+  callbacks:
+    original: |-
+      (list, optional) A list of callbacks defined with
+      \code{\link[=luz_callback]{luz_callback()}} that will be called during the training procedure. The
+      callbacks \code{\link[=luz_callback_metrics]{luz_callback_metrics()}}, \code{\link[=luz_callback_progress]{luz_callback_progress()}} and
+      \code{\link[=luz_callback_train_valid]{luz_callback_train_valid()}} are always added by default.
+    translation: ~
+  accelerator:
+    original: |-
+      (accelerator, optional) An optional \code{\link[=accelerator]{accelerator()}} object
+      used to configure device placement of the components like \link{nn_module}s,
+      optimizers and batches of data.
+    translation: ~
+  verbose:
+    original: |-
+      (logical, optional) An optional boolean value indicating if
+      the fitting procedure should emit output to the console during training.
+      By default, it will produce output if \code{\link[=interactive]{interactive()}} is \code{TRUE}, otherwise
+      it won't print to the console.
+    translation: ~
+  dataloader_options:
+    original: |-
+      Options used when creating a dataloader. See
+      \code{\link[torch:dataloader]{torch::dataloader()}}. \code{shuffle=TRUE} by default for the training data and
+      \code{batch_size=32} by default. It will error if not \code{NULL} and \code{data} is
+      already a dataloader.
+    translation: ~
+description:
+  original: |
+    Create predictions for a fitted model
+  translation: ~
+seealso:
+  original: "Other training: \n\\code{\\link{evaluate}()},\n\\code{\\link{fit.luz_module_generator}()},\n\\code{\\link{setup}()}\n"
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

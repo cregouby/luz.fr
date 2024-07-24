@@ -1,0 +1,23 @@
+title:
+  original: Loads a checkpoint
+  translation: ~
+arguments:
+  obj:
+    original: Object to which we want to laod the checkpoint.
+    translation: ~
+  path:
+    original: Path of the checkpoint on disk.
+    translation: ~
+  '...':
+    original: unused. Is there to allow future extensions.
+    translation: ~
+description:
+  original: |
+    Works with checkpoints created typically with \code{\link[=luz_callback_model_checkpoint]{luz_callback_model_checkpoint()}}.
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

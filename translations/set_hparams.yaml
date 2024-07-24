@@ -1,0 +1,30 @@
+title:
+  original: Set hyper-parameter of a module
+  translation: ~
+arguments:
+  module:
+    original: An \code{nn_module} that has been \code{\link[=setup]{setup()}}.
+    translation: ~
+  '...':
+    original: |-
+      The parameters set here will be used to initialize the \code{nn_module}, ie they
+      are passed unchanged to the \code{initialize} method of the base \code{nn_module}.
+    translation: ~
+value:
+  original: |
+    The same luz module
+  translation: ~
+description:
+  original: |
+    This function is used to define hyper-parameters before calling \code{fit} for
+    \code{luz_modules}.
+  translation: ~
+seealso:
+  original: "Other set_hparam: \n\\code{\\link{set_opt_hparams}()}\n"
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

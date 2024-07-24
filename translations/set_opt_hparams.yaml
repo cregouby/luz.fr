@@ -1,0 +1,32 @@
+title:
+  original: Set optimizer hyper-parameters
+  translation: ~
+arguments:
+  module:
+    original: An \code{nn_module} that has been \code{\link[=setup]{setup()}}.
+    translation: ~
+  '...':
+    original: |-
+      The parameters passed here will be used to initialize the optimizers.
+      For example, if your optimizer is \code{optim_adam} and you pass \code{lr=0.1}, then the
+      \code{optim_adam} function is called with \code{optim_adam(parameters, lr=0.1)} when fitting
+      the model.
+    translation: ~
+value:
+  original: |
+    The same luz module
+  translation: ~
+description:
+  original: |
+    This function is used to define hyper-parameters for the optimizer initialization
+    method.
+  translation: ~
+seealso:
+  original: "Other set_hparam: \n\\code{\\link{set_hparams}()}\n"
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

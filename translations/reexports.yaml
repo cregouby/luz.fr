@@ -1,0 +1,21 @@
+docType:
+  original: import
+  translation: ~
+title:
+  original: Objects exported from other packages
+  translation: ~
+description:
+  original: |-
+    These objects are imported from other packages. Follow the links
+    below to see their documentation.
+
+    \describe{
+      \item{generics}{\code{\link[generics]{fit}}}
+    }
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

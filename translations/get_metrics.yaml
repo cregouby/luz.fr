@@ -1,0 +1,31 @@
+title:
+  original: Get metrics from the object
+  translation: ~
+arguments:
+  object:
+    original: The object to query for metrics.
+    translation: ~
+  '...':
+    original: Currently unused.
+    translation: ~
+value:
+  original: |
+    A data.frame containing the metric values.
+  translation: ~
+description:
+  original: |
+    Get metrics from the object
+  translation: ~
+section{Methods (by class)}:
+  original: |-
+    \itemize{
+    \item \code{get_metrics(luz_module_fitted)}: Extract metrics from a luz fitted model.
+
+    }
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

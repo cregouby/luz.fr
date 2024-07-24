@@ -1,0 +1,61 @@
+title:
+  original: Mixup callback
+  translation: ~
+arguments:
+  alpha:
+    original: parameter for the beta distribution used to sample mixing coefficients
+    translation: ~
+  '...':
+    original: currently unused. Just to force named arguments.
+    translation: ~
+  run_valid:
+    original: Should it run during validation
+    translation: ~
+  auto_loss:
+    original: |-
+      Should it automatically modify the loss function? This will wrap
+      the loss function to create the mixup loss. If \code{TRUE} make sure that your loss
+      function does not apply reductions. If \code{run_valid=FALSE}, then loss will be
+      mean reduced during validation.
+    translation: ~
+value:
+  original: |
+    A \code{luz_callback}
+  translation: ~
+description:
+  original: |
+    Implementation of \href{https://arxiv.org/abs/1710.09412}{'mixup: Beyond Empirical Risk Minimization'}.
+    As of today, tested only for categorical data,
+    where targets are expected to be integers, not one-hot encoded vectors.
+    This callback is supposed to be used together with \code{\link[=nn_mixup_loss]{nn_mixup_loss()}}.
+  translation: ~
+details:
+  original: |
+    Overall, we follow the \href{https://github.com/fastai/fastai/blob/master/fastai/callback/mixup.py}{fastai implementation}
+    described \href{https://forums.fast.ai/t/mixup-data-augmentation/22764}{here}.
+    Namely,
+    \itemize{
+    \item We work with a single dataloader only, randomly mixing two observations from the same batch.
+    \item We linearly combine losses computed for both targets:
+    \code{loss(output, new_target) = weight * loss(output, target1) + (1-weight) * loss(output, target2)}
+    \item We draw different mixing coefficients for every pair.
+    \item We replace \code{weight} with \code{weight = max(weight, 1-weight)} to avoid duplicates.
+    }
+  translation: ~
+examples:
+  original: |+
+    if (torch::torch_is_installed()) {
+    mixup_callback <- luz_callback_mixup()
+    }
+
+  translation: ~
+seealso:
+  original: "\\code{\\link[=nn_mixup_loss]{nn_mixup_loss()}}, \\code{\\link[=nnf_mixup]{nnf_mixup()}}\n\nOther
+    luz_callbacks: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_interrupt}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

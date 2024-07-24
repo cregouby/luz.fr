@@ -1,0 +1,36 @@
+title:
+  original: Accuracy
+  translation: ~
+value:
+  original: |
+    Returns new luz metric.
+  translation: ~
+description:
+  original: |
+    Computes accuracy for multi-class classification problems.
+  translation: ~
+details:
+  original: |
+    This metric expects to take logits or probabilities at every
+    update. It will then take the columnwise argmax and compare
+    to the target.
+  translation: ~
+examples:
+  original: |
+    if (torch::torch_is_installed()) {
+    library(torch)
+    metric <- luz_metric_accuracy()
+    metric <- metric$new()
+    metric$update(torch_randn(100, 10), torch::torch_randint(1, 10, size = 100))
+    metric$compute()
+    }
+  translation: ~
+seealso:
+  original: "Other luz_metrics: \n\\code{\\link{luz_metric_binary_accuracy_with_logits}()},\n\\code{\\link{luz_metric_binary_accuracy}()},\n\\code{\\link{luz_metric_binary_auroc}()},\n\\code{\\link{luz_metric_mae}()},\n\\code{\\link{luz_metric_mse}()},\n\\code{\\link{luz_metric_multiclass_auroc}()},\n\\code{\\link{luz_metric_rmse}()},\n\\code{\\link{luz_metric}()}\n"
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

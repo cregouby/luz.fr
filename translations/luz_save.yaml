@@ -1,0 +1,40 @@
+title:
+  original: Saves luz objects to disk
+  translation: ~
+arguments:
+  obj:
+    original: |-
+      an object of class 'luz_module_fitted' as returned by
+      \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}.
+    translation: ~
+  path:
+    original: path in file system so save the object.
+    translation: ~
+  '...':
+    original: currently unused.
+    translation: ~
+description:
+  original: |
+    Allows saving luz fitted models to the disk. Objects can be loaded back with
+    \code{\link[=luz_load]{luz_load()}}.
+  translation: ~
+note:
+  original: |
+    Objects are saved as plain \code{.rds} files but \code{obj$model} is serialized
+    with \code{torch_save} before saving it.
+  translation: ~
+section{Warning}:
+  original: |
+    The \link{ctx} is naively serialized. Ie, we only use \code{\link[=saveRDS]{saveRDS()}} to serialize it.
+    Don't expect \code{luz_save} to work correctly if you have unserializable objects
+    in the \link{ctx} like \code{torch_tensor}s and external pointers in general.
+  translation: ~
+seealso:
+  original: "Other luz_save: \n\\code{\\link{luz_load}()}\n"
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

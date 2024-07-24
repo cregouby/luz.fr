@@ -1,0 +1,36 @@
+title:
+  original: Metrics callback
+  translation: ~
+value:
+  original: |
+    A \code{luz_callback}
+  translation: ~
+description:
+  original: |
+    Tracks metrics passed to \code{\link[=setup]{setup()}} during training and validation.
+  translation: ~
+details:
+  original: |
+    This callback takes care of 2 \link{ctx} attributes:
+    \itemize{
+    \item \code{ctx$metrics}: stores the current metrics objects that are initialized once for epoch,
+    and are further \code{update()}d and \code{compute()}d every batch. You will rarely need
+    to work with these metrics.
+    \item \code{ctx$records$metrics}: Stores metrics per training/validation and epoch. The
+    structure is very similar to \code{ctx$losses}.
+    }
+  translation: ~
+note:
+  original: |
+    In general you won't need to explicitly use the metrics callback as it's
+    used by default in \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}.
+  translation: ~
+seealso:
+  original: "Other luz_callbacks: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_interrupt}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

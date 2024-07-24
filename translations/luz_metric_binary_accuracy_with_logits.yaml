@@ -1,0 +1,40 @@
+title:
+  original: Binary accuracy with logits
+  translation: ~
+arguments:
+  threshold:
+    original: value used to classifiy observations between 0 and 1.
+    translation: ~
+value:
+  original: |
+    Returns new luz metric.
+  translation: ~
+description:
+  original: |
+    Computes accuracy for binary classification problems where the model
+    return logits. Commonly used together with \code{\link[torch:nn_bce_with_logits_loss]{torch::nn_bce_with_logits_loss()}}.
+  translation: ~
+details:
+  original: |
+    Probabilities are generated using \code{\link[torch:nnf_sigmoid]{torch::nnf_sigmoid()}} and \code{threshold} is used to
+    classify between 0 or 1.
+  translation: ~
+examples:
+  original: |
+    if (torch::torch_is_installed()) {
+    library(torch)
+    metric <- luz_metric_binary_accuracy_with_logits(threshold = 0.5)
+    metric <- metric$new()
+    metric$update(torch_randn(100), torch::torch_randint(0, 1, size = 100))
+    metric$compute()
+    }
+  translation: ~
+seealso:
+  original: "Other luz_metrics: \n\\code{\\link{luz_metric_accuracy}()},\n\\code{\\link{luz_metric_binary_accuracy}()},\n\\code{\\link{luz_metric_binary_auroc}()},\n\\code{\\link{luz_metric_mae}()},\n\\code{\\link{luz_metric_mse}()},\n\\code{\\link{luz_metric_multiclass_auroc}()},\n\\code{\\link{luz_metric_rmse}()},\n\\code{\\link{luz_metric}()}\n"
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

@@ -1,0 +1,33 @@
+title:
+  original: Loads model weights into a fitted object.
+  translation: ~
+arguments:
+  obj:
+    original: luz object to which you want to copy the new weights.
+    translation: ~
+  path:
+    original: path to saved model in disk.
+    translation: ~
+  '...':
+    original: other arguments passed to \code{\link[=torch_load]{torch_load()}}.
+    translation: ~
+value:
+  original: |
+    Returns \code{NULL} invisibly.
+  translation: ~
+description:
+  original: |
+    This can be useful when you have saved model checkpoints during training and
+    want to reload the best checkpoint in the end.
+  translation: ~
+section{Warning}:
+  original: |
+    \code{luz_save_model_weights} operates inplace, ie modifies the model object to contain the
+    new weights.
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

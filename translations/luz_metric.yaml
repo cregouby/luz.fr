@@ -1,0 +1,109 @@
+title:
+  original: Creates a new luz metric
+  translation: ~
+arguments:
+  name:
+    original: string naming the new metric.
+    translation: ~
+  '...':
+    original: |-
+      named list of public methods. You should implement at least
+      \code{initialize}, \code{update} and \code{compute}. See the details section for more
+      information.
+    translation: ~
+  private:
+    original: |-
+      An optional list of private members, which can be functions
+      and non-functions.
+    translation: ~
+  active:
+    original: An optional list of active binding functions.
+    translation: ~
+  parent_env:
+    original: |-
+      An environment to use as the parent of newly-created
+      objects.
+    translation: ~
+  inherit:
+    original: |-
+      A R6ClassGenerator object to inherit from; in other words, a
+      superclass. This is captured as an unevaluated expression which is
+      evaluated in \code{parent_env} each time an object is instantiated.
+    translation: ~
+value:
+  original: |
+    Returns new luz metric.
+  translation: ~
+description:
+  original: |
+    Creates a new luz metric
+  translation: ~
+details:
+  original: "In order to implement a new \\code{luz_metric} we need to implement 3
+    methods:\n\\itemize{\n\\item \\code{initialize}: defines the metric initial state.
+    This function is\ncalled for each epoch for both training and validation loops.\n\\item
+    \\code{update}: updates the metric internal state. This function is called\nat
+    every training and validation step with the predictions obtained by\nthe model
+    and the target values obtained from the dataloader.\n\\item \\code{compute}: uses
+    the internal state to compute metric values. This\nfunction is called whenever
+    we need to obtain the current metric\nvalue. Eg, it’s called every training step
+    for metrics displayed in\nthe progress bar, but only called once per epoch to
+    record it’s value\nwhen the progress bar is not displayed.\n}\n\nOptionally, you
+    can implement an \\code{abbrev} field that gives the metric an\nabbreviation that
+    will be used when displaying metric information in the\nconsole or tracking record.
+    If no \\code{abbrev} is passed, the class name\nwill be used.\n\nLet’s take a
+    look at the implementation of \\code{luz_metric_accuracy} so you\ncan see how
+    to implement a new one:\n\n\\if{html}{\\out{<div class=\"sourceCode r\">}}\\preformatted{luz_metric_accuracy
+    <- luz_metric(\n  # An abbreviation to be shown in progress bars, or \n  # when
+    printing progress\n  abbrev = \"Acc\", \n  # Initial setup for the metric. Metrics
+    are initialized\n  # every epoch, for both training and validation\n  initialize
+    = function() {\n    self$correct <- 0\n    self$total <- 0\n  },\n  # Run at every
+    training or validation step and updates\n  # the internal state. The update function
+    takes `preds`\n  # and `target` as parameters.\n  update = function(preds, target)
+    {\n    pred <- torch::torch_argmax(preds, dim = 2)\n    self$correct <- self$correct
+    + (pred == target)$\n      to(dtype = torch::torch_float())$\n      sum()$\n      item()\n
+    \   self$total <- self$total + pred$numel()\n  },\n  # Use the internal state
+    to query the metric value\n  compute = function() {\n    self$correct/self$total\n
+    \ }\n)\n}\\if{html}{\\out{</div>}}\n\n\\strong{Note}: It’s good practice that
+    the \\code{compute} metric returns regular R\nvalues instead of torch tensors
+    and other parts of luz will expect that.\n"
+  translation: ~
+examples:
+  original: |+
+    luz_metric_accuracy <- luz_metric(
+      # An abbreviation to be shown in progress bars, or
+      # when printing progress
+      abbrev = "Acc",
+      # Initial setup for the metric. Metrics are initialized
+      # every epoch, for both training and validation
+      initialize = function() {
+        self$correct <- 0
+        self$total <- 0
+      },
+      # Run at every training or validation step and updates
+      # the internal state. The update function takes `preds`
+      # and `target` as parameters.
+      update = function(preds, target) {
+        pred <- torch::torch_argmax(preds, dim = 2)
+        self$correct <- self$correct + (pred == target)$
+          to(dtype = torch::torch_float())$
+          sum()$
+          item()
+        self$total <- self$total + pred$numel()
+      },
+      # Use the internal state to query the metric value
+      compute = function() {
+        self$correct/self$total
+      }
+    )
+
+  translation: ~
+seealso:
+  original: "Other luz_metrics: \n\\code{\\link{luz_metric_accuracy}()},\n\\code{\\link{luz_metric_binary_accuracy_with_logits}()},\n\\code{\\link{luz_metric_binary_accuracy}()},\n\\code{\\link{luz_metric_binary_auroc}()},\n\\code{\\link{luz_metric_mae}()},\n\\code{\\link{luz_metric_mse}()},\n\\code{\\link{luz_metric_multiclass_auroc}()},\n\\code{\\link{luz_metric_rmse}()}\n"
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

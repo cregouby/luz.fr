@@ -1,0 +1,26 @@
+title:
+  original: Creates a metric set
+  translation: ~
+arguments:
+  metrics:
+    original: |-
+      A list of luz_metrics that are meant to be used in both training
+      and validation.
+    translation: ~
+  train_metrics:
+    original: A list of luz_metrics that are only used during training.
+    translation: ~
+  valid_metrics:
+    original: A list of luz_metrics that are only sued for validation.
+    translation: ~
+description:
+  original: |
+    A metric set can be used to specify metrics that are only evaluated during
+    training, validation or both.
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

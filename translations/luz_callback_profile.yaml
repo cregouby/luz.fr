@@ -1,0 +1,39 @@
+title:
+  original: Profile callback
+  translation: ~
+value:
+  original: |
+    A \code{luz_callback}
+  translation: ~
+description:
+  original: |
+    Computes the times for high-level operations in the training loops.
+  translation: ~
+details:
+  original: |
+    Records are saved in \code{ctx$records$profile}. Times are stored as seconds.
+    Data is stored in the following structure:
+    \itemize{
+    \item \strong{fit} time for the entire fit procedure.
+    \item \strong{epoch} times per epoch
+    }
+  translation: ~
+note:
+  original: |
+    In general you don't need to use these callback by yourself because it's always
+    included by default in \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}.
+  translation: ~
+examples:
+  original: |+
+    profile_callback <- luz_callback_profile()
+
+  translation: ~
+seealso:
+  original: "Other luz_callbacks: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_interrupt}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

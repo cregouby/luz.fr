@@ -1,0 +1,65 @@
+title:
+  original: Checkpoints model weights
+  translation: ~
+arguments:
+  path:
+    original: |-
+      Path to save the model on disk. The path is interpolated with \code{glue},
+      so you can use any attribute within the \link{ctx} by using \code{'{ctx$epoch}'}. Specially
+      the \code{epoch} and \code{monitor} quantities are already in the environment. If the specified
+      path is a path to a directory (ends with \code{/} or \verb{\\}), then models are saved with the name given by
+      \verb{epoch-{epoch:02d}-{self$monitor}-{monitor:.3f}.pt}. See more in the examples.
+      You can use \code{\link[=sprintf]{sprintf()}} to quickly format quantities, for example:\code{'{epoch:02d}'}.
+    translation: ~
+  monitor:
+    original: |-
+      A string in the format \verb{<set>_<metric>} where \verb{<set>} can be
+      'train' or 'valid' and \verb{<metric>} can be the abbreviation of any metric
+      that you are tracking during training. The metric name is case insensitive.
+    translation: ~
+  save_best_only:
+    original: |-
+      if \code{TRUE} models are only saved if they have an improvement
+      over a previously saved model.
+    translation: ~
+  mode:
+    original: |-
+      Specifies the direction that is considered an improvement. By default
+      'min' is used. Can also be 'max' (higher is better) and 'zero'
+      (closer to zero is better).
+    translation: ~
+  min_delta:
+    original: |-
+      Minimum difference to consider as improvement. Only used when
+      \code{save_best_only=TRUE}.
+    translation: ~
+description:
+  original: |
+    This saves checkpoints of the model according to the specified metric and
+    behavior.
+  translation: ~
+note:
+  original: |
+    \code{mode} and \code{min_delta} are only used when \code{save_best_only=TRUE}.
+    \code{save_best_only} will overwrite the saved models if the \code{path} parameter
+    don't differentiate by epochs.
+
+    Read the checkpointing article in the pkgdown website for more
+    information.
+  translation: ~
+examples:
+  original: |+
+    luz_callback_model_checkpoint(path= "path/to/dir")
+    luz_callback_model_checkpoint(path= "path/to/dir/epoch-{epoch:02d}/model.pt")
+    luz_callback_model_checkpoint(path= "path/to/dir/epoch-{epoch:02d}/model-{monitor:.2f}.pt")
+
+  translation: ~
+seealso:
+  original: "Other luz_callbacks: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_interrupt}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

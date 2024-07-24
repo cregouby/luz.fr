@@ -1,0 +1,36 @@
+title:
+  original: Binary accuracy
+  translation: ~
+arguments:
+  threshold:
+    original: value used to classifiy observations between 0 and 1.
+    translation: ~
+value:
+  original: |
+    Returns new luz metric.
+  translation: ~
+description:
+  original: |
+    Computes the accuracy for binary classification problems where the
+    model returns probabilities. Commonly used when the loss is \code{\link[torch:nn_bce_loss]{torch::nn_bce_loss()}}.
+  translation: ~
+examples:
+  original: |+
+    if (torch::torch_is_installed()) {
+    library(torch)
+    metric <- luz_metric_binary_accuracy(threshold = 0.5)
+    metric <- metric$new()
+    metric$update(torch_rand(100), torch::torch_randint(0, 1, size = 100))
+    metric$compute()
+    }
+
+  translation: ~
+seealso:
+  original: "Other luz_metrics: \n\\code{\\link{luz_metric_accuracy}()},\n\\code{\\link{luz_metric_binary_accuracy_with_logits}()},\n\\code{\\link{luz_metric_binary_auroc}()},\n\\code{\\link{luz_metric_mae}()},\n\\code{\\link{luz_metric_mse}()},\n\\code{\\link{luz_metric_multiclass_auroc}()},\n\\code{\\link{luz_metric_rmse}()},\n\\code{\\link{luz_metric}()}\n"
+  translation: ~
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

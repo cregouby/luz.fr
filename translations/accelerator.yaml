@@ -1,0 +1,32 @@
+title:
+  original: Create an accelerator
+  translation: Créer un accélérateur
+arguments:
+  device_placement:
+    original: |-
+      (logical) whether the \code{accelerator} object should
+      handle device placement. Default: \code{TRUE}
+    translation: |-
+      (logique) si l'objet \code{accelerator} doit gérer le placement
+      sur les cartes accélératrices. Par défaut : \code{TRUE}
+  cpu:
+    original: (logical) whether the training procedure should run on the CPU.
+    translation: (logique) le processus d'apprentissage doit-il s'exécuter sur le processeur central ?
+  cuda_index:
+    original: |-
+      (integer) index of the CUDA device to use if multiple GPUs
+      are available. Default: the result of torch::cuda_current_device().
+    translation: |-
+      (entier) index de la carte CUDA à utiliser si plusieurs GPUs
+      sont disponibles. Par défaut : le résultat de torch::cuda_current_device()
+description:
+  original: |
+    Create an accelerator
+  translation: |
+    Créer un accélérateur
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

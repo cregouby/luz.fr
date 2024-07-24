@@ -1,11 +1,13 @@
 title:
   original: Context object
-  translation: ~
+  translation: Objet Context
 description:
   original: |
     Context objects used in luz to share information between model methods,
     metrics and callbacks.
-  translation: ~
+  translation: |
+    Les objets context sont utilisés par luz pour l'échange d'information 
+    entre méthodes, métriques et callbaks.
 details:
   original: |
     The \code{ctx} object is used in luz to share information between the

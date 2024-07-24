@@ -1,0 +1,728 @@
+title:
+  original: Context object
+  translation: Objet de type contexte
+description:
+  original: |
+    Context object storing information about the model training context.
+    See also \link{ctx}.
+  translation: |
+    Objet de type context stockant des informations sur le contexte 
+    d'entraînement du modèle. Voir également \link{ctx}.
+section{Public fields}:
+  original: |
+    \if{html}{\out{<div class="r6-fields">}}
+    \describe{
+    \item{\code{buffers}}{This is a list of buffers that callbacks can use to write temporary
+    information into \code{ctx}.}
+    }
+    \if{html}{\out{</div>}}
+  translation: |
+    \if{html}{\out{<div class="r6-fields">}}
+    \describe{
+    \item{\code{buffers}}{une liste de buffers que les callbacks peuvent utiliser pour une écriture
+    temporaire d'information dans le  \code{ctx}.}
+    }
+    \if{html}{\out{</div>}}
+section{Active bindings}:
+  original: |
+    \if{html}{\out{<div class="r6-active-bindings">}}
+    \describe{
+    \item{\code{records}}{stores information about values logged with \code{self$log}.}
+
+    \item{\code{device}}{allows querying the current accelerator device}
+
+    \item{\code{callbacks}}{list of callbacks that will be called.}
+
+    \item{\code{iter}}{current iteration}
+
+    \item{\code{batch}}{the current batch data. a list with input data and targets.}
+
+    \item{\code{input}}{a shortcut for \code{ctx$batch[[1]]}}
+
+    \item{\code{target}}{a shortcut for \code{ctx$batch[[2]]}}
+
+    \item{\code{min_epochs}}{the minimum number of epochs that the model will run on.}
+
+    \item{\code{max_epochs}}{the maximum number of epochs that the model will run.}
+
+    \item{\code{hparams}}{a list of hyperparameters that were used to initialize \code{ctx$model}.}
+
+    \item{\code{opt_hparams}}{a list of hyperparameters used to initialize the \code{ctx$optimizers}.}
+
+    \item{\code{train_data}}{a dataloader that is used for training the model}
+
+    \item{\code{valid_data}}{a dataloader using during model validation}
+
+    \item{\code{accelerator}}{an \code{\link[=accelerator]{accelerator()}} used to move data, model and etc the the correct
+    device.}
+
+    \item{\code{optimizers}}{a named list of optimizers that will be used during model training.}
+
+    \item{\code{verbose}}{bool wether the process is in verbose mode or not.}
+
+    \item{\code{handlers}}{List of error handlers that can be used. See \code{\link[rlang:try_fetch]{rlang::try_fetch()}}
+    for more info.}
+
+    \item{\code{epoch_handlers}}{List of error handlers that can be used. See \code{\link[rlang:try_fetch]{rlang::try_fetch()}}
+    for more info.}
+
+    \item{\code{training}}{A bool indicating if the model is in training or validation mode.}
+
+    \item{\code{model}}{The model being trained.}
+
+    \item{\code{pred}}{Last predicted values.}
+
+    \item{\code{opt}}{Current optimizer.}
+
+    \item{\code{opt_name}}{Current optimizer name.}
+
+    \item{\code{data}}{Current dataloader in use.}
+
+    \item{\code{loss_fn}}{Loss function used to train the model}
+
+    \item{\code{loss}}{Last computed loss values. Detached from the graph.}
+
+    \item{\code{loss_grad}}{Last computed loss value, not detached, so you can do additional
+    tranformation.}
+
+    \item{\code{epoch}}{Current epoch.}
+
+    \item{\code{metrics}}{List of metrics that are tracked by the process.}
+
+    \item{\code{step_opt}}{Defines how step is called for the optimizer. It must be a function
+    taking an optimizer as argument.}
+    }
+    \if{html}{\out{</div>}}
+  translation: |
+    \if{html}{\out{<div class="r6-active-bindings">}}
+    \describe{
+    \item{\code{records}}{stocke des informations sur les valeurs enregistrées avec \code{self$log}.}
+
+    \item{\code{device}}{permet de demander l'accélérateur actuel}
+
+    \item{\code{callbacks}}{liste de callbacks qui seront appelés.}
+
+    \item{\code{iter}}{itération actuelle}
+
+    \item{\code{batch}}{les données du lot courant. une liste avec les données d'entrée et les variables cibles.}
+
+    \item{\code{input}}{\code{ctx$batch[[1]]}}
+
+    \item{\code{target}}{\code{ctx$batch[[2]]}}
+
+    \item{\code{min_epochs}}{le nombre minimum d'époques que le modèle exécutera.}
+
+    \item{\code{max_epochs}}{le nombre maximum d'époques que le modèle exécutera.}
+
+    \item{\code{hparams}}{liste de hyperparamètres utilisés pour initialiser \code{ctx$model}.}
+
+    \item{\code{opt_hparams}}{liste de hyperparamètres utilisés pour initialiser les \code{ctx$optimizers}.}
+
+    \item{\code{train_data}}{dataloader utilisé pour l'entraînement du modèle}
+
+    \item{\code{valid_data}}{dataloader utilisé pendant la validation du modèle}
+
+    \item{\code{accelerator}}{un \code{\link[=accelerator]{accelerator()}} luz qui configure le 
+    deploiement sur un device entre autre.}
+
+    \item{\code{optimizers}}{liste de optimiseurs qui seront utilisés pendant l'entraînement du modèle.}
+
+    \item{\code{verbose}}{valeur logique indiquant si le processus est en mode verbeux ou non.}
+
+    \item{\code{handlers}}{Liste des gestionnaires d'erreur que l'on peut utiliser. Voir \code{\link[rlang:try_fetch]{rlang::try_fetch()}}
+    pour plus d'informations.}
+
+    \item{\code{epoch_handlers}}{Liste des gestionnaires d'époque que l'on peut utiliser. Voir \code{\link[rlang:try_fetch]{rlang::try_fetch()}}
+    pour plus d'informations.}
+
+    \item{\code{training}}{valeur logique indiquant si le modèle est en mode entraînement ou validation.}
+
+    \item{\code{model}}{le modèle en cours d'entraînement.}
+
+    \item{\code{pred}}{valeur prédite la plus récente.}
+
+    \item{\code{opt}}{optimiseur actuel.}
+
+    \item{\code{opt_name}}{nom de l'optimiseur actuel.}
+
+    \item{\code{data}}{dataloader en cours d'utilisation.}
+
+    \item{\code{loss_fn}}{fonction de coût utilisée pour entraîner le modèle}
+
+    \item{\code{loss}}{valeur du coût la plus récente, non déconnectée, donc vous pouvez faire des transformations supplémentaires.}
+
+    \item{\code{loss_grad}}{gradient du coût le plus récent, pas déconnecté, donc vous pouvez faire des transformations supplémentaires.}
+
+    \item{\code{epoch}}{époque actuelle.}
+
+    \item{\code{metrics}}{liste de métriques suivies par le processus.}
+
+    \item{\code{step_opt}}{définit comment est appelée la fonction d'étape pour l'optimiseur. Ce doit être une fonction prenant un optimiseur en argument.}
+    }
+    \if{html}{\out{</div>}}
+section{Methods}:
+  original: |
+    \subsection{Public methods}{
+    \itemize{
+    \item \href{#method-luz_context-new}{\code{context$new()}}
+    \item \href{#method-luz_context-log}{\code{context$log()}}
+    \item \href{#method-luz_context-log_metric}{\code{context$log_metric()}}
+    \item \href{#method-luz_context-get_log}{\code{context$get_log()}}
+    \item \href{#method-luz_context-get_metrics}{\code{context$get_metrics()}}
+    \item \href{#method-luz_context-get_metric}{\code{context$get_metric()}}
+    \item \href{#method-luz_context-get_formatted_metrics}{\code{context$get_formatted_metrics()}}
+    \item \href{#method-luz_context-get_metrics_df}{\code{context$get_metrics_df()}}
+    \item \href{#method-luz_context-set_verbose}{\code{context$set_verbose()}}
+    \item \href{#method-luz_context-clean}{\code{context$clean()}}
+    \item \href{#method-luz_context-call_callbacks}{\code{context$call_callbacks()}}
+    \item \href{#method-luz_context-state_dict}{\code{context$state_dict()}}
+    \item \href{#method-luz_context-unsafe_set_records}{\code{context$unsafe_set_records()}}
+    \item \href{#method-luz_context-clone}{\code{context$clone()}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-new"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-new}{}}}
+    \subsection{Method \code{new()}}{
+    Initializes the context object with minimal necessary information.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$new(verbose, accelerator, callbacks, training)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{verbose}}{Whether the context should be in verbose mode or not.}
+
+    \item{\code{accelerator}}{A luz \code{\link[=accelerator]{accelerator()}} that configures device placement and
+    others.}
+
+    \item{\code{callbacks}}{A list of callbacks used by the model. See \code{\link[=luz_callback]{luz_callback()}}.}
+
+    \item{\code{training}}{A boolean that indicates if the context is in training mode or not.}
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-log"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-log}{}}}
+    \subsection{Method \code{log()}}{
+    Allows logging arbitrary information in the \code{ctx}.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$log(what, set, value, index = NULL, append = TRUE)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{what}}{(string) What you are logging.}
+
+    \item{\code{set}}{(string) Usually 'train' or 'valid' indicating the set you want
+    to lot to. But can be arbitrary info.}
+
+    \item{\code{value}}{value to log}
+
+    \item{\code{value}}{Arbitrary value to log.}
+
+    \item{\code{index}}{Index that this value should be logged. If \code{NULL} the value
+    is added to the end of list, otherwise the index is used.}
+
+    \item{\code{append}}{If \code{TRUE} and a value in the corresponding index already
+    exists, then value is appended to the current value. If \code{FALSE} value
+    is overwritten in favor of the new value.}
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-log_metric"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-log_metric}{}}}
+    \subsection{Method \code{log_metric()}}{
+    Log a metric gen its name and value.
+    Metric values are indexed by epoch.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$log_metric(name, value)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{name}}{name of the metric}
+
+    \item{\code{value}}{value to log}
+
+    \item{\code{value}}{Arbitrary value to log.}
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-get_log"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-get_log}{}}}
+    \subsection{Method \code{get_log()}}{
+    Get a specific value from the log.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$get_log(what, set, index = NULL)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{what}}{(string) What you are logging.}
+
+    \item{\code{set}}{(string) Usually 'train' or 'valid' indicating the set you want
+    to lot to. But can be arbitrary info.}
+
+    \item{\code{index}}{Index that this value should be logged. If \code{NULL} the value
+    is added to the end of list, otherwise the index is used.}
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-get_metrics"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-get_metrics}{}}}
+    \subsection{Method \code{get_metrics()}}{
+    Get all metric given an epoch and set.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$get_metrics(set, epoch = NULL)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{set}}{(string) Usually 'train' or 'valid' indicating the set you want
+    to lot to. But can be arbitrary info.}
+
+    \item{\code{epoch}}{The epoch you want to extract metrics from.}
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-get_metric"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-get_metric}{}}}
+    \subsection{Method \code{get_metric()}}{
+    Get the value of a metric given its name, epoch and set.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$get_metric(name, set, epoch = NULL)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{name}}{name of the metric}
+
+    \item{\code{set}}{(string) Usually 'train' or 'valid' indicating the set you want
+    to lot to. But can be arbitrary info.}
+
+    \item{\code{epoch}}{The epoch you want to extract metrics from.}
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-get_formatted_metrics"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-get_formatted_metrics}{}}}
+    \subsection{Method \code{get_formatted_metrics()}}{
+    Get formatted metrics values
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$get_formatted_metrics(set, epoch = NULL)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{set}}{(string) Usually 'train' or 'valid' indicating the set you want
+    to log to. But can be arbitrary info.}
+
+    \item{\code{epoch}}{The epoch you want to extract metrics from.}
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-get_metrics_df"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-get_metrics_df}{}}}
+    \subsection{Method \code{get_metrics_df()}}{
+    Get a data.frame containing all metrics.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$get_metrics_df()}\if{html}{\out{</div>}}
+    }
+
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-set_verbose"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-set_verbose}{}}}
+    \subsection{Method \code{set_verbose()}}{
+    Allows setting the \code{verbose} attribute.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$set_verbose(verbose = NULL)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{verbose}}{boolean. If \code{TRUE} verbose mode is used. If \code{FALSE} non verbose.
+    if \code{NULL} we use the result of \code{\link[=interactive]{interactive()}}.}
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-clean"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-clean}{}}}
+    \subsection{Method \code{clean()}}{
+    Removes unnecessary information from the context object.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$clean()}\if{html}{\out{</div>}}
+    }
+
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-call_callbacks"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-call_callbacks}{}}}
+    \subsection{Method \code{call_callbacks()}}{
+    Call the selected callbacks. Where \code{name} is the callback types to call, eg
+    'on_epoch_begin'.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$call_callbacks(name)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{name}}{name of the metric}
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-state_dict"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-state_dict}{}}}
+    \subsection{Method \code{state_dict()}}{
+    Returns a list containing minimal information from the context. Used to
+    create the returned values.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$state_dict()}\if{html}{\out{</div>}}
+    }
+
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-unsafe_set_records"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-unsafe_set_records}{}}}
+    \subsection{Method \code{unsafe_set_records()}}{
+    Are you sure you know what you are doing?
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$unsafe_set_records(records)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{records}}{New set of records to be set.}
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-clone"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-clone}{}}}
+    \subsection{Method \code{clone()}}{
+    The objects of this class are cloneable with this method.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$clone(deep = FALSE)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+  translation: 
+    \subsection{Méthodes publiquement accessibles}{
+    \itemize{
+    \item \href{#method-luz_context-new}{\code{context$new()}}
+    \item \href{#method-luz_context-log}{\code{context$log()}}
+    \item \href{#method-luz_context-log_metric}{\code{context$log_metric()}}
+    \item \href{#method-luz_context-get_log}{\code{context$get_log()}}
+    \item \href{#method-luz_context-get_metrics}{\code{context$get_metrics()}}
+    \item \href{#method-luz_context-get_metric}{\code{context$get_metric()}}
+    \item \href{#method-luz_context-get_formatted_metrics}{\code{context$get_formatted_metrics()}}
+    \item \href{#method-luz_context-get_metrics_df}{\code{context$get_metrics_df()}}
+    \item \href{#method-luz_context-set_verbose}{\code{context$set_verbose()}}
+    \item \href{#method-luz_context-clean}{\code{context$clean()}}
+    \item \href{#method-luz_context-call_callbacks}{\code{context$call_callbacks()}}
+    \item \href{#method-luz_context-state_dict}{\code{context$state_dict()}}
+    \item \href{#method-luz_context-unsafe_set_records}{\code{context$unsafe_set_records()}}
+    \item \href{#method-luz_context-clone}{\code{context$clone()}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-new"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-new}{}}}
+    \subsection{Méthode \code{new()}}{
+    Initie l'objet de contexte avec les informations nécessaires minimales.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$new(verbose, accelerator, callbacks, training)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{verbose}}{Active le contexte mode verbeux.}
+
+    \item{\code{accelerator}}{Un \code{\link[=accelerator]{accelerator()}} luz à utliser.}
+
+    \item{\code{callbacks}}{Une liste de rappels utilisés par le modèle. Voir \code{\link[=luz_callback]{luz_callback()}}.}
+
+    \item{\code{training}}{Un boolean indiquant si le contexte est en mode entraînement ou non.}
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-log"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-log}{}}}
+    \subsection{Méthode \code{log()}}{
+    Permet de logger des informations arbitraires dans le \code{ctx}.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$log(what, set, value, index = NULL, append = TRUE)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{what}}{(string) Ce que vous voulez logger.}
+
+    \item{\code{set}}{(string) Généralement 'train' ou 'valid' indiquant dans quel jeu de données 
+    écrire, mais peut aussi être une valeur arbitraire.}
+
+    \item{\code{value}}{valeur à logger}
+
+    \item{\code{index}}{Index auquel logger cette valeur. Si NULL, la valeur est ajoutée à la fin de la liste, 
+    sinon l'index est utilisé.}
+
+    \item{\code{append}}{Si TRUE et si une valeur existe déjà à cet index dans le jeu de données, alors la valeur est 
+    ajoutée au valeurs actuelles. Si FALSE, la valeur est réécrite en faveur de la nouvelle valeur.}
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-log_metric"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-log_metric}{}}}
+    \subsection{Méthode \code{log_metric()}}{
+    Logger un métrique par son nom et sa valeur.
+    Les valeurs des métriques sont indexées par époque.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$log_metric(name, value)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{name}}{nom de la métrique}
+
+    \item{\code{value}}{valeur à logguer}
+
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-get_log"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-get_log}{}}}
+    \subsection{Méthode \code{get_log()}}{
+    Lit une valeur spécifique dans le log.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$get_log(what, set, index = NULL)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{what}}{(string) Ce qui est loggué.}
+
+    \item{\code{set}}{(string) Généralement 'train' ou 'valid' indiquant dans quel jeu de données 
+    lire, mais peut aussi être une valeur arbitraire.}
+
+    \item{\code{index}}{Index auquel cette valeur doit être logguée. Si NULL, la valeur est lue à 
+    la fin de la liste, sinon l'index est utilisé.}
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-get_metrics"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-get_metrics}{}}}
+    \subsection{Méthode \code{get_metrics()}}{
+    Lit toutes les métriques d'une époque sur un jeu de donnée.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$get_metrics(set, epoch = NULL)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{set}}{(string) Généralement 'train' ou 'valid' indiquant dans quel jeu de données 
+    lire, mais peut aussi être une valeur arbitraire.}
+
+    \item{\code{epoch}}{L'époque demandée.}
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-get_metric"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-get_metric}{}}}
+    \subsection{Méthode \code{get_metric()}}{
+    Lit la valeur d'une métrique pour un jeu de donnée, une époque, et un nom
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$get_metric(name, set, epoch = NULL)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{name}}{nom de la métrique}
+
+    \item{\code{set}}{(string) Généralement 'train' ou 'valid' indiquant dans quel jeu de données 
+    lire, mais peut aussi être une valeur arbitraire.}
+
+    \item{\code{epoch}}{L'époque demandée.}
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-get_formatted_metrics"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-get_formatted_metrics}{}}}
+    \subsection{Méthode \code{get_formatted_metrics()}}{
+    Lit et formatte une valeur de métrique 
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$get_formatted_metrics(set, epoch = NULL)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{set}}{(string) Généralement 'train' ou 'valid' indiquant dans quel jeu de données 
+    lire, mais peut aussi être une valeur arbitraire.}
+
+    \item{\code{epoch}}{L'époque demandée.}
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-get_metrics_df"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-get_metrics_df}{}}}
+    \subsection{Méthode \code{get_metrics_df()}}{
+    Lit toutes les métriques sous forme de data-frame.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$get_metrics_df()}\if{html}{\out{</div>}}
+    }
+
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-set_verbose"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-set_verbose}{}}}
+    \subsection{Méthode \code{set_verbose()}}{
+    Peremt de fixer l'attribut \code{verbose}.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$set_verbose(verbose = NULL)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{verbose}}{booleen. Mode verbeux si \code{TRUE}. Mode non-verbeux si \code{FALSE}.
+    si \code{NULL}, alors le résultat de \code{\link[=interactive]{interactive()}} est utilisé.}
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-clean"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-clean}{}}}
+    \subsection{Méthode \code{clean()}}{
+    Enlève les informations non-essentielles de l'objet context.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$clean()}\if{html}{\out{</div>}}
+    }
+
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-call_callbacks"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-call_callbacks}{}}}
+    \subsection{Méthode \code{call_callbacks()}}{
+    Appelle le callback selectionné. Avec \code{name} comme type de callback à appeller, par exemple 
+    'on_epoch_begin'.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$call_callbacks(name)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{name}}{nom du callback}
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-state_dict"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-state_dict}{}}}
+    \subsection{Méthode \code{state_dict()}}{
+    Renvoie la liste des informations minimales sur le context. Utilisé pour créer cette liste.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$state_dict()}\if{html}{\out{</div>}}
+    }
+
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-unsafe_set_records"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-unsafe_set_records}{}}}
+    \subsection{Méthode \code{unsafe_set_records()}}{
+    Estes vous bien sûr de savoir ce que vous faites?
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$unsafe_set_records(records)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{records}}{Nouveau jeu d'entregistrements à affecter}
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+    \if{html}{\out{<hr>}}
+    \if{html}{\out{<a id="method-luz_context-clone"></a>}}
+    \if{latex}{\out{\\hypertarget{method-luz_context-clone}{}}}
+    \subsection{Méthode \code{clone()}}{
+    Les objets de la classe sont clonable par cette méthode.
+    \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}\preformatted{context$clone(deep = FALSE)}\if{html}{\out{</div>}}
+    }
+
+    \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+    \item{\code{deep}}{Doit on créer un clone en profondeur.}
+    }
+    \if{html}{\out{</div>}}
+    }
+    }
+
+untranslatable:
+- alias
+- name
+- keyword
+- concept
+- usage

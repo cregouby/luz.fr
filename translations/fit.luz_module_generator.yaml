@@ -1,10 +1,10 @@
 title:
   original: Fit a \code{nn_module}
-  translation: ~
+  translation: Entraîne un \code{nn_module}
 arguments:
   object:
     original: An \code{nn_module} that has been \code{\link[=setup]{setup()}}.
-    translation: ~
+    translation: Un \code{nn_module} qui a été \code{\link[=setup]{setup()}}.
   data:
     original: |-
       (dataloader, dataset or list) A dataloader created with
@@ -12,7 +12,12 @@ arguments:
       with \code{\link[torch:dataset]{torch::dataset()}} or a list. Dataloaders and datasets must return a
       list with at most 2 items. The first item will be used as input for the
       module and the second will be used as a target for the loss function.
-    translation: ~
+    translation: |- 
+      (dataloader, dataset ou list) Un dataloader créé avec
+      \code{\link[torch:dataloader]{torch::dataloader()}} utilisé pour l'entraînement du modèle, ou un jeu de données créé avec
+      \code{\link[torch:dataset]{torch::dataset()}} ou une liste. Les dataloaders et les jeux de données doivent renvoyer 
+      une liste contenant au plus 2 éléments. Le premier élément sera utilisé comme entrée pour le module et 
+      le second comme variable à prédire pour la fonction de perte.
   epochs:
     original: |-
       (int) The maximum number of epochs for training the model. If a
@@ -21,14 +26,24 @@ arguments:
       value is \code{min_epochs} and the second value is \code{max_epochs}. The minimum and
       maximum number of epochs are included in the context object as
       \code{ctx$min_epochs} and \code{ctx$max_epochs}, respectively.
-    translation: ~
+    translation: |- 
+      (entier) Le nombre maximal d'époques d'entraînement du modèle. Si une 
+      valeur unique est fournie, elle sera prise comme \code{max_epochs} et
+      \code{min_epochs} sera à 0. Si un vecteur de deux nombres est fourni, 
+      la première valeur sera \code{min_epochs} et la seconde valeur sera \code{max_epochs}. 
+      Le nombre minimum et maximum d'époques sont inclus dans l'objet context sous forme de
+      \code{ctx$min_epochs} et \code{ctx$max_epochs}, respectivement.
   callbacks:
     original: |-
       (list, optional) A list of callbacks defined with
       \code{\link[=luz_callback]{luz_callback()}} that will be called during the training procedure. The
       callbacks \code{\link[=luz_callback_metrics]{luz_callback_metrics()}}, \code{\link[=luz_callback_progress]{luz_callback_progress()}} and
       \code{\link[=luz_callback_train_valid]{luz_callback_train_valid()}} are always added by default.
-    translation: ~
+    translation: |- 
+      (liste, optionnel) Une liste de callbacks définis avec
+      \code{\link[=luz_callback]{luz_callback()}} qui seront appelés pendant la procédure d'entraînement. 
+      Les callbacks \code{\link[=luz_callback_metrics]{luz_callback_metrics()}}, \code{\link[=luz_callback_progress]{luz_callback_progress()}} et
+      \code{\link[=luz_callback_train_valid]{luz_callback_train_valid()}} sont toujours ajoutés par défaut.
   valid_data:
     original: |-
       (dataloader, dataset, list or scalar value; optional) A
@@ -38,44 +53,66 @@ arguments:
       list, then you can also supply a numeric value between 0 and 1 - and in
       this case a random sample with size corresponding to that proportion from
       \code{data} will be used for validation.
-    translation: ~
+    translation: |- 
+      (dataloader, dataset, liste ou scalaire; optionnel) Un dataloader créé avec \code{\link[torch:dataloader]{torch::dataloader()}}
+      ou un jeu de données créé avec \code{\link[torch:dataset]{torch::dataset()}} qui sera utilisé 
+      pendant la procédure de validation. Ils doivent retourner une liste contenant (input, target). Si \code{data}
+      est un \code{\link[torch:dataset]{torch::dataset()}} ou une liste, vous pouvez également fournir une valeur 
+      numérique entre 0 et 1 - et dans ce cas, une échantillonnage aléatoire avec taille correspondante à celle 
+      proportionnelle à partir de \code{data} sera utilisée pour la validation.
   accelerator:
     original: |-
       (accelerator, optional) An optional \code{\link[=accelerator]{accelerator()}} object
       used to configure device placement of the components like \link{nn_module}s,
       optimizers and batches of data.
-    translation: ~
+    translation: |- 
+      (accelerator, optional) Un objet \code{\link[=accelerator]{accelerator()}} optionnel
+      utilisé pour configurer le device cible du calcul pour des composants tels que les modules nn,
+      les optimiseurs et batches de données.
   verbose:
     original: |-
       (logical, optional) An optional boolean value indicating if
       the fitting procedure should emit output to the console during training.
       By default, it will produce output if \code{\link[=interactive]{interactive()}} is \code{TRUE}, otherwise
       it won't print to the console.
-    translation: ~
+    translation: |- 
+      (logique, optionnel) Une valeur booléenne indiquant si la procédure d'entraînement doit produire ses messages
+      vers la console pendant l'entraînement. Par défaut, elle produira des message si \code{\link[=interactive]{interactive()}}
+      est \code{TRUE}, sinon elle ne publiera pas vers la console.
   '...':
     original: Currently unused.
-    translation: ~
+    translation: Inutilisé
   dataloader_options:
     original: |-
       Options used when creating a dataloader. See
       \code{\link[torch:dataloader]{torch::dataloader()}}. \code{shuffle=TRUE} by default for the training data and
       \code{batch_size=32} by default. It will error if not \code{NULL} and \code{data} is
       already a dataloader.
-    translation: ~
+    translation: |- 
+      Options utilisées lors de la création d'un dataloader. Voir
+      \code{\link[torch:dataloader]{torch::dataloader()}}. \code{shuffle=TRUE} par défaut pour les données d'entraînement et
+      \code{batch_size=32} par défaut. Il produira une erreur si ce n'est pas \code{NULL} si \code{data} est déjà un dataloader.
 value:
   original: |
     A fitted object that can be saved with \code{\link[=luz_save]{luz_save()}} and can be
     printed with \code{\link[=print]{print()}} and plotted with \code{\link[=plot]{plot()}}.
-  translation: ~
+  translation: | 
+    Un objet entraîné qui peut être enregistré avec \code{\link[=luz_save]{luz_save()}} 
+    et peut être affiché avec \code{\link[=print]{print()}} et visualisé avec \code{\link[=plot]{plot()}}.
 description:
   original: |
     Fit a \code{nn_module}
-  translation: ~
+  translation: Entraîne un \code{nn_module}
 seealso:
   original: "\\code{\\link[=predict.luz_module_fitted]{predict.luz_module_fitted()}}
     for how to create predictions.\n\\code{\\link[=setup]{setup()}} to find out how
     to create modules that can be trained with \\code{fit}.\n\nOther training: \n\\code{\\link{evaluate}()},\n\\code{\\link{predict.luz_module_fitted}()},\n\\code{\\link{setup}()}\n"
-  translation: ~
+  translation: | 
+    \code{\link[=predict.luz_module_fitted]{predict.luz_module_fitted()}}
+    pour savoir comment créer des prédictions.\code{\link[=setup]{setup()}} pour trouver comment
+    créer des modules qui peuvent être entraînés avec \code{fit}.
+    Autres entraînement
+    \code{\link{evaluate}()}, \code{\link{predict.luz_module_fitted}()}, \code{\link{setup}()}
 untranslatable:
 - alias
 - name

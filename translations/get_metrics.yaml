@@ -1,28 +1,34 @@
 title:
   original: Get metrics from the object
-  translation: ~
+  translation: Extrait les métriques de l'objet
 arguments:
   object:
     original: The object to query for metrics.
-    translation: ~
+    translation: L'objet d'où extraire les métriques
   '...':
     original: Currently unused.
-    translation: ~
+    translation: Inutilisé
 value:
   original: |
     A data.frame containing the metric values.
-  translation: ~
+  translation: |
+    Un data.frame contenant les valeurs des métriques
 description:
   original: |
     Get metrics from the object
-  translation: ~
+  translation: |
+    Extrait les métriques de l'objet
 section{Methods (by class)}:
   original: |-
     \itemize{
     \item \code{get_metrics(luz_module_fitted)}: Extract metrics from a luz fitted model.
 
     }
-  translation: ~
+  translation: |-
+    \itemize{
+    \item \code{get_metrics(luz_module_fitted)}: Extrait les métriques d'un modèle luz entraîné.
+
+    }
 untranslatable:
 - alias
 - name

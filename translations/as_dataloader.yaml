@@ -103,7 +103,9 @@ section{Overriding}:
     \item L'unique argument requis est `x`. Vous avez des paramètres avec de bonnes valeurs par défaut pour tous les autres arguments.
     }
 
-    Il est préférable d'éviter l'implémentation de méthodes `\code{as_dataloader}` pour les classes S3 courantes comme `\code{data.frames}`. Dans ce cas, il est mieux de affecter une classe différente aux inputs et d'implémenter `\code{as_dataloader}` pour elle.
+    Il faut éviter l'implémentation de méthodes `\code{as_dataloader}` pour les classes S3 courantes comme 
+    `\code{data.frames}`. Si nécessaire, il est préférable d'affecter une classe S3 spécifique aux inputs et d'implémenter 
+    `\code{as_dataloader}` pour cette classe.
 untranslatable:
 - alias
 - name

@@ -49,11 +49,53 @@ details:
 
 
     Context attributes
-  translation: ~
+  translation: |
+    L'objet \code{ctx} est utilisé par luz pour partager des méthodes entre la boucle 
+    d'entraînement, les callbacks, les méthodes du modèles et les métriques. La table ci-dessous
+    liste les informations disponibles dans \code{ctx} par défaut. Les autres callbacks
+    peuvent potentiellement modifier ces attributs et en ajouter d'autres.
+    \if{html}{\out{
+    <!-- Il est recommandé d'utiliser l"éditeurs visuel de RStudio pour éditer la table. -->
+    }}
+    \tabular{ll}{
+       Attribute \tab Description \cr
+       \code{verbose} \tab La valeur (\code{TRUE} ou \code{FALSE}) affectée à l'argument \code{verbose} dans \code{fit} . \cr
+       \code{accelerator} \tab L'objet Accelerator utilisé pour distribuer la charge de calcul aux cartes accélératrices, les données, etc. It assumes the value passed to the \code{accelerator} parameter in \code{fit}. \cr
+       \code{model} \tab Un objet \code{nn_module} initialisé qui sera entraîné pendant le process de \code{fit}. \cr
+       \code{optimizers} \tab Liste nommée d'optimateurs utilisés pendant l'entraînement. \cr
+       \code{data} \tab Le dataloader en cours d'usage. Pendant l'entraînement, c'est \code{ctx$train_data}, pendant l'évaluation, c'est \code{ctx$valid_data}. It can also be the prediction dataset when in \code{predict}. \cr
+       \code{train_data} \tab Dataloader fourni comme argument \code{data} à \code{fit}. Modifié pour fournir les données au device cible. \cr
+       \code{valid_data} \tab Dataloader fourni comme argument \code{valid_data} à \code{fit}. Modifié pour fournir les données au device cible. \cr
+       \code{min_epochs} \tab Nombre minimum d'époques que le modèle sera entraîné. \cr
+       \code{max_epochs} \tab Nombre maximum d'époques que le modèle sera entraîné. \cr
+       \code{epoch} \tab Époque actuelle de l'entraînement. \cr
+       \code{iter} \tab Itération actuelle de l'entraînement. Il est réinitialisé à chaque époque et lorsqu'on passe d'une entraînement à une validation. \cr
+       \code{training} \tab Si le modèle est en mode entraînement ou validation. Voir également \code{help("luz_callback_train_valid")} \cr
+       \code{callbacks} \tab Liste des callbacks qui seront appelés pendant la procédure d'entraînement. C'est l'union de la liste passée à l'argument \code{callbacks} et des callbacks par défaut. \cr
+       \code{step} \tab la closure qui sera utilisé pour faire un \code{step} du modèle. Elle est utilisée pour l'entraînement et la validation. Ne prends pas d'argument mais a accès à l'objet \code{ctx}. \cr
+       \code{call_callbacks} \tab Appel des callbacks par leur nom. Par exemple \code{call_callbacks("on_train_begin")} appelle tous les callbacks qui fournissent des methodes pour ce point. \cr
+       \code{batch} \tab Dernier lot obtenu par le dataloader. le lot est \code{list()} de 2 éléments, l'un est utilisé comme \code{input} et l'autre come \code{target}. \cr
+       \code{input} \tab Premier élément de la liste du dernier lot obtenu par le dataloader actuel. \cr
+       \code{target} \tab Second élément de la liste du dernier lot obtenu par le dataloader actuel. \cr
+       \code{pred} \tab Dernières prédictions obtenues par \code{ctx$model$forward} . \strong{Note:} cela peut être potentiellement modifié par les appels précédemment exécutés. Ne sera pas disponible si vous utilisez un pas d'entraînement personnalisé. \cr
+       \code{loss_fn} \tab La fonction de coût active, qui sera minimisée pendant l'entraînement. \cr
+       \code{loss} \tab La dernière valeur mesurée de la fonction de coût \strong{Note:} Ne sera pas disponible avec un pas d'entraînement personnalisé. \cr
+       \code{opt} \tab L'optimiseur en cours, c.a.d. celui qui sera utilisé pour le prochain \code{step} pour la mise à jour des paramêtres du modèle. \cr
+       \code{opt_nm} \tab Le nom de l'optimiseur en cours. Par default, c'est \code{opt}, sauf si votre modèle utilise plusieurs optimiseurs suivant le jeu de paramêtres à optimiser. \cr
+       \code{metrics} \tab Une \code{list()} des objet de métrique en cours \code{update}és à chaqe \code{on_train_batch_end()} ou \code{on_valid_batch_end()}. Voir aussi \code{help("luz_callback_metrics")} \cr
+       \code{records} \tab Une \code{list()} enregitrant toutes les valeurs des métriques d'entraînement et de validation. Voir aussi \code{help("luz_callback_metrics")}. Contient aussi les métrique sde profiling. Voir \code{help("luz_callback_profile")} pour plus d'information. \cr
+       \code{handlers} \tab Une \code{list()} nommée des \code{handlers} transférée à \code{rlang::with_handlers()} pendant la boucle d'entraînement, qui permet de gérer des erreurs ou des conditions levées par d'autres callbacks. \cr
+       \code{epoch_handlers} \tabUne \code{list()} nommée des \code{handlers} utilisée avec \code{rlang::with_handlers()}. Ces handlers sont utilisés à l'intérieur de la boucle de l'époque, et vous permettent de gérer des évènements spécifiques à l'époque, sans pour autant arrêter l'entraînement. \cr
+    }
+
+
+    Attributs du contexte
+
 seealso:
   original: |
     Context object: \link{context}
-  translation: ~
+  translation: |
+    Objet contexte: \link{context}
 untranslatable:
 - alias
 - name

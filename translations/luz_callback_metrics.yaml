@@ -1,14 +1,16 @@
 title:
   original: Metrics callback
-  translation: ~
+  translation: Callback sur les métriques
 value:
   original: |
     A \code{luz_callback}
-  translation: ~
+  translation: |
+    Un \code{luz_callback}
 description:
   original: |
     Tracks metrics passed to \code{\link[=setup]{setup()}} during training and validation.
-  translation: ~
+  translation: |
+    Suit les métriques passées à \code{\link[=setup]{setup()}} pendant l'entraînement et la validation.
 details:
   original: |
     This callback takes care of 2 \link{ctx} attributes:
@@ -19,15 +21,25 @@ details:
     \item \code{ctx$records$metrics}: Stores metrics per training/validation and epoch. The
     structure is very similar to \code{ctx$losses}.
     }
-  translation: ~
+  translation: |
+    Ce callback s'occupe de 2 attributs de  \link{ctx}:
+    \itemize{
+    \item \code{ctx$metrics}: stocke les objets de métriques courants qui sont initialisés une fois par époque,
+    et sont plus tard mis à jour pas \code{update()} et calculés pas \code{compute()} à chaque batch. 
+    Vous aurez rarement besoin de travailler avec ces métriques.
+    \item \code{ctx$records$metrics}: Stocke les métriques pour chaque entraînement/validation et chaque époque. 
+    La structure est très similaire à \code{ctx$losses}.
+    }
 note:
   original: |
     In general you won't need to explicitly use the metrics callback as it's
     used by default in \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}.
-  translation: ~
+  translation: |
+    En général, vous n'avez pas besoin d'utiliser explicitement le callback de métriques car il est
+    utilisé par défaut dans \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}.
 seealso:
   original: "Other luz_callbacks: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_interrupt}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
-  translation: ~
+  translation: "Autres luz_callbacks: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
 untranslatable:
 - alias
 - name

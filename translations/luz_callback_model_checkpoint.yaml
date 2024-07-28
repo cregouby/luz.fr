@@ -1,6 +1,6 @@
 title:
   original: Checkpoints model weights
-  translation: ~
+  translation: Sauvegarde les poids intermédiaires du modèle
 arguments:
   path:
     original: |-
@@ -10,34 +10,51 @@ arguments:
       path is a path to a directory (ends with \code{/} or \verb{\\}), then models are saved with the name given by
       \verb{epoch-{epoch:02d}-{self$monitor}-{monitor:.3f}.pt}. See more in the examples.
       You can use \code{\link[=sprintf]{sprintf()}} to quickly format quantities, for example:\code{'{epoch:02d}'}.
-    translation: ~
+    translation: |-
+      Chemin pour sauvegarder le modèle sur disque dur. Le chemin est interpolé avec \code{glue},
+      donc vous pouvez utiliser tout attribut dans le \link{ctx} en utilisant \code{'{ctx$epoch}'}. PAr exemple,
+      les valeurs \code{epoch} et \code{monitor} sont déjà présentes dans l'environnement. Si le chemin spécifié
+      est un répertoire (se termine par \code{/} ou \verb{\\}), alors les modèles sont sauvegardés avec le nom fourni par
+      \verb{epoch-{epoch:02d}-{self$monitor}-{monitor:.3f}.pt}. Voir les exemples.
+      Vous pouvez utiliser \code{\link[=sprintf]{sprintf()}} pour formater rapidement les valeurs, par exemple:\code{'{epoch:02d}'}.
   monitor:
     original: |-
       A string in the format \verb{<set>_<metric>} where \verb{<set>} can be
       'train' or 'valid' and \verb{<metric>} can be the abbreviation of any metric
       that you are tracking during training. The metric name is case insensitive.
-    translation: ~
+    translation: |-
+      Une chaîne au format \verb{<set>_<metric>} où \verb{<set>} peut être
+      'train' ou 'valid' et \verb{<metric>} est l'abréviation de toute métrique 
+      suivie pendant l'entraînement. Le nom de la métrique est insensible à la casse.
   save_best_only:
     original: |-
       if \code{TRUE} models are only saved if they have an improvement
       over a previously saved model.
-    translation: ~
+    translation: |-
+      Si \code{TRUE}, les modèles ne sont sauvegardés que si ils améliorent un
+      modèle précédemment enregistré.
   mode:
     original: |-
       Specifies the direction that is considered an improvement. By default
       'min' is used. Can also be 'max' (higher is better) and 'zero'
       (closer to zero is better).
-    translation: ~
+    translation: |-
+      Spécifie la direction considérée comme une amélioration. Par défaut, 
+      'min' est utilisé. Cela peut également être 'max' (lorque on cherche à maximiser
+      la métrique) et 'zero' (plus proche de zéro est mieux).
   min_delta:
     original: |-
       Minimum difference to consider as improvement. Only used when
       \code{save_best_only=TRUE}.
-    translation: ~
+    translation: |-
+      Différence minimale à considérer comme une amélioration. Seulement utilisée lorsque
+      \code{save_best_only=TRUE}.
 description:
   original: |
     This saves checkpoints of the model according to the specified metric and
     behavior.
-  translation: ~
+  translation: |-
+    Sauvegarde les poids intermédiaires du modèle selon la métrique spécifiée et le comportement.
 note:
   original: |
     \code{mode} and \code{min_delta} are only used when \code{save_best_only=TRUE}.
@@ -46,7 +63,12 @@ note:
 
     Read the checkpointing article in the pkgdown website for more
     information.
-  translation: ~
+  translation: |-
+    \code{mode} et \code{min_delta} ne sont utilisés que lorsque \code{save_best_only=TRUE}.
+    \code{save_best_only} écrasera les modèles enregistrés si le paramètre \code{path} ne 
+    différencie pas les noms des modèles par epochs.
+
+    Voir la \href{https://mlverse.github.io/luz/articles/checkpoints.html}{vignette de checkpointing} pour plus de détails.
 examples:
   original: |+
     luz_callback_model_checkpoint(path= "path/to/dir")
@@ -56,7 +78,7 @@ examples:
   translation: ~
 seealso:
   original: "Other luz_callbacks: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_interrupt}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
-  translation: ~
+  translation:  "Autres callbacks luz: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_interrupt}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
 untranslatable:
 - alias
 - name

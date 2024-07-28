@@ -1,36 +1,46 @@
 title:
   original: Learning rate scheduler callback
-  translation: ~
+  translation: Callback de modification du taux d'apprentissage
 arguments:
   lr_scheduler:
     original: |-
       A \code{\link[torch:lr_scheduler]{torch::lr_scheduler()}} that will be initialized with
       the optimizer and the \code{...} parameters.
-    translation: ~
+    translation: |-
+      Un \code{\link[torch:lr_scheduler]{torch::lr_scheduler()}} qui sera initialisé avec
+      l'optimiseur et les paramètres \code{...} .
   '...':
     original: |-
       Additional arguments passed to \code{lr_scheduler} together with
       the optimizers.
-    translation: ~
+    translation: |-
+      Arguments supplémentaires passés avec l'optimiseur à \code{lr_scheduler}.
   call_on:
     original: |-
       The callback breakpoint that \code{scheduler$step()} is called.
       Default is \code{'on_epoch_end'}. See \code{\link[=luz_callback]{luz_callback()}} for more information.
-    translation: ~
+    translation: |-
+      Le point d'arrêt du callback auquel \code{scheduler$step()} est appelé.
+      Par défaut c'est \code{'on_epoch_end'}. Voir \code{\link[=luz_callback]{luz_callback()}} pour plus d'informations.
   opt_name:
     original: |-
       name of the optimizer that will be affected by this callback.
       Should match the name given in \code{set_optimizers}. If your module has a single
       optimizer, \code{opt_name} is not used.
-    translation: ~
+    translation: |-
+      Nom de l'optimiseur qui sera affecté par ce callback.
+      Doit correspondre au nom donné dans \code{set_optimizers}. Si votre module a un seul
+      optimiseur, \code{opt_name} n'est pas utilisé.
 value:
   original: |
     A \code{\link[=luz_callback]{luz_callback()}} generator.
-  translation: ~
+  translation: |-
+    Un générateur \code{\link[=luz_callback]{luz_callback()}}.
 description:
   original: |
     Initializes and runs \code{\link[torch:lr_scheduler]{torch::lr_scheduler()}}s.
-  translation: ~
+  translation: |-
+    Initialisation et exécution des \code{\link[torch:lr_scheduler]{torch::lr_scheduler()}}s.
 examples:
   original: |
     if (torch::torch_is_installed()) {
@@ -39,7 +49,7 @@ examples:
   translation: ~
 seealso:
   original: "Other luz_callbacks: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_interrupt}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
-  translation: ~
+  translation: "Autres luz_callbacks: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
 untranslatable:
 - alias
 - name

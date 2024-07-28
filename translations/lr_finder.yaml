@@ -1,42 +1,49 @@
 title:
   original: Learning Rate Finder
-  translation: ~
+  translation: Recherche du taux d'apprentissage
 arguments:
   object:
     original: An nn_module that has been setup().
-    translation: ~
+    translation: Un module nn qui a été configuré.
   data:
     original: (dataloader) A dataloader created with torch::dataloader()  used for
       learning rate finding.
-    translation: ~
+    translation: (dataloader) Une dataloader créée avec torch::dataloader() utilisée
+     pour le recherche de taux d'apprentissage.
   steps:
     original: '(integer) The number of steps to iterate over in the learning rate
       finder. Default: 100.'
-    translation: ~
+    translation: |
+      (entier) Le nombre d'itérations pour la recherche de taux d'apprentissage. Défaut : 100.
   start_lr:
     original: '(float) The smallest learning rate. Default: 1e-7.'
-    translation: ~
+    translation: |
+      (réel) Le plus petit taux d'apprentissage. Défaut : 1e-7.
   end_lr:
     original: '(float) The highest learning rate. Default: 1e-1.'
-    translation: ~
+    translation: |
+      (réel) Le plus grand taux d'apprentissage. Défaut : 1e-1.
   log_spaced_intervals:
     original: '(logical) Whether to divide the range between start_lr and end_lr into
       log-spaced intervals (alternative: uniform intervals). Default: TRUE'
-    translation: ~
+    translation: |
+      (logique) Doit-on découper logarithmiquement l'intervalle entre start_lr et end_lr  (Si FALSE : intervalles uniformes). Défaut : TRUE
   '...':
     original: Other arguments passed to \code{fit}.
-    translation: ~
+    translation: Autres arguments passés à \code{fit}.
   verbose:
     original: Wether to show a progress bar during the process.
-    translation: ~
+    translation: Doit-on afficher un barre de progression pendant la recherche.
 value:
   original: |
     A dataframe with two columns: learning rate and loss
-  translation: ~
+  translation: |
+    Un dataframe de deux colonnes : taux d'apprentissage et valeur de la fonction de perte
 description:
   original: |
     Learning Rate Finder
-  translation: ~
+  translation: |
+    Recherche du taux d'apprentissage
 examples:
   original: |
     if (torch::torch_is_installed()) {

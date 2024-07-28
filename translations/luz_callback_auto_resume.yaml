@@ -1,21 +1,27 @@
 title:
   original: Resume training callback
-  translation: ~
+  translation: Callback de reprise de l'entraînement du modèle.
 arguments:
   path:
     original: Path to save state files for the model.
-    translation: ~
+    translation: Chemin où sauvegarder les fichiers d'état du modèle.
 description:
   original: |
     This callback allows you to resume training a model.
-  translation: ~
+  translation: |
+    Ce callback vous permet de reprendre l'entraînement du modèle.
 details:
   original: |
     When using it, model weights, optimizer state are serialized at the end of
     each epoch. If something fails during training simply re-running the same
     script will restart the model training from the epoch right after the last
     epoch that was serialized.
-  translation: ~
+  translation: |
+    Quand on l'utilise, les poids du modèle, l'état de l'optimiseur sont sérialisés 
+    à la fin de chaque époque. Si quelque chose échoue pendant l'entraînement,  
+    réexécuter le même script reprendra l'entraînement du modèle depuis l'époque
+    qui suit la dernière époque sérialisée.
+
 note:
   original: |
     In general you will want to add this callback as the last in the callbacks
@@ -25,7 +31,11 @@ note:
 
     Read the checkpointing article in the pkgdown website for more
     information.
-  translation: ~
+  translation: |
+    En général, vous voudrez ajouter ce callback en dernier dans la liste de callbacks, 
+    car ainsi, l'état sérialisé est susceptible de contenir toutes les modifications possibles 
+    apportées par d'autres callbacks à \code{'on_epoch_end'}. Le \code{weight} par défaut 
+    de ce callback est \code{Inf}.
 section{Customizing serialization}:
   original: |
     By default model, optimizer state and records are serialized. Callbacks can
@@ -33,7 +43,12 @@ section{Customizing serialization}:
     \code{load_state_dict()} methods.
     If those methods are implemented, then \code{state_dict()} is called at the end of
     each epoch and \code{load_state_dict()} is called when the model is resumed.
-  translation: ~
+  translation: |
+    Pour un modèle par défaut, l'état de l'optimiseur et les enregistrements sont sérialisés. 
+    Les callbacks peuvent être utilisés pour personnaliser la sérialisation en implémentant les 
+    méthodes \code{state_dict()} et \code{load_state_dict()}. Si ces méthodes sont implémentées, 
+    alors \code{state_dict()} est appelée à la fin de chaque époque et \code{load_state_dict()} 
+    est appelée lorsque le modèle est reprend.
 examples:
   original: |
     if (torch::torch_is_installed()) {
@@ -84,10 +99,57 @@ examples:
     get_metrics(results)
 
     }
-  translation: ~
+  translation: |
+    |
+    if (torch::torch_is_installed()) {
+    library(torch)
+    library(luz)
+
+    x <- torch_randn(1000, 10)
+    y <- torch_randn(1000, 1)
+
+    model <- nn_linear %>%
+      setup(optimizer = optim_sgd, loss = nnf_mse_loss) %>%
+      set_hparams(in_features = 10, out_features = 1) %>%
+      set_opt_hparams(lr = 0.01)
+
+    # Simuler une erreur au milieu de l'époque 5 qui ne se produit qu'une seule fois.
+    callback_stop <- luz_callback(
+      "interrupt",
+      failed = FALSE,
+      on_epoch_end = function() {
+        if (ctx$epoch == 5 && !self$failed) {
+          self$failed <- TRUE
+          stop("Erreur à l'époque 5")
+        }
+      }
+    )
+    path <- tempfile()
+    autoresume <- luz_callback_auto_resume(path = path)
+    interrupt <- callback_stop()
+
+    # Essaye une fois et observe que le modèle échoue
+    try({
+      results <- model %>% fit(
+        list(x, y),
+        callbacks = list(autoresume, interrupt),
+        verbose = FALSE
+      )
+    })
+
+    # Le modèle reprend et l'entrâinement peut se terminer
+    results <- model %>% fit(
+      list(x, y),
+      callbacks = list(autoresume, interrupt),
+      verbose = FALSE
+    )
+
+    get_metrics(results)
+
 seealso:
   original: "Other luz_callbacks: \n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_interrupt}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
-  translation: ~
+  translation: "Autres luz_callbacks : \n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_interrupt}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
+
 untranslatable:
 - alias
 - name

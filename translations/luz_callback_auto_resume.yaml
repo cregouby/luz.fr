@@ -4,7 +4,7 @@ title:
 arguments:
   path:
     original: Path to save state files for the model.
-    translation: Chemin où sauvegarder les fichiers d'état du modèle.
+    translation: Chemin où sauvegarder les fichiers d'instantané du modèle.
 description:
   original: |
     This callback allows you to resume training a model.
@@ -17,9 +17,9 @@ details:
     script will restart the model training from the epoch right after the last
     epoch that was serialized.
   translation: |
-    Quand on l'utilise, les poids du modèle, l'état de l'optimiseur sont sérialisés 
+    Quand on l'utilise, les poids du modèle et l'état de l'optimiseur sont sérialisés 
     à la fin de chaque époque. Si quelque chose échoue pendant l'entraînement,  
-    réexécuter le même script reprendra l'entraînement du modèle depuis l'époque
+    réexécuter le même script reprendra l'entraînement du modèle à l'époque
     qui suit la dernière époque sérialisée.
 
 note:
@@ -36,6 +36,9 @@ note:
     car ainsi, l'état sérialisé est susceptible de contenir toutes les modifications possibles 
     apportées par d'autres callbacks à \code{'on_epoch_end'}. Le \code{weight} par défaut 
     de ce callback est \code{Inf}.
+
+    Voir la \href{https://mlverse.github.io/luz/articles/checkpoints.html}{vignette sur les instantanés} 
+    pour plus de détails.
 section{Customizing serialization}:
   original: |
     By default model, optimizer state and records are serialized. Callbacks can
@@ -44,11 +47,11 @@ section{Customizing serialization}:
     If those methods are implemented, then \code{state_dict()} is called at the end of
     each epoch and \code{load_state_dict()} is called when the model is resumed.
   translation: |
-    Pour un modèle par défaut, l'état de l'optimiseur et les enregistrements sont sérialisés. 
+    Par défaut, le modèle, l'état de l'optimiseur et l'état des callbacks sont sérialisés. 
     Les callbacks peuvent être utilisés pour personnaliser la sérialisation en implémentant les 
     méthodes \code{state_dict()} et \code{load_state_dict()}. Si ces méthodes sont implémentées, 
     alors \code{state_dict()} est appelée à la fin de chaque époque et \code{load_state_dict()} 
-    est appelée lorsque le modèle est reprend.
+    est appelée lorsque le modèle reprend.
 examples:
   original: |
     if (torch::torch_is_installed()) {

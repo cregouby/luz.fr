@@ -1,24 +1,31 @@
 title:
   original: tfevents callback
-  translation: ~
+  translation: callback tfevent
 arguments:
   logdir:
     original: A directory to where log will be written to.
-    translation: ~
+    translation: Un répertoire où sera écrit le journal.
   histograms:
     original: |-
       A boolean specifying if histograms of model weights should
       be logged. It can also be a character vector specifying the name of the parameters
       that should be logged (names are the same as \code{names(model$parameters)}).
-    translation: ~
+    translation: |
+      Un booléen spécifiant si les histogrammes des poids du modèle doivent 
+      être enregistrés. Peut aussi être un vecteur de chaîne de caractères spécifiant
+      les noms des paramètres à enregistrer (noms identiques à \code{names(model$parameters)}).
+
   '...':
     original: Currently not used. For future expansion.
-    translation: ~
+    translation: Inutilisé
 description:
   original: |
     Logs metrics and other model information in the tfevents file format.
     Assuming tensorboard is installed, result can be visualized with
-  translation: ~
+  translation: |
+    Enregistre des métriques et d'autres informations du modèle sous forme
+    de fichier tfevents. Quand tensorboard est installé, les résultats peuvent être visualisés avec
+    ...
 details:
   original: |
     \if{html}{\out{<div class="sourceCode">}}\preformatted{tensorboard --logdir=logs

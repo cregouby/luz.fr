@@ -1,6 +1,6 @@
 title:
   original: Checkpoints model weights
-  translation: Sauvegarde les poids intermédiaires du modèle
+  translation: Sauvegarde un instantanné du modèle
 arguments:
   path:
     original: |-
@@ -54,7 +54,7 @@ description:
     This saves checkpoints of the model according to the specified metric and
     behavior.
   translation: |-
-    Sauvegarde les poids intermédiaires du modèle selon la métrique spécifiée et le comportement.
+    Sauvegarde l'instantanné du modèle selon la métrique spécifiée et le comportement.
 note:
   original: |
     \code{mode} and \code{min_delta} are only used when \code{save_best_only=TRUE}.
@@ -68,7 +68,8 @@ note:
     \code{save_best_only} écrasera les modèles enregistrés si le paramètre \code{path} ne 
     différencie pas les noms des modèles par epochs.
 
-    Voir la \href{https://mlverse.github.io/luz/articles/checkpoints.html}{vignette de checkpointing} pour plus de détails.
+    Voir la \href{https://mlverse.github.io/luz/articles/checkpoints.html}{vignette sur les instantanés} 
+    pour plus de détails.
 examples:
   original: |+
     luz_callback_model_checkpoint(path= "path/to/dir")

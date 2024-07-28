@@ -1,21 +1,28 @@
 title:
   original: Interrupt callback
-  translation: ~
+  translation: Callback d'interruption
 value:
   original: |
     A \code{luz_callback}
-  translation: ~
+  translation: |
+    Un \code{luz_callback}
 description:
   original: |
     Adds a handler that allows interrupting the training loop using \code{ctrl + C}.
     Also registers a \code{on_interrupt} breakpoint so users can register callbacks to
     be run on training loop interruption.
-  translation: ~
+  translation: |
+    Ajoute un gestionnaire qui permet d'interrompre la boucle d'apprentissage en utilisant \code{ctrl + C}.
+    Enregistre également un point d'interruption \code{on_interrupt} afin que les utilisateurs
+    puissent enregistrer d'autres callbacks qui seront exécutés lors de l'interruption de 
+    la boucle d'apprentissage.
 note:
   original: |
     In general you don't need to use these callback by yourself because it's always
     included by default in \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}.
-  translation: ~
+  translation: |
+    Vous n'avez généralement pas à utiliser ces callbacks par vous-même, car ils sont toujours
+    inclus par défaut dans \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}.
 examples:
   original: |+
     interrupt_callback <- luz_callback_interrupt()
@@ -23,7 +30,7 @@ examples:
   translation: ~
 seealso:
   original: "Other luz_callbacks: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
-  translation: ~
+  translation: "Autres luz_callbacks: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
 untranslatable:
 - alias
 - name

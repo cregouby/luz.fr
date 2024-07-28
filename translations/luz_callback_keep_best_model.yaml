@@ -1,28 +1,39 @@
 title:
   original: Keep the best model
-  translation: ~
+  translation: Conserver le meilleur modèle
 arguments:
   monitor:
     original: |-
       A string in the format \verb{<set>_<metric>} where \verb{<set>} can be
       'train' or 'valid' and \verb{<metric>} can be the abbreviation of any metric
       that you are tracking during training. The metric name is case insensitive.
-    translation: ~
+    translation: |-
+      Une chaîne au format \verb{<set>_<metric>} où \verb{<set>} peut être
+      'train' ou 'valid' et \verb{<metric>} est l'abréviation d'une métrique
+      qui est suivie pendant l'entraînement. Le nom de la métrique est insensible à la casse.
+
   mode:
     original: |-
       Specifies the direction that is considered an improvement. By default
       'min' is used. Can also be 'max' (higher is better) and 'zero'
       (closer to zero is better).
-    translation: ~
+    translation: |-
+      Spécifie la direction considérée comme une amélioration. Par défaut, 
+      'min' est utilisé. Cela peut également être 'max' (lorque on cherche à maximiser
+      la métrique) et 'zero' (plus proche de zéro est mieux).
   min_delta:
     original: Minimum improvement to reset the patience counter.
-    translation: ~
+    translation: Amélioration minimale pour réinitialiser le compteur de patience.
 description:
   original: |
     Each epoch, if there's improvement in the monitored metric we serialize the
     model weights to a temp file. When training is done, we reload weights from
     the best model.
-  translation: ~
+  translation: |
+    À chaque époque, si il y a amélioration dans la métrique surveillée, 
+    on sauvegarde les poids du modèle dans un fichier temporaire. Lorsque l'entraînement
+    est terminé, on recharge les poids du meilleur modèle.
+
 examples:
   original: |+
     cb <- luz_callback_keep_best_model()
@@ -30,7 +41,7 @@ examples:
   translation: ~
 seealso:
   original: "Other luz_callbacks: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_interrupt}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
-  translation: ~
+  translation: "Autres luz_callbacks: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
 untranslatable:
 - alias
 - name

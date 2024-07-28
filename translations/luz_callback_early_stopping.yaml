@@ -1,39 +1,51 @@
 title:
   original: Early stopping callback
-  translation: ~
+  translation: Callback d'arrêt précoce
 arguments:
   monitor:
     original: |-
       A string in the format \verb{<set>_<metric>} where \verb{<set>} can be
       'train' or 'valid' and \verb{<metric>} can be the abbreviation of any metric
       that you are tracking during training. The metric name is case insensitive.
-    translation: ~
+    translation: |-
+      Une chaîne au format \verb{<set>_<metric>} où \verb{<set>} peut être 
+      'train' ou 'valid' et \verb{<metric>} est l'abréviation d'une métrique
+      qui est suivie pendant l'entraînement. Le nom de la métrique est insensible à la casse.
   min_delta:
     original: Minimum improvement to reset the patience counter.
-    translation: ~
+    translation: Amélioration minimale pour réinitialiser le compteur de patience.
   patience:
     original: Number of epochs without improving until stoping training.
-    translation: ~
+    translation: Nombre d'époques sans amélioration avant que l'entraînement s'arrête.
   mode:
     original: |-
       Specifies the direction that is considered an improvement. By default
       'min' is used. Can also be 'max' (higher is better) and 'zero'
       (closer to zero is better).
-    translation: ~
+    translation: |-
+      Spécifie la direction considérée comme une amélioration. Par défaut, 
+      'min' est utilisé. Cela peut également être 'max' (lorque on cherche à maximiser
+      la métrique) et 'zero' (plus proche de zéro est mieux).
+
   baseline:
     original: |-
       An initial value that will be used as the best seen value
       in the begining. Model will stopm training if no better than baseline value
       is found in the first \code{patience} epochs.
-    translation: ~
+    translation: |-
+      Une valeur initiale qui sera utilisée comme la meilleure valeur vue. L'entraînement
+      s'arrêtera si aucune valeur meilleure que la valeur de référence n'est trouvée dans
+      les premières \code{patience} époques.
 value:
   original: |
     A \code{luz_callback} that does early stopping.
-  translation: ~
+  translation: |
+    Un \code{luz_callback} qui déclenche l'arrêt précoce de l'entraînement.
 description:
   original: |
     Stops training when a monitored metric stops improving
-  translation: ~
+  translation: |
+    Arrête l'entraînement lorsque le métrique suivie cesse de s'améliorer
 note:
   original: |
     This callback adds a \code{on_early_stopping} callback that can be used to
@@ -41,7 +53,12 @@ note:
 
     If \code{verbose=TRUE} in \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}} a message is printed when
     early stopping.
-  translation: ~
+  translation: |-
+    Ce callback ajoute un callback \code{on_early_stopping} qui peut être utilisé
+    pour appeler d'autres callbacks dès que l'entraînement s'arrête .
+
+    Si \code{verbose=TRUE} dans \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}, alors
+    un message est imprimé lors de l'arrêt précoce de l'entraînement.
 examples:
   original: |+
     cb <- luz_callback_early_stopping()
@@ -49,7 +66,7 @@ examples:
   translation: ~
 seealso:
   original: "Other luz_callbacks: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_interrupt}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
-  translation: ~
+  translation: "Autres luz_callbacks: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_interrupt}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
 untranslatable:
 - alias
 - name

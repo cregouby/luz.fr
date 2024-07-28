@@ -1,26 +1,33 @@
 title:
   original: Gradient clipping callback
-  translation: ~
+  translation: Callback d'écrêtage du gradient
 arguments:
   max_norm:
     original: '(float or int): max norm of the gradients'
-    translation: ~
+    translation: '(entier ou réel) : norme maximale des gradients'
   norm_type:
     original: |-
       (float or int): type of the used p-norm. Can be \code{Inf} for
       infinity norm.
-    translation: ~
+    translation: |-
+      (entier ou réel) : type de la norme p utilisée. Peut être \code{Inf} pour
+      la norme infinie.
 description:
   original: |
     By adding the GradientClip callback, the gradient \code{norm_type} (default:2) norm
     is clipped to at most \code{max_norm} (default:1) using \code{\link[torch:nn_utils_clip_grad_norm_]{torch::nn_utils_clip_grad_norm_()}},
     which can avoid loss divergence.
-  translation: ~
+  translation: |
+    En ajoutant le callback GradientClip, la norme \code{norm_type} (par défaut:2) des gradients
+    est écrêtée à la valeur \code{max_norm} (par défaut: 1) utilisant \code{\link[torch:nn_utils_clip_grad_norm_]{torch::nn_utils_clip_grad_norm_()}},
+    ce qui peut éviter la divergence de la fonction de coût.
 references:
   original: |
     See FastAI \href{https://docs.fast.ai/callback.training.html#GradientClip}{documentation}
     for the GradientClip callback.
-  translation: ~
+  translation: |
+    Voir FastAI \href{https://docs.fast.ai/callback/training.html#GradientClip}{documentation}
+    pour le callback de GradientClip.
 untranslatable:
 - alias
 - name

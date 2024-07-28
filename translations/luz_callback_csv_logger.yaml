@@ -7,7 +7,7 @@ arguments:
     translation: chemin de fichier sur le disque.
 description:
   original: |
-    Logs metrics obtained during training a fiel on disk.
+    Logs metrics obtained during training a file on disk.
     The file will have 1 line for each epoch/validation.
   translation: |
     Enregistre les métriques d'entrainement dans un fichier

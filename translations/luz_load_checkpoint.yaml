@@ -1,20 +1,21 @@
 title:
   original: Loads a checkpoint
-  translation: ~
+  translation: Charge un instantanné
 arguments:
   obj:
     original: Object to which we want to laod the checkpoint.
-    translation: ~
+    translation: L'objet dans lequel charger l'instantané.
   path:
     original: Path of the checkpoint on disk.
-    translation: ~
+    translation: Chemin de l'instantané sur le disque.
   '...':
     original: unused. Is there to allow future extensions.
-    translation: ~
+    translation: inutilisé.
 description:
   original: |
     Works with checkpoints created typically with \code{\link[=luz_callback_model_checkpoint]{luz_callback_model_checkpoint()}}.
-  translation: ~
+  translation: |
+    Fonctionne avec les instantanés créés avec \code{\link[=luz_callback_model_checkpoint]{luz_callback_model_checkpoint()}}.
 untranslatable:
 - alias
 - name

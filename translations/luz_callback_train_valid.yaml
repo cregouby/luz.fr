@@ -1,14 +1,16 @@
 title:
   original: Train-eval callback
-  translation: ~
+  translation: callback train-eval
 value:
   original: |
     A \code{luz_callback}
-  translation: ~
+  translation: |
+    Un \code{luz_callback}
 description:
   original: |
     Switches important flags for training and evaluation modes.
-  translation: ~
+  translation: |
+    Bascule les paramètres importants entre les modes d'apprentissage et de validation.
 details:
   original: |
     It takes care of the three \code{ctx} attributes:
@@ -20,15 +22,25 @@ details:
     \item \code{ctx$loss}: Resets the \code{loss} attribute to \code{list()} when finished training/ or
     validating.
     }
-  translation: ~
+  translation: |
+    Il s'occupe des trois attributs suivants de l'objet \code{ctx} :
+    \itemize{
+    \item \code{ctx$model}: Gère l'appel à \code{ctx$model$train()} et \code{ctx$model$eval()}, lorsque c'est approprié.
+    \item \code{ctx$training}: Fixe ce fanion à \code{TRUE} lors de l'apprentissage et à \code{FALSE} lors de la validation.
+    \item \code{ctx$loss}: Réinitialise l'attribut loss à \code{list()} lorsque l'apprentissage ou la validation est terminé.
+    }
+
 note:
   original: |
     In general you won't need to explicitly use the metrics callback as it's
     used by default in \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}.
-  translation: ~
+  translation: |
+    En général, vous n'avez pas besoin d'utiliser explicitement le callback train-eval
+    car il est utilisé par défaut dans \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}.
+
 seealso:
   original: "Other luz_callbacks: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_interrupt}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback}()}\n"
-  translation: ~
+  translation: "Autres luz_callbacks: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
 untranslatable:
 - alias
 - name

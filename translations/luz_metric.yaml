@@ -1,43 +1,53 @@
 title:
   original: Creates a new luz metric
-  translation: ~
-arguments:
+  translation: Crée une nouvelle métrique luz
   name:
     original: string naming the new metric.
-    translation: ~
+    translation: Chaîne de caractères définissant le nom de la métrique.
   '...':
     original: |-
       named list of public methods. You should implement at least
       \code{initialize}, \code{update} and \code{compute}. See the details section for more
       information.
-    translation: ~
+    translation: |-
+      liste nomée de méthodes publiques. Vous devez implémenter au moins
+      \code{initialize}, \code{update} et \code{compute}. Voir la section Détails pour plus d'informations.
   private:
     original: |-
       An optional list of private members, which can be functions
       and non-functions.
-    translation: ~
+    translation: |-
+      Liste optionnelle d'objets privés, qui peuvent être des fonctions et non-des fonctions.
   active:
     original: An optional list of active binding functions.
-    translation: ~
+    translation: Une liste optionnelle de fonctions d'active binding.
   parent_env:
     original: |-
       An environment to use as the parent of newly-created
       objects.
-    translation: ~
+    translation: |-
+      Environnement à utiliser comme parent pour les objets 
+      nouvellement créés.
   inherit:
     original: |-
       A R6ClassGenerator object to inherit from; in other words, a
       superclass. This is captured as an unevaluated expression which is
       evaluated in \code{parent_env} each time an object is instantiated.
-    translation: ~
+    translation: |-
+      Un objet R6ClassGenerator duquel hériter; autrement dit, une super-classe.
+      Cela est capturé comme une expression non-évaluée qui sera évaluée dans
+      \code{parent_env} chaque fois qu'un objet est instancié.
+
 value:
   original: |
     Returns new luz metric.
-  translation: ~
+  translation: |
+    Renvoie la nouvelle métrique luz.
 description:
   original: |
     Creates a new luz metric
-  translation: ~
+  translation: |
+    Crée une nouvelle métrique luz
 details:
   original: "In order to implement a new \\code{luz_metric} we need to implement 3
     methods:\n\\itemize{\n\\item \\code{initialize}: defines the metric initial state.
@@ -67,7 +77,35 @@ details:
     \ }\n)\n}\\if{html}{\\out{</div>}}\n\n\\strong{Note}: It’s good practice that
     the \\code{compute} metric returns regular R\nvalues instead of torch tensors
     and other parts of luz will expect that.\n"
-  translation: ~
+  translation: "Pour implémenter un nouveau \\code{luz_metric}, il faut implémenter 3 
+    méthodes:\n\\itemize{\n\\item \\code{initialize}: définit l'état initial de la métrique. 
+    Cette fonction est\nappelée pour chaque époque dans les boucles d'entraînement et de 
+    validation.\n\\item \\code{update}: met à jour l'état interne de la métrique. Cette 
+    fonction est appelée\nà chaque étape d'entraînement et de validation avec les prédictions 
+    obtenues par le modèle\net les valeurs cibles obtenues à partir du dataloader.\n
+    \\item \\code{compute}: utilise l'état interne pour calculer les valeurs du métrique. 
+    Cette\nfonction est appelée chaque fois que nous devons obtenir la valeur actuelle du métrique.
+    \nEg, elle est appelée chaque étape d'entraînement pour les métriques affichées dans la\nbare 
+    de progression, mais uniquement appelée une fois par époque pour enregistrer sa valeur\nlorsque 
+    la bare de progression n'est pas affichée.\n}\n\nOptionnellement, vous pouvez implémenter 
+    un champ \\code{abbrev} qui donne à la métrique un abrégé que l'on utilisera lors de l'\n
+    affichage d'informations sur les métriques dans le console ou enregistrer.\nSi aucun 
+    \\code{abbrev} n'est passé, le nom de classe sera utilisé.\n\n Voyons comment implémenter 
+    \\code{luz_metric_accuracy} pour voir comment implémenter une nouvelle métrique:\n\n\\if{html}
+    {\\out{<div class=\"sourceCode r\">}}\\preformatted{luz_metric_accuracy <- luz_metric(\n  
+    # Un abrégé à afficher dans les barreaux de progression, ou\ n# lorsque l'on imprime la 
+    progression\n  abbrev = \"Acc\", \n  # Configuration initiale pour le métrique. Les 
+    métriques sont initialisées\n  # à chaque époque, pour les boucles d'entraînement et de 
+    validation\n  initialize = function() {\n    self$correct <- 0\n    self$total <- 0\n  },\n  
+    # Exécuter à chaque étape d'entraînement ou de validation et mettre à jour\n  
+    # l'état interne. La fonction update prend `preds` et `target` en paramètres.\n  
+    update = function(preds, target) {\n    pred <- torch::torch_argmax(preds, dim = 2)\n    
+    self$correct <- self$correct + (pred == target)$\n      to(dtype = torch::torch_float())$\n      
+    sum()$\n      item()\n    \   self$total <- self$total + pred$numel()\n  },\n  
+    # Utiliser l'état interne pour interroger la valeur du métrique\n  compute = function() {\n    
+    self$correct/self$total\n  }\n)\n}\\if{html}{\\out{</div>}}\n\n\nstrong{Note} : Il est recommandé 
+    que le métrique \\code{compute} renvoie des valeurs régulières R au lieu de tenseurs torch car 
+    c'est ce qui est attendu par les autres parties de luz.\n"
 examples:
   original: |+
     luz_metric_accuracy <- luz_metric(
@@ -100,7 +138,7 @@ examples:
   translation: ~
 seealso:
   original: "Other luz_metrics: \n\\code{\\link{luz_metric_accuracy}()},\n\\code{\\link{luz_metric_binary_accuracy_with_logits}()},\n\\code{\\link{luz_metric_binary_accuracy}()},\n\\code{\\link{luz_metric_binary_auroc}()},\n\\code{\\link{luz_metric_mae}()},\n\\code{\\link{luz_metric_mse}()},\n\\code{\\link{luz_metric_multiclass_auroc}()},\n\\code{\\link{luz_metric_rmse}()}\n"
-  translation: ~
+  translation: "Autres métriques de luz: \n\\code{\\link{luz_metric_accuracy}()},\n\\code{\\link{luz_metric_binary_accuracy_with_logits}()},\n\\code{\\link{luz_metric_binary_accuracy}()},\n\\code{\\link{luz_metric_binary_auroc}()},\n\\code{\\link{luz_metric_mae}()},\n\\code{\\link{luz_metric_mse}()},\n\\code{\\link{luz_metric_multiclass_auroc}()},\n\\code{\\link{luz_metric_rmse}()}\n"
 untranslatable:
 - alias
 - name

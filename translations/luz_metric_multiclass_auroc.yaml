@@ -1,23 +1,30 @@
 title:
   original: Computes the multi-class AUROC
-  translation: ~
+  translation: Calcule la surface sour la courbe de ROC dans le cas multi-classe.
 arguments:
   num_thresholds:
     original: |-
       Number of thresholds used to compute confusion matrices.
       In that case, thresholds are created by getting \code{num_thresholds} values linearly
       spaced in the unit interval.
-    translation: ~
+    translation: |-
+      Nombre de seuils utilisés pour calculer les matrices de confusion.
+      Lorsqu'utilisés, les seuils sont créés en prenant \code{num_thresholds} valeurs 
+      linéairement espacées sur l'intervale [0, 1].
   thresholds:
     original: |-
       (optional) If threshold are passed, then those are used to compute the
       confusion matrices and \code{num_thresholds} is ignored.
-    translation: ~
+    translation: |-
+      (facultatif) Si des seuils sont fournis, alors ceux-ci sont utilisés pour
+      calculer les matrices de confusion et le paramètre \code{num_thresholds} est ignoré.
   from_logits:
     original: |-
       If \code{TRUE} then we call \code{\link[torch:nnf_softmax]{torch::nnf_softmax()}} in the predictions
       before computing the metric.
-    translation: ~
+    translation: |
+       Si \code{TRUE} alors nous appliquons \code{\link[torch:nnf_softmax]{torch::nnf_softmax()}}
+       sur les predictions avant le calcul de la métrique.
   average:
     original: |-
       The averaging method:
@@ -29,13 +36,26 @@ arguments:
       mean pondering by the number of instances for each class.
       \item \code{'none'}: Returns the AUROC for each class in a list.
       }
-    translation: ~
+    translation: |-
+      La méthode pour moyenner :
+      \itemize{
+      \item \code{'micro'} : Empile toutes les classes et calcule l'AUC comme si c'était
+      un problème de classification binaire.
+      \item \code{'macro'} : Trouve l'AUC pour chaque classe et calcule leur moyenne.
+      \item \code{'weighted'} : Trouve l'AUC pour chaque classe et calcule leur 
+      moyenne pondéré en fonction du nombre d'instances pour chaque classe.
+      \item \code{'none'} : Retourne l'AUC pour chaque classe dans une liste.
+      }
 description:
   original: |
     The same definition as \href{https://www.tensorflow.org/api_docs/python/tf/keras/metrics/AUC}{Keras}
     is used by default. This is equivalent to the \code{'micro'} method in SciKit Learn
     too. See \href{https://scikit-learn.org/stable/modules/generated/sklearn.metrics.roc_auc_score.html}{docs}.
-  translation: ~
+  translation: |
+    La définition de  \href{https://www.tensorflow.org/api_docs/python/tf/keras/metrics/AUC}{Keras}
+    est utilisée par défaut. Cela équivaut à la méthode \code{'micro'} dans SciKit Learn. 
+    Voir \href{https://scikit-learn.org/stable/modules/generated/sklearn.metrics.roc_auc_score.html}{docs}.
+
 details:
   original: |
     \strong{Note} that class imbalance can affect this metric unlike
@@ -43,7 +63,9 @@ details:
 
     Currently the AUC is approximated using the 'interpolation' method described in
     \href{https://www.tensorflow.org/api_docs/python/tf/keras/metrics/AUC}{Keras}.
-  translation: ~
+  translation: |
+    \strong{Notez} que le déséquilibre des classes peut affecter cette métrique, 
+    contrairement à l'AUC pour une classification binaire.
 examples:
   original: |
     if (torch::torch_is_installed()) {
@@ -67,7 +89,7 @@ examples:
   translation: ~
 seealso:
   original: "Other luz_metrics: \n\\code{\\link{luz_metric_accuracy}()},\n\\code{\\link{luz_metric_binary_accuracy_with_logits}()},\n\\code{\\link{luz_metric_binary_accuracy}()},\n\\code{\\link{luz_metric_binary_auroc}()},\n\\code{\\link{luz_metric_mae}()},\n\\code{\\link{luz_metric_mse}()},\n\\code{\\link{luz_metric_rmse}()},\n\\code{\\link{luz_metric}()}\n"
-  translation: ~
+  translation: "Autres métrique de luz: \n\\code{\\link{luz_metric_accuracy}()},\n\\code{\\link{luz_metric_binary_accuracy_with_logits}()},\n\\code{\\link{luz_metric_binary_accuracy}()},\n\\code{\\link{luz_metric_binary_auroc}()},\n\\code{\\link{luz_metric_mae}()},\n\\code{\\link{luz_metric_mse}()},\n\\code{\\link{luz_metric_rmse}()},\n\\code{\\link{luz_metric}()}\n"
 untranslatable:
 - alias
 - name

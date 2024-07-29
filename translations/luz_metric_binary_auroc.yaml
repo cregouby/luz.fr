@@ -1,28 +1,38 @@
 title:
   original: Computes the area under the ROC
-  translation: ~
+  translation: Calcule la surface sous la courbe de ROC
 arguments:
   num_thresholds:
     original: |-
       Number of thresholds used to compute confusion matrices.
       In that case, thresholds are created by getting \code{num_thresholds} values linearly
       spaced in the unit interval.
-    translation: ~
+    translation: |
+      Nombre de seuils utilisés pour calculer les matrices de confusion.
+      Lorsqu'utilisés, les seuils sont créés en prenant \code{num_thresholds} valeurs 
+      linéairement espacées sur l'intervale [0, 1].
   thresholds:
     original: |-
       (optional) If threshold are passed, then those are used to compute the
       confusion matrices and \code{num_thresholds} is ignored.
-    translation: ~
+    translation: |-
+      (facultatif) Si des seuils sont fournis, alors ceux-ci sont utilisés pour
+      calculer les matrices de confusion et le paramètre \code{num_thresholds} est ignoré.
   from_logits:
     original: |-
       Boolean indicating if predictions are logits, in that case
       we use sigmoid to put them in the unit interval.
-    translation: ~
+    translation: |
+      Booléen indiquant si les prédictions sont des logits, dans ce cas
+      nous utilisons la fonction sigmoid pour les placer dans l'intervalle [0, 1].
 description:
   original: |
     To avoid storing all predictions and targets for an epoch we compute confusion
     matrices across a range of pre-established thresholds.
-  translation: ~
+  translation: |
+    Pour éviter de stocker toutes les prédictions et les valeurscibles pour une époque, 
+    nous calculons des matrices de confusion sur une plage de seuils établis à l'avance.
+
 examples:
   original: |
     if (torch::torch_is_installed()){
@@ -45,7 +55,7 @@ examples:
   translation: ~
 seealso:
   original: "Other luz_metrics: \n\\code{\\link{luz_metric_accuracy}()},\n\\code{\\link{luz_metric_binary_accuracy_with_logits}()},\n\\code{\\link{luz_metric_binary_accuracy}()},\n\\code{\\link{luz_metric_mae}()},\n\\code{\\link{luz_metric_mse}()},\n\\code{\\link{luz_metric_multiclass_auroc}()},\n\\code{\\link{luz_metric_rmse}()},\n\\code{\\link{luz_metric}()}\n"
-  translation: ~
+  translation: "Autres métrique luz: \n\\code{\\link{luz_metric_accuracy}()},\n\\code{\\link{luz_metric_binary_accuracy_with_logits}()},\n\\code{\\link{luz_metric_binary_accuracy}()},\n\\code{\\link{luz_metric_mae}()},\n\\code{\\link{luz_metric_mse}()},\n\\code{\\link{luz_metric_multiclass_auroc}()},\n\\code{\\link{luz_metric_rmse}()},\n\\code{\\link{luz_metric}()}\n"
 untranslatable:
 - alias
 - name

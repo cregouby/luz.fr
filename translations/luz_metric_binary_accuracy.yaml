@@ -1,19 +1,22 @@
 title:
   original: Binary accuracy
-  translation: ~
+  translation: Précision binaire 
 arguments:
   threshold:
     original: value used to classifiy observations between 0 and 1.
-    translation: ~
+    translation: valeur de seuil pour classifier les observations en 0 ou 1.
 value:
   original: |
     Returns new luz metric.
-  translation: ~
+  translation: |
+    Renvoie la nouvelle métrique luz.
 description:
   original: |
     Computes the accuracy for binary classification problems where the
     model returns probabilities. Commonly used when the loss is \code{\link[torch:nn_bce_loss]{torch::nn_bce_loss()}}.
-  translation: ~
+  translation: |
+    Calcule la précision pour les problèmes de classification binaire
+    pour un modèle avec des probabilités en sortie. Le plus souvent, associé à \code{\link[torch:nn_bce_loss]{torch::nn_bce_loss()}}.
 examples:
   original: |+
     if (torch::torch_is_installed()) {
@@ -27,7 +30,7 @@ examples:
   translation: ~
 seealso:
   original: "Other luz_metrics: \n\\code{\\link{luz_metric_accuracy}()},\n\\code{\\link{luz_metric_binary_accuracy_with_logits}()},\n\\code{\\link{luz_metric_binary_auroc}()},\n\\code{\\link{luz_metric_mae}()},\n\\code{\\link{luz_metric_mse}()},\n\\code{\\link{luz_metric_multiclass_auroc}()},\n\\code{\\link{luz_metric_rmse}()},\n\\code{\\link{luz_metric}()}\n"
-  translation: ~
+  translation: "Autres métriques de luz: \n\\code{\\link{luz_metric_accuracy}()},\n\\code{\\link{luz_metric_binary_accuracy_with_logits}()},\n\\code{\\link{luz_metric_binary_auroc}()},\n\\code{\\link{luz_metric_mae}()},\n\\code{\\link{luz_metric_mse}()},\n\\code{\\link{luz_metric_multiclass_auroc}()},\n\\code{\\link{luz_metric_rmse}()},\n\\code{\\link{luz_metric}()}\n"
 untranslatable:
 - alias
 - name

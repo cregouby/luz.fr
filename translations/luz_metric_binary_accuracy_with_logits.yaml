@@ -16,7 +16,7 @@ description:
     return logits. Commonly used together with \code{\link[torch:nn_bce_with_logits_loss]{torch::nn_bce_with_logits_loss()}}.
   translation: |
     Calcule la précision (accuracy) pour les problèmes de classification binaire
-    pour un modèle avec des logits en sortie. Fréquement utilisé avec \code{\link[torch:nn_bce_with_logits_loss]{torch::nn_bce_with_logits_loss()}}.
+    pour un modèle avec des logits en sortie. Le plus souvent, associé à \code{\link[torch:nn_bce_with_logits_loss]{torch::nn_bce_with_logits_loss()}}.
 details:
   original: |
     Probabilities are generated using \code{\link[torch:nnf_sigmoid]{torch::nnf_sigmoid()}} and \code{threshold} is used to

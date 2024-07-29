@@ -1,23 +1,27 @@
 title:
   original: Creates a metric set
-  translation: ~
+  translation: Crée un ensemble de métriques
 arguments:
   metrics:
     original: |-
       A list of luz_metrics that are meant to be used in both training
       and validation.
-    translation: ~
+    translation: |-
+      Une liste de \code{luz_metrics} à utiliser pour l'entraînement 
+      et la validation
   train_metrics:
     original: A list of luz_metrics that are only used during training.
-    translation: ~
+    translation: Une liste de \code{luz_metrics} à utiliser seulement pour l'entraînement
   valid_metrics:
     original: A list of luz_metrics that are only sued for validation.
-    translation: ~
+    translation: Une liste de \code{luz_metrics} à utiliser seulement pour la validation
 description:
   original: |
     A metric set can be used to specify metrics that are only evaluated during
     training, validation or both.
-  translation: ~
+  translation: |
+    Un ensemble de métriques à utiliser pour specifier les métriques à utiliser pendant
+    l'entraînement, l'évaluation, ou les deux.
 untranslatable:
 - alias
 - name

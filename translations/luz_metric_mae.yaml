@@ -1,14 +1,16 @@
 title:
   original: Mean absolute error
-  translation: ~
+  translation: Erreur absolue moyenne
 value:
   original: |
     Returns new luz metric.
-  translation: ~
+  translation: |
+    Renvoie la nouvelle métrique luz.
 description:
   original: |
     Computes the mean absolute error.
-  translation: ~
+  translation: |
+    Calcule l'erreur absolue moyenne.
 examples:
   original: |
     if (torch::torch_is_installed()) {
@@ -21,7 +23,7 @@ examples:
   translation: ~
 seealso:
   original: "Other luz_metrics: \n\\code{\\link{luz_metric_accuracy}()},\n\\code{\\link{luz_metric_binary_accuracy_with_logits}()},\n\\code{\\link{luz_metric_binary_accuracy}()},\n\\code{\\link{luz_metric_binary_auroc}()},\n\\code{\\link{luz_metric_mse}()},\n\\code{\\link{luz_metric_multiclass_auroc}()},\n\\code{\\link{luz_metric_rmse}()},\n\\code{\\link{luz_metric}()}\n"
-  translation: ~
+  translation: "Autres métriques de luz: \n\\code{\\link{luz_metric_accuracy}()},\n\\code{\\link{luz_metric_binary_accuracy_with_logits}()},\n\\code{\\link{luz_metric_binary_accuracy}()},\n\\code{\\link{luz_metric_binary_auroc}()},\n\\code{\\link{luz_metric_mse}()},\n\\code{\\link{luz_metric_multiclass_auroc}()},\n\\code{\\link{luz_metric_rmse}()},\n\\code{\\link{luz_metric}()}\n"
 untranslatable:
 - alias
 - name

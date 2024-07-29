@@ -1,10 +1,11 @@
 title:
   original: Pipe operator
-  translation: ~
+  translation: L'opérateur de pipe
 description:
   original: |
     See \code{magrittr::\link[magrittr:pipe]{\%>\%}} for details.
-  translation: ~
+  translation: |
+    Voir \code{magrittr::\link[magrittr:pipe]{\%>\%}} pour les détails.
 untranslatable:
 - alias
 - name

@@ -1,27 +1,34 @@
 title:
   original: Set hyper-parameter of a module
-  translation: ~
+  translation: Définit les hyper-paramètres d'un module
 arguments:
   module:
     original: An \code{nn_module} that has been \code{\link[=setup]{setup()}}.
-    translation: ~
+    translation: Un \code{nn_module} après son initialisation par \code{\link[=setup]{setup()}}.
   '...':
     original: |-
       The parameters set here will be used to initialize the \code{nn_module}, ie they
       are passed unchanged to the \code{initialize} method of the base \code{nn_module}.
-    translation: ~
+    translation: |-
+      Les paramètres définis ici seront utilisés pour initialiser le \code{nn_module}, 
+      c'est-à-dire qu'ils seront passés tels quels à la méthode \code{initialize} du 
+      \code{nn_module} de base.
 value:
   original: |
     The same luz module
-  translation: ~
+  translation: |
+    The même module luz
 description:
   original: |
     This function is used to define hyper-parameters before calling \code{fit} for
     \code{luz_modules}.
-  translation: ~
+  translation: |
+    Cette fonction est utilisée pour définir les hyper-paramètres avant d'appeler 
+    \code{fit} pour les \code{luz_modules}.
+
 seealso:
   original: "Other set_hparam: \n\\code{\\link{set_opt_hparams}()}\n"
-  translation: ~
+  translation:  "Autres set_hparam: \n\\code{\\link{set_opt_hparams}()}\n"
 untranslatable:
 - alias
 - name

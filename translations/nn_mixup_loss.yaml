@@ -1,6 +1,6 @@
 title:
   original: Loss to be used with \code{callbacks_mixup()}.
-  translation: ~
+  translation: Fonction de coût à utiliser avec \code{callbacks_mixup()}.
 arguments:
   loss:
     original: |-
@@ -8,17 +8,26 @@ arguments:
       support the \code{reduction} field. During training the attribute will be changed to
       \code{'none'} so we get the loss for individual observations. See for for example
       documentation for the \code{reduction} argument in \code{\link[torch:nn_cross_entropy_loss]{torch::nn_cross_entropy_loss()}}.
-    translation: ~
+    translation: |-
+      Le fonction de coût sous-jacente de \code{nn_module} à appeler. Elle doit supporter le champ
+      \code{reduction}. Pendant l'entraînement, l'attribut sera modifié en \code{'none'} afin que 
+      nous obtenions le coût pour les observations individuelles. Voir par exemple la documentation 
+      du champ \code{reduction} dans \code{\link[torch:nn_cross_entropy_loss]{torch::nn_cross_entropy_loss()}}.
+
 description:
   original: |
     In the training phase, computes individual losses with regard to two targets, weights them item-wise,
     and averages the linear combinations to yield the mean batch loss.
     For validation and testing, defers to the passed-in loss.
-  translation: ~
+  translation: |
+    Pendant la phase d'entraînement, calcule la fonction de coût par rapport à deux cibles individuelles, 
+    leur alloue chacune un poids et les combine linéairement pour obtenir la perte moyenne du lot.
+    Pour la validation et le test, se réfère au tenseur de perte passé.
 details:
   original: |
     It should be used together with \code{\link[=luz_callback_mixup]{luz_callback_mixup()}}.
-  translation: ~
+  translation: |
+    Doit être utilisé simultanément avec \code{\link[=luz_callback_mixup]{luz_callback_mixup()}}.
 seealso:
   original: |
     \code{\link[=luz_callback_mixup]{luz_callback_mixup()}}

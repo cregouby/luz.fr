@@ -1,16 +1,16 @@
 title:
   original: Mixup logic
-  translation: ~
+  translation: Logique de mélange
 arguments:
   x:
     original: an input batch
-    translation: ~
+    translation: un lot des variables d'entrées
   'y':
     original: a target batch
-    translation: ~
+    translation: un lot des variables cible
   weight:
     original: weighting coefficient to be used by \code{torch_lerp()}
-    translation: ~
+    translation: les coefficients de pondération à utiliser avec \code{torch_lerp()}
 value:
   original: |
     A \code{list} of:
@@ -26,11 +26,24 @@ value:
     \item \code{weight}, the mixing weights
     }
     }
-  translation: ~
+  translation: |
+    Une \code{list}e contenant :
+    \itemize{
+    \item \code{x}, le nouveau lot d'entrées mélangé
+    \item \code{y}, une \code{list}e contenant :
+    \itemize{
+    \item \code{ys}, une \code{list}e contenant :
+    \itemize{
+    \item \code{y1}, la cible originale \code{y1}
+    \item \code{y2}, la cible mélangée \code{y2}
+    }
+    \item \code{weight}, les poids de mélange
+    }
 description:
   original: |
     Logic underlying \code{\link[=luz_callback_mixup]{luz_callback_mixup()}}.
-  translation: ~
+  translation: |
+    La logique sous-jacente à \code{\link[=luz_callback_mixup]{luz_callback_mixup()}}.
 details:
   original: |
     Based on the passed-in input and target batches, as well as applicable mixing weights,
@@ -38,7 +51,12 @@ details:
     The new input batch is a weighted linear combination of input batch items, while
     the new target batch bundles the original targets, as well as the mixing weights, in
     a nested list.
-  translation: ~
+  translation: |
+    Sur la base des lots d'entrées et de cibles passés en argument, ainsi que des poids de mélange appropriés,
+    la fonction remplace le lot actuel par de nouveaux tenseurs.
+    Le nouveau lot d'entrées est une combinaison linéaire pondérée des éléments du lot d'entrées initial,
+    tandis que le nouveau lot de cibles rassemble les cibles originales, ainsi que les poids de mélange,
+    dans une liste imbriquée.
 examples:
   original: |+
     if (torch::torch_is_installed()) {

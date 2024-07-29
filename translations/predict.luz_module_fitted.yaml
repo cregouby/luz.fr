@@ -1,52 +1,69 @@
 title:
   original: Create predictions for a fitted model
-  translation: ~
+  translation: Crée des prédictions pour un modèle entraîné
 arguments:
   object:
     original: (fitted model) the fitted model object returned from \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}
-    translation: ~
+    translation: L'objet modèle entraîné retourné par \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}
   newdata:
     original: |-
       (dataloader, dataset, list or array) returning a list with at
       least 1 element. The other elements aren't used.
-    translation: ~
+    translation: |-
+      (dataloader, dataset, liste ou tableau) renvoyant une liste avec 
+      au moins un élément. Les autres éléments ne sont pas utilisés.
   '...':
     original: Currently unused.
-    translation: ~
+    translation: Inutilisé
   callbacks:
     original: |-
       (list, optional) A list of callbacks defined with
       \code{\link[=luz_callback]{luz_callback()}} that will be called during the training procedure. The
       callbacks \code{\link[=luz_callback_metrics]{luz_callback_metrics()}}, \code{\link[=luz_callback_progress]{luz_callback_progress()}} and
       \code{\link[=luz_callback_train_valid]{luz_callback_train_valid()}} are always added by default.
-    translation: ~
+    translation: |-
+      (liste, optionnel) Une liste d'appels de callback définis avec \code{\link[=luz_callback]{luz_callback()}} 
+      qui seront appelés pendant la procédure d'entraînement. Les appels de callback \code{\link[=luz_callback_metrics]{luz_callback_metrics()}}, 
+      \code{\link[=luz_callback_progress]{luz_callback_progress()}} et \code{\link[=luz_callback_train_valid]{luz_callback_train_valid()}} 
+      sont toujours ajoutés par défaut.
+
   accelerator:
     original: |-
       (accelerator, optional) An optional \code{\link[=accelerator]{accelerator()}} object
       used to configure device placement of the components like \link{nn_module}s,
       optimizers and batches of data.
-    translation: ~
+    translation: |-
+      (accélérateur, optionnel) Un objet d'accélérateur \code{\link[=accelerator]{accelerator()}} 
+      utilisé pour configurer l'emplacement du calcul des composants tels que les \link{nn_module}s, 
+      les optimiseurs et les lots de données.
   verbose:
     original: |-
       (logical, optional) An optional boolean value indicating if
       the fitting procedure should emit output to the console during training.
       By default, it will produce output if \code{\link[=interactive]{interactive()}} is \code{TRUE}, otherwise
       it won't print to the console.
-    translation: ~
+    translation: |-
+      (logique, optionnel) La procédure d'entraînement doit-elle émettre des messages vers la console pendant 
+      l'entraînement. Par défaut, elle produira des messages si \code{\link[=interactive]{interactive()}} est \code{TRUE}.
   dataloader_options:
     original: |-
       Options used when creating a dataloader. See
       \code{\link[torch:dataloader]{torch::dataloader()}}. \code{shuffle=TRUE} by default for the training data and
       \code{batch_size=32} by default. It will error if not \code{NULL} and \code{data} is
       already a dataloader.
-    translation: ~
+    translation: |-
+      Options utilisées lors de la création d'un dataloader. Voir \code{\link[torch:dataloader]{torch::dataloader()}}. 
+      \code{shuffle=TRUE} par défaut pour les données d'entraînement et \code{batch_size=32} par défaut. 
+      Il produira une erreur si ce n'est pas \code{NULL} et que \code{data} est déjà un dataloader.
+
 description:
   original: |
     Create predictions for a fitted model
-  translation: ~
+  translation: |
+    Crée des prédictions pour un modèle entraîné
 seealso:
   original: "Other training: \n\\code{\\link{evaluate}()},\n\\code{\\link{fit.luz_module_generator}()},\n\\code{\\link{setup}()}\n"
-  translation: ~
+  translation: "Autres entraînements: \n\\code{\\link{evaluate}()},\n\\code{\\link{fit.luz_module_generator}()},\n\\code{\\link{setup}()}\n"
 untranslatable:
 - alias
 - name

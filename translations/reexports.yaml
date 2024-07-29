@@ -1,9 +1,9 @@
 docType:
   original: import
-  translation: ~
+  translation: import
 title:
   original: Objects exported from other packages
-  translation: ~
+  translation: Objets exportés des autres paquets
 description:
   original: |-
     These objects are imported from other packages. Follow the links
@@ -12,7 +12,13 @@ description:
     \describe{
       \item{generics}{\code{\link[generics]{fit}}}
     }
-  translation: ~
+  translation: |-
+    Ces objects sont importés d'autres paquets. Suivez les liens suivants
+    pour consulter leur documentation.
+
+    \describe{
+      \item{generics}{\code{\link[generics]{fit}}}
+    }
 untranslatable:
 - alias
 - name

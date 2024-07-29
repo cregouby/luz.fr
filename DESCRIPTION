@@ -1,15 +1,21 @@
 Package: luz.fr
 Type: Translation-module
-Title: What the package does (short line)
-Version: 1.0
+Title: Une interface de programmation de 'torch' de haut-niveau
+Version: 0.4.0
 Date: 2024-05-26
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Author: c(
+    person("Christophe", "Regouby", email = "christophe.regouby@free.fr", role = c("aut", "cre", "cph")),
+    )
+Description: Une interface de haut niveau pour « torch » fournissant des utilitaires 
+    pour réduire la quantité de code nécessaire pour réaliser les tâches courantes, 
+    abstraire les détails de « torch » et faire fonctionner le même code à la fois sur
+    le « CPU » et la « GPU ». Il est suffisamment flexible pour permettre
+    d'expérimenter une large gamme de modèles. Il est fortement inspiré par « fastai » de 
+    Howard et al. (2020) <arXiv:2002.04688>, 'Keras' par Chollet et al. (2015) et 
+    PyTorch Lightning' de Falcon et al. (2019) <doi:10.5281/zenodo.3828935>.
+License: MIT + file LICENSE
 Language: fr
-Translates: luz (== 0.4.0.9002)
+Translates: luz (== 0.4.0)
 LazyData: true
 imports:
     rhelpi18n
-

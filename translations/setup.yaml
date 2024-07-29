@@ -1,29 +1,38 @@
 title:
   original: Set's up a \code{nn_module} to use with luz
-  translation: ~
+  translation: Initialise l'usage d'un \code{nn_module} avec luz
 arguments:
   module:
     original: (\code{nn_module}) The \code{nn_module} that you want set up.
-    translation: ~
+    translation: (\code{nn_module}) Le \code{nn_module} à utiliser.
   loss:
     original: |-
       (\code{function}, optional) An optional function with the signature
       \verb{function(input, target)}. It's only requires if your \code{nn_module} doesn't
       implement a method called \code{loss}.
-    translation: ~
+    translation: |-
+      (fonction, optionnel) Une fonction avec la signature 
+      \verb{function(input, target)}. Elle est uniquement requise si votre  \code{nn_module} 
+      n'implémente pas une fonction de coût nomée \code{loss}.
   optimizer:
     original: |-
       (\code{torch_optimizer}, optional) A function with the signature
       \verb{function(parameters, ...)} that is used to initialize an optimizer given
       the model parameters.
-    translation: ~
+    translation: |-
+      (optimiseur torch, optionnel) Une fonction avec la signature 
+      \verb{function(parameters, ...)} qui est utilisée pour initialiser un optimiseur 
+      à partir des paramètres du modèle.
   metrics:
     original: |-
       (\code{list}, optional) A list of metrics to be tracked during
       the training procedure. Sometimes, you want some metrics to be evaluated
       only during training or validation, in this case you can pass a \code{\link[=luz_metric_set]{luz_metric_set()}}
       object to specify metrics used in each stage.
-    translation: ~
+    translation: |-
+      (liste, optionnel) Une liste de métriques à suivre pendant la procédure d'entraînement. 
+      Si vous voulez que des métriques soient évaluées uniquement pendant l'entraînement ou la validation, 
+      vous pouvez passer un objet luz_metric_set() pour spécifier les métriques utilisées à chaque étape.
   backward:
     original: |-
       (\code{function}) A functions that takes the loss scalar values as
@@ -32,20 +41,30 @@ arguments:
       how luz calls the \code{backward()}, for example, if you need to add additional
       arguments to the backward call. Note that this becomes a method of the \code{nn_module}
       thus can be used by your custom \code{step()} if you override it.
-    translation: ~
+    translation: |-
+      (fonction) Une fonction qui prend des valeurs retournées par la fonction de coût comme paramètres. 
+      Elle doit appeler \verb{$backward()} ou \code{\link[torch:autograd_backward]{torch::autograd_backward()}}. 
+      En général, vous n'avez pas besoin de définir ce paramètre sauf si vous devez personnaliser comment luz 
+      appelle la méthode \code{backward()}, par exemple, si vous devez ajouter des arguments supplémentaires à 
+      l'appel de la méthode. Notez que cela devient une méthode du \code{nn_module}, donc elle peut être utilisée 
+      par votre \code{step()} personnalisé si vous le redéfinissez.
 value:
   original: |
     A luz module that can be trained with \code{\link[=fit]{fit()}}.
-  translation: ~
+  translation: |-
+    Un module luz qui peut être entraîné avec \code{\link[=fit]{fit()}}.
 description:
   original: |
     The setup function is used to set important attributes and method for \code{nn_modules}
     to be used with luz.
-  translation: ~
+  translation: |-
+    La fonction d'initialiation est utilisée pour définir les attributs et les méthodes 
+    importantes pour le  \code{nn_modules} fonctionne avec luz.
 details:
   original: |
     It makes sure the module have all the necessary ingredients in order to be fitted.
-  translation: ~
+  translation: |-
+    Elle s'assure que le module ait tous les ingrédients nécessaires pour être entraîné.
 note:
   original: |
     It also adds a \code{device} active field that can be used to query the current
@@ -53,10 +72,16 @@ note:
     \code{\link[=ctx]{ctx()}} is not available, eg, when calling methods from outside the \code{luz}
     wrappers. Users can override the default by implementing a \code{device} active
     method in the input \code{module}.
-  translation: ~
+  translation: |-
+    Elle ajoute également un champ de \code{device} actif qui peut être utilisé pour 
+    interroger le \code{device} courant du module dans les méthodes, comme par exemple 
+    \code{self$device}. Cela est utile lorsque \code{\link[=ctx]{ctx()}} n'est pas disponible, 
+    par exemple, lorsque vous appelez des méthodes en dehors de \code{luz}. Les utilisateurs 
+    peuvent personnaliser la valeur par défaut en implémentant une méthode active de \code{device} 
+    dans le module d'entrée.
 seealso:
   original: "Other training: \n\\code{\\link{evaluate}()},\n\\code{\\link{fit.luz_module_generator}()},\n\\code{\\link{predict.luz_module_fitted}()}\n"
-  translation: ~
+  translation: "Autres entraînements: \n\\code{\\link{evaluate}()},\n\\code{\\link{fit.luz_module_generator}()},\n\\code{\\link{predict.luz_module_fitted}()}\n"
 untranslatable:
 - alias
 - name

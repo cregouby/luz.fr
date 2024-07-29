@@ -1,20 +1,26 @@
 title:
   original: Accuracy
-  translation: ~
+  translation: Précision (accuracy)
 value:
   original: |
     Returns new luz metric.
-  translation: ~
+  translation: |
+    Renvoie la nouvelle métrique luz.
 description:
   original: |
     Computes accuracy for multi-class classification problems.
-  translation: ~
+  translation: |
+    Calcule la précision (accuracy) pour les problèmes de classification multi-classes.
 details:
   original: |
     This metric expects to take logits or probabilities at every
     update. It will then take the columnwise argmax and compare
     to the target.
-  translation: ~
+  translation: |
+    Cette métrique s'attend à des logits ou des probabilités
+    à chaque mise à jour. Elle prend alors l'argmax par colonne
+    et le compare à la variable cible.
+
 examples:
   original: |
     if (torch::torch_is_installed()) {
@@ -27,7 +33,7 @@ examples:
   translation: ~
 seealso:
   original: "Other luz_metrics: \n\\code{\\link{luz_metric_binary_accuracy_with_logits}()},\n\\code{\\link{luz_metric_binary_accuracy}()},\n\\code{\\link{luz_metric_binary_auroc}()},\n\\code{\\link{luz_metric_mae}()},\n\\code{\\link{luz_metric_mse}()},\n\\code{\\link{luz_metric_multiclass_auroc}()},\n\\code{\\link{luz_metric_rmse}()},\n\\code{\\link{luz_metric}()}\n"
-  translation: ~
+  translation: "Autres métriques de luz : \n\\code{\\link{luz_metric_binary_accuracy_with_logits}()},\n\\code{\\link{luz_metric_binary_accuracy}()},\n\\code{\\link{luz_metric_binary_auroc}()},\n\\code{\\link{luz_metric_mae}()},\n\\code{\\link{luz_metric_mse}()},\n\\code{\\link{luz_metric_multiclass_auroc}()},\n\\code{\\link{luz_metric_rmse}()},\n\\code{\\link{luz_metric}()}\n"
 untranslatable:
 - alias
 - name

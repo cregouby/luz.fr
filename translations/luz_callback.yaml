@@ -1,42 +1,52 @@
 title:
   original: Create a new callback
-  translation: ~
+  translation: Créer un nouveau callback
 arguments:
   name:
     original: name of the callback
-    translation: ~
+    translation: nom du callback
   '...':
     original: |-
       Public methods of the callback. The name of the methods is used
       to know how they should be called. See the details section.
-    translation: ~
+    translation: |-
+      Méthodes publiques du callback. Le nom des méthodes est utilisé 
+      pour savoir comment elles doivent être appelées. Voir la section détails.
   private:
     original: |-
       An optional list of private members, which can be functions
       and non-functions.
-    translation: ~
+    translation: |-
+      Une liste optionnelle de méthodes privées, qui peuvent être
+      des fonctions et non-des fonctions.
   active:
     original: An optional list of active binding functions.
-    translation: ~
+    translation: Une liste optionnelle de fonctions d'active binding.
   parent_env:
     original: |-
       An environment to use as the parent of newly-created
       objects.
-    translation: ~
+    translation: |-
+      Un environnement à utiliser comme parent pour les objets
+      nouvellement créés.
   inherit:
     original: |-
       A R6ClassGenerator object to inherit from; in other words, a
       superclass. This is captured as an unevaluated expression which is
       evaluated in \code{parent_env} each time an object is instantiated.
-    translation: ~
+    translation: |-
+      Un objet R6ClassGenerator duquel hériter; autrement dit, une super-classe.
+      Cela est capturé comme une expression non-évaluée qui sera évaluée dans
+      \code{parent_env} chaque fois qu'un objet est instancié.
 value:
   original: |
     A \code{luz_callback} that can be passed to \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}.
-  translation: ~
+  translation: |-
+    Un callback \code{luz_callback} que l'on peut passer à \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}.
 description:
   original: |
     Create a new callback
-  translation: ~
+  translation: Crée un nouveau callback
 details:
   original: |
     Let’s implement a callback that prints ‘Iteration \code{n}’ (where \code{n} is the
@@ -137,11 +147,105 @@ details:
     callbacks in luz already provide a weight value. For example, the
     \code{?luz_callback_early_stopping} has a weight of \code{Inf}, since in general
     we want to run it as the last thing in the loop.
-  translation: ~
+  translation: |-
+    Nous allons implémenter un rappel qui affiche « Itération \code{n} » (où \code{n} est le nombre d'itération)
+    pour chaque lot du jeu de donnée d'entraînement et « Fait » lorsqu'une époque est terminée.
+    Pour ce faire, nous utilisons la fonction \code{luz_callback} :
+
+    \if{html}{\out{<div class="sourceCode r">}}\preformatted{print_callback <- luz_callback(
+      name = "print_callback",
+      initialize = function(message) {
+        self$message <- message
+      },
+      on_train_batch_end = function() {
+        cat("Itération ", ctx$iter, "\n")
+      },
+      on_epoch_end = function() {
+        cat(self$message, "\n")
+      }
+    )
+    }\if{html}{\out{</div>}}
+
+    La fonction de callback `luz_callback()` accepte des fonctions nommées en tant qu'arguments dans \code{...}, 
+    où le nom indique le moment auquel la fonction de callback devrait être appelée. Par exemple,
+    \code{on_train_batch_end()} est appelée à chaque lot à la fin du processus d'apprentissage, 
+    et \code{on_epoch_end()} est appelée à la fin de chaque époque.
+
+    La valeur renvoyée par `luz_callback()` est une fonction qui initialise une instance du callback. 
+    Les callbacks peuvent avoir des paramètres d'initialisation, comme le nom d'un fichier dans lequel
+    enregistrer les résultats. Dans ce cas, vous pouvez passer une méthode d'initialisation \code{initialize}
+    lors de la définition de la fonction de callback et sauvegarder ces paramètres dans l'objet \code{self}.
+    Dans l'exemple ci-dessus, la fonction de callback a un paramètre \code{message} qui est affiché à la
+    fin de chaque époque.
+
+    Une fois que la fonction de rappel est définie, elle peut être passée à la fonction \code{fit}
+    via le paramètre \code{callbacks}.
+
+    \if{html}{\out{<div class="sourceCode r">}}\preformatted{fitted <- net \%>\%
+      setup(...) \%>\%
+      fit(..., callbacks = list(
+        print_callback(message = "Fait!")
+      ))
+    }\if{html}{\out{</div>}}
+
+    Les callbacks peuvent être déclenchés à de nombreuses position de la boucle d'entraînement, 
+    notemment à des combinaisons d'entre elles. Voici un aperçu des \emph{breakpoints} de callback 
+    possible :
+
+
+    \if{html}{\out{<div class="sourceCode">}}\preformatted{Début Fit
+      - on_fit_begin
+      Début de Boucle d'Époque 
+        - on_epoch_begin
+        Début d'Entraînement
+          - on_train_begin
+          Début de Boucle sur le Lot
+            - on_train_batch_begin
+              Début d'Étape d'Entraînement par Défaut
+                - on_train_batch_after_pred
+                - on_train_batch_after_loss
+                - on_train_batch_before_backward
+                - on_train_batch_before_step
+                - on_train_batch_after_step
+              Fin d'Étape d'Entraînement par Défaut :
+            - on_train_batch_end
+          Fin de Boucle sur le Lot
+          - on_train_end
+        Fin d'Entraînement
+        Début de Validation
+          - on_valid_begin
+          Début de Boucle sur le Lot
+            - on_valid_batch_begin
+              Début d'Étape de Validation par Défaut
+                - on_valid_batch_after_pred
+                - on_valid_batch_after_loss
+              Fin d'Étape de Validation par Défaut
+            - on_valid_batch_end
+          Fin de Boucle sur le Lot
+          - on_valid_end
+        Fin de Validation
+        - on_epoch_end
+      Fin de Boucle d'Époque
+      - on_fit_end
+    } \if{html}{\out{</div>}}
+
+    Chaque étape du marquée avec \verb{on_*} est un point dans la procédure d'entraînement qui est 
+    disponible pour les appels de callback.
+
+    L'autre partie importante des callback est l'objet \code{ctx} (contexte). 
+    Voir \code{help("ctx")} pour plus de détails.
+
+    Par défaut, les callbacks sont appelés dans l'ordre où ils ont été passés à la fonction \code{fit}
+     (ou  \code{predict} ou \code{evaluate}), mais vous pouvez fournir un attribut \code{weight} qui contrôlera
+    l'ordre dans lequel ils seront appelés. Par exemple, si un callback a \code{weight = 10} et un autre a 
+    \code{weight = 1}, alors le premier sera appelé après le second. Les callback qui ne spécifient pas 
+    d'attribut `weight` sont considérés comme ayant une valeur de \code{weight = 0}. Quelques callback intégrés 
+    dans luz fournissent déjà une valeur de poids. Par exemple, le \code{?luz_callback_early_stopping} a un 
+    poids de \code{Inf}, car nous voulons généralement l'exécuter comme la dernière chose dans la boucle.
 section{Prediction callbacks}:
   original: |
     You can also use callbacks when using \code{\link[=predict]{predict()}}. In this case the supported
-    callback methods are detailed above.
+    callback methods are detailed below:
 
     \if{html}{\out{<div class="sourceCode">}}\preformatted{Start predict
      - on_predict_begin
@@ -152,7 +256,19 @@ section{Prediction callbacks}:
      - on_predict_end
     End predict
     }\if{html}{\out{</div>}}
-  translation: ~
+  translation: |
+    Vous pouvez également utiliser des fonctions de callback avec \code{\link[=predict]{predict()}}. 
+    Dans ce cas, les callbacks supportés sont listés ci-dessous:
+
+    \if{html}{\out{<div class="sourceCode">}}\preformatted{Début de Prédiction
+     - on_predict_begin
+     Début de Boucle de Prédiction
+      - on_predict_batch_begin
+      - on_predict_batch_end
+     Fin de Boucle de Prédiction
+     - on_predict_end
+    Fin de Prédiction
+    }\if{html}{\out{</div>}}
 section{Evaluate callbacks}:
   original: |
     Callbacks can also be used with \code{\link[=evaluate]{evaluate()}}, in this case, the callbacks that
@@ -171,7 +287,25 @@ section{Evaluate callbacks}:
      - on_valid_end
     End Valid
     }\if{html}{\out{</div>}}
-  translation: ~
+  translation: |
+    Les fonctions de callback peuvent également être utilisées avec \code{\link[=evaluate]{evaluate()}}, 
+    dans ce cas, les callbacks utilisés sont équivalents à ceux de la boucle de validation lors de 
+    l'utilisation de \code{\link[=fit]{fit()}}:
+
+    \if{html}{\out{<div class="sourceCode">}}\preformatted{Début de Validation
+     - on_valid_begin
+     Début de Boucle de Validation du Lot
+      - on_valid_batch_begin
+      Début de l'étape de Validation par défaut
+       - on_valid_batch_after_pred
+       - on_valid_batch_after_loss
+      Fin de l'étape de Validation par défaut
+      - on_valid_batch_end
+     Fin du Lot
+     - on_valid_end
+    Fin de Validation
+    }\if{html}{\out{</div>}}
+
 examples:
   original: |
     print_callback <- luz_callback(
@@ -186,7 +320,7 @@ examples:
   translation: ~
 seealso:
   original: "Other luz_callbacks: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_interrupt}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_profile}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()}\n"
-  translation: ~
+  translation: "Autres callbacks luz: \n\\code{\\link{luz_callback_auto_resume}()},\n\\code{\\link{luz_callback_csv_logger}()},\n\\code{\\link{luz_callback_early_stopping}()},\n\\code{\\link{luz_callback_interrupt}()},\n\\code{\\link{luz_callback_keep_best_model}()},\n\\code{\\link{luz_callback_lr_scheduler}()},\n\\code{\\link{luz_callback_metrics}()},\n\\code{\\link{luz_callback_mixed_precision}()},\n\\code{\\link{luz_callback_mixup}()},\n\\code{\\link{luz_callback_model_checkpoint}()},\n\\code{\\link{luz_callback_progress}()},\n\\code{\\link{luz_callback_resume_from_checkpoint}()},\n\\code{\\link{luz_callback_train_valid}()},\n\\code{\\link{luz_callback}()}\n"
 untranslatable:
 - alias
 - name

@@ -1,17 +1,18 @@
 title:
   original: Load trained model
-  translation: ~
+  translation: Charge un modèle entrainé depuis le disque
 arguments:
   path:
-    original: path in file system so save the object.
-    translation: ~
+    original: path in file system to the object.
+    translation: Chemin du fichier de modèle sur le disque.
 description:
   original: |
     Loads a fitted model. See documentation in \code{\link[=luz_save]{luz_save()}}.
-  translation: ~
+  translation: |
+    Charge un modèle entraîné. Voir la documentation dans \code{\link[=luz_save]{luz_save()}}.
 seealso:
   original: "Other luz_save: \n\\code{\\link{luz_save}()}\n"
-  translation: ~
+  translation: "Autre luz_save: \n\\code{\\link{luz_save}()}\n"
 untranslatable:
 - alias
 - name

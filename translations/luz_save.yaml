@@ -1,37 +1,45 @@
 title:
   original: Saves luz objects to disk
-  translation: ~
+  translation: Enregistre in objet luz sur disque
 arguments:
   obj:
     original: |-
       an object of class 'luz_module_fitted' as returned by
       \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}.
-    translation: ~
+    translation: |-
+      Un objet de classe 'luz_module_fitted', résultat de 
+      \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}.
   path:
-    original: path in file system so save the object.
-    translation: ~
+    original: path in file system to the object.
+    translation: Chemin du fichier de modèle sur le disque.
   '...':
     original: currently unused.
-    translation: ~
-description:
+    translation: inutilisé
   original: |
     Allows saving luz fitted models to the disk. Objects can be loaded back with
     \code{\link[=luz_load]{luz_load()}}.
-  translation: ~
+  translation: |
+    Enregistre un modèle entraîné luz sur disque. Les objects peuvent être restaurés avec
+    \code{\link[=luz_load]{luz_load()}}.
 note:
   original: |
     Objects are saved as plain \code{.rds} files but \code{obj$model} is serialized
     with \code{torch_save} before saving it.
-  translation: ~
+  translation: |
+    Les objets sont sauvegardés au format \code{.rds}, mais le \code{obj$model} est 
+    d'abord sérialisé avec \code{torch_save} avant cela.
 section{Warning}:
   original: |
     The \link{ctx} is naively serialized. Ie, we only use \code{\link[=saveRDS]{saveRDS()}} to serialize it.
     Don't expect \code{luz_save} to work correctly if you have unserializable objects
     in the \link{ctx} like \code{torch_tensor}s and external pointers in general.
-  translation: ~
+  translation: |
+    L'objet \link{ctx} est sérialisé naivement, c-à-d. que on utilise \code{\link[=saveRDS]{saveRDS()}}directement
+    pour le sérialiser. Ne comptez pas sur \code{luz_save} pour des objet non sérialisables dans 
+    le \link{ctx} comme des \code{torch_tensor}s ou des pointeurs externes en général.
 seealso:
   original: "Other luz_save: \n\\code{\\link{luz_load}()}\n"
-  translation: ~
+  translation: "Autre luz_save: \n\\code{\\link{luz_save}()}\n"
 untranslatable:
 - alias
 - name

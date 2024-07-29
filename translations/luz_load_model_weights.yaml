@@ -1,30 +1,35 @@
 title:
   original: Loads model weights into a fitted object.
-  translation: ~
+  translation: Charge des poids sauvegardés sur disque, dans un modèle.
 arguments:
   obj:
     original: luz object to which you want to copy the new weights.
-    translation: ~
+    translation: Objet luz sur lequel copier les nouveaux poids.
   path:
     original: path to saved model in disk.
-    translation: ~
+    translation: Chemin du fichier de poids sauvegardé sur le disque.
   '...':
     original: other arguments passed to \code{\link[=torch_load]{torch_load()}}.
-    translation: ~
+    translation: Autres arguments passés à \code{\link[=torch_load]{torch_load()}}.
 value:
   original: |
     Returns \code{NULL} invisibly.
-  translation: ~
+  translation: |
+    Retourne \code{NULL} de manière invisible.
 description:
   original: |
     This can be useful when you have saved model checkpoints during training and
     want to reload the best checkpoint in the end.
-  translation: ~
+  translation: |
+    Peut être utile quand vous avez sauvegardé des instantanés de modèle pendant l'entraînement,
+    et que vous voulez restaurer le meilleur instantané à la fin.
 section{Warning}:
   original: |
     \code{luz_save_model_weights} operates inplace, ie modifies the model object to contain the
     new weights.
-  translation: ~
+  translation: |
+    \code{luz_save_model_weights} opère directement sur l'objet, c-à-d qu'il modifie le modèle
+    pour lui affecter les nouveaux poids.
 untranslatable:
 - alias
 - name

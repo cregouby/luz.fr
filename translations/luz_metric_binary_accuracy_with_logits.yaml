@@ -1,24 +1,29 @@
 title:
   original: Binary accuracy with logits
-  translation: ~
+  translation: Précision binaire avec logits
 arguments:
   threshold:
     original: value used to classifiy observations between 0 and 1.
-    translation: ~
+    translation: valeur de seuil pour classifier les observations en 0 ou 1.
 value:
   original: |
     Returns new luz metric.
-  translation: ~
+  translation: |
+    Renvoie la nouvelle métrique luz.
 description:
   original: |
     Computes accuracy for binary classification problems where the model
     return logits. Commonly used together with \code{\link[torch:nn_bce_with_logits_loss]{torch::nn_bce_with_logits_loss()}}.
-  translation: ~
+  translation: |
+    Calcule la précision (accuracy) pour les problèmes de classification binaire
+    pour un modèle avec des logits en sortie. Fréquement utilisé avec \code{\link[torch:nn_bce_with_logits_loss]{torch::nn_bce_with_logits_loss()}}.
 details:
   original: |
     Probabilities are generated using \code{\link[torch:nnf_sigmoid]{torch::nnf_sigmoid()}} and \code{threshold} is used to
     classify between 0 or 1.
-  translation: ~
+  translation: |
+    Les probabilités sont calcullées avec \code{\link[torch:nnf_sigmoid]{torch::nnf_sigmoid()}} et le \code{threshold} 
+    permet de classifier en 0 ou 1.
 examples:
   original: |
     if (torch::torch_is_installed()) {
@@ -31,7 +36,7 @@ examples:
   translation: ~
 seealso:
   original: "Other luz_metrics: \n\\code{\\link{luz_metric_accuracy}()},\n\\code{\\link{luz_metric_binary_accuracy}()},\n\\code{\\link{luz_metric_binary_auroc}()},\n\\code{\\link{luz_metric_mae}()},\n\\code{\\link{luz_metric_mse}()},\n\\code{\\link{luz_metric_multiclass_auroc}()},\n\\code{\\link{luz_metric_rmse}()},\n\\code{\\link{luz_metric}()}\n"
-  translation: ~
+  translation: "Autres métriques de luz:  \n\\code{\\link{luz_metric_accuracy}()},\n\\code{\\link{luz_metric_binary_accuracy}()},\n\\code{\\link{luz_metric_binary_auroc}()},\n\\code{\\link{luz_metric_mae}()},\n\\code{\\link{luz_metric_mse}()},\n\\code{\\link{luz_metric_multiclass_auroc}()},\n\\code{\\link{luz_metric_rmse}()},\n\\code{\\link{luz_metric}()}\n"
 untranslatable:
 - alias
 - name

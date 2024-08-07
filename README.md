@@ -24,11 +24,11 @@ Voici comment obtenir l'aide de {luz} en français :
 # configure la session en langue française
 Sys.setenv(LANGUAGE = "fr")
 
-# charge la librairie de traduction puis tabnet par sa traduction française
+# charge la librairie de traduction puis luz par sa traduction française
 library(luz.fr)
 
 # consulte l'aide normalement
 ??lr_finder
 ```
 
-![exemple de page de documentation en français dans l'onglet Help de RStudio(images/clipboard-1010983901.png)
+![exemple de page de documentation en français dans l'onglet Help de RStudio](images/clipboard-1010983901.png)

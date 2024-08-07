@@ -1,3 +1,9 @@
+---
+---
+---
+
+![](images/luz.fr.png){alt="logo luz.fr" width="358"}
+
 # luz.fr
 
 <!-- badges: start -->
@@ -31,4 +37,4 @@ library(luz.fr)
 ??lr_finder
 ```
 
-![exemple de page de documentation en français dans l'onglet Help de RStudio](images/clipboard-1010983901.png)
+![](images/clipboard-1010983901.png){alt="exemple de page de documentation en français dans l'onglet Help de RStudio"}

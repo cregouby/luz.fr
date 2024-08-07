@@ -7,23 +7,23 @@ arguments:
     translation: l'objet d'entrée.
   '...':
     original: Passed to \code{\link[torch:dataloader]{torch::dataloader()}}.
-    translation: Passé à `\code{\link[torch:dataloader]{torch::dataloader()}}`.
+    translation: Passé à \code{\link[torch:dataloader]{torch::dataloader()}}.
   batch_size:
     original: |-
       (int, optional): how many samples per batch to load
       (default: \code{1}).
     translation: |-
-      (entier, facultatif) : nombre de séquences par lot à charger
-      (par défaut : `\code{1}`).
+      (entier, facultatif) : nombre de séquences à charger par lot
+      (par défaut: \code{1}).
 description:
   original: |
     \code{as_dataloader} is used internally by luz to convert input
     \code{data} and \code{valid_data} as passed to \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}} to a
     \link[torch:dataloader]{torch::dataloader}
   translation: |-
-    `\code{as_dataloader}` est utilisé en interne par luz pour convertir les entrées
-    `\code{data}` et `\code{valid_data}` passés à `\code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}` vers un
-    `\link[torch:dataloader]{torch::dataloader}`
+    \code{as_dataloader} est utilisé en interne par luz pour convertir les entrées
+    \code{data} et \code{valid_data} passés à \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}} en un
+    \code{\link[torch:dataloader]{torch::dataloader}}
 details:
   original: |
     \code{as_dataloader} methods should have sensible defaults for batch_size,
@@ -33,11 +33,11 @@ details:
     to create a \link[torch:dataset]{torch::dataset} and a \link[torch:dataloader]{torch::dataloader} in simple
     experiments.
   translation: |-
-    Les méthodes `\code{as_dataloader}` devraient avoir des paramètres par défaut choisis
+    Les méthodes \code{as_dataloader} devraient avoir des paramètres par défaut choisis
     avec attention pour la taille du lot, les workers parallèles, etc.
 
-    Elle permet aux utilisateurs de tester rapidement `\code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}` sans avoir besoin
-    de créer un `\link[torch:dataset]{torch::dataset}` et un `\link[torch:dataloader]{torch::dataloader}` pour l'expérimentation.
+    Elle permet aux utilisateurs de tester rapidement \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}} sans avoir besoin
+    de créer un \link[torch:dataset]{torch::dataset} et un \link[torch:dataloader]{torch::dataloader} pour l'expérimentation.
 section{Methods (by class)}:
   original: |-
     \itemize{
@@ -61,24 +61,24 @@ section{Methods (by class)}:
     }
   translation: |-
     \itemize{
-    \item `\code{as_dataloader(dataset)}` : Convertit un `\code{\link[torch:dataset]{torch::dataset()}}` en 
-    un `\code{\link[torch:dataloader]{torch::dataloader()}}`.
+    \item \code{as_dataloader(dataset)} : Convertit un \code{\link[torch:dataset]{torch::dataset()}} en 
+    un \code{\link[torch:dataloader]{torch::dataloader()}}.
 
-    \item `\code{as_dataloader(iterable_dataset)}` : Convertit un `\code{\link[torch:iterable_dataset]{torch::iterable_dataset()}}` en 
-    un `\code{\link[torch:dataloader]{torch::dataloader()}}`
+    \item \code{as_dataloader(iterable_dataset)} : Convertit un \code{\link[torch:iterable_dataset]{torch::iterable_dataset()}} en 
+    un \code{\link[torch:dataloader]{torch::dataloader()}}
 
-    \item `\code{as_dataloader(list)}` : Convertit une liste de tenseurs ou d'arrays avec la même
-    taille dans leur première dimension en un `\code{\link[torch:dataloader]{torch::dataloader()}}`
+    \item \code{as_dataloader(list)} : Convertit une liste de tenseurs ou d'arrays avec la même
+    taille dans leur première dimension en un \code{\link[torch:dataloader]{torch::dataloader()}}
 
-    \item `\code{as_dataloader(dataloader)}` : Retourne le même dataloader
+    \item \code{as_dataloader(dataloader)} : Retourne le même dataloader
 
-    \item `\code{as_dataloader(matrix)}` : Convertit la matrice en un dataloader
+    \item \code{as_dataloader(matrix)} : Convertit la matrice en un dataloader
 
-    \item `\code{as_dataloader(numeric)}` : Convertit le vecteur numérique en un dataloader
+    \item \code{as_dataloader(numeric)} : Convertit le vecteur numérique en un dataloader
 
-    \item `\code{as_dataloader(array)}` : Convertit l'array en un dataloader
+    \item \code{as_dataloader(array)} : Convertit l'array en un dataloader
 
-    \item `\code{as_dataloader(torch_tensor)}` : Convertit le tenseur en un dataloader
+    \item \code{as_dataloader(torch_tensor)} : Convertit le tenseur en un dataloader
     }
 section{Overriding}:
   original: |
@@ -95,17 +95,17 @@ section{Overriding}:
     like \code{data.frames}. In this case, its better to assign a different class to
     the inputs and implement \code{as_dataloader} for it.
   translation: |-
-    Vous pouvez implémenter votre propre méthode S3 de `\code{as_dataloader}` si vous voulez que votre 
-    structure de données soit automatiquement prise en charge par luz's `\code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}`.
+    Vous pouvez implémenter votre propre méthode S3 de \code{as_dataloader} si vous voulez que votre 
+    structure de données soit automatiquement prise en charge par luz's \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}.
     La méthode doit satisfaire les conditions suivantes :
     \itemize{
-    \item La méthode doit retourner un `\code{\link[torch:dataloader]{torch::dataloader()}}`.
+    \item La méthode doit retourner un \code{\link[torch:dataloader]{torch::dataloader()}}.
     \item L'unique argument requis est `x`. Vous avez des paramètres avec de bonnes valeurs par défaut pour tous les autres arguments.
     }
 
-    Il faut éviter l'implémentation de méthodes `\code{as_dataloader}` pour les classes S3 courantes comme 
-    `\code{data.frames}`. Si nécessaire, il est préférable d'affecter une classe S3 spécifique aux inputs et d'implémenter 
-    `\code{as_dataloader}` pour cette classe.
+    Il faut éviter l'implémentation de méthodes \code{as_dataloader} pour les classes S3 courantes comme 
+    \code{data.frames}. Si nécessaire, il est préférable d'affecter une classe S3 spécifique aux inputs et d'implémenter 
+    \code{as_dataloader} pour cette classe.
 untranslatable:
 - alias
 - name

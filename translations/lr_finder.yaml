@@ -4,7 +4,7 @@ title:
 arguments:
   object:
     original: An nn_module that has been setup().
-    translation: Un module nn qui a été configuré.
+    translation: Un module nn qui a été configuré par \code{setup()}.
   data:
     original: (dataloader) A dataloader created with torch::dataloader()  used for
       learning rate finding.

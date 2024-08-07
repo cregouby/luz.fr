@@ -43,7 +43,7 @@ arguments:
       By default, it will produce output if \code{\link[=interactive]{interactive()}} is \code{TRUE}, otherwise
       it won't print to the console.
     translation: |-
-      (logique, optionnel) La procédure d'entraînement doit-elle émettre des messages vers la console pendant 
+      (booléen, optionnel) La procédure d'entraînement doit-elle émettre des messages vers la console pendant 
       l'entraînement. Par défaut, elle produira des messages si \code{\link[=interactive]{interactive()}} est \code{TRUE}.
   dataloader_options:
     original: |-

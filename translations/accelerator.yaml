@@ -7,11 +7,11 @@ arguments:
       (logical) whether the \code{accelerator} object should
       handle device placement. Default: \code{TRUE}
     translation: |-
-      (logique) si l'objet \code{accelerator} doit gérer le placement
+      (booléen) si l'objet \code{accelerator} doit gérer le placement
       sur les cartes accélératrices. Par défaut : \code{TRUE}
   cpu:
     original: (logical) whether the training procedure should run on the CPU.
-    translation: (logique) le processus d'apprentissage doit-il s'exécuter sur le processeur central ?
+    translation: (booléen) le processus d'apprentissage doit-il s'exécuter sur le processeur central ?
   cuda_index:
     original: |-
       (integer) index of the CUDA device to use if multiple GPUs

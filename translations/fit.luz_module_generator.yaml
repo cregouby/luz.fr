@@ -76,7 +76,7 @@ arguments:
       By default, it will produce output if \code{\link[=interactive]{interactive()}} is \code{TRUE}, otherwise
       it won't print to the console.
     translation: |- 
-      (logique, optionnel) Une valeur booléenne indiquant si la procédure d'entraînement doit produire ses messages
+      (booléen, optionnel) La procédure d'entraînement doit-elle produire ses messages
       vers la console pendant l'entraînement. Par défaut, elle produira des message si \code{\link[=interactive]{interactive()}}
       est \code{TRUE}, sinon elle ne publiera pas vers la console.
   '...':

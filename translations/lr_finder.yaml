@@ -8,7 +8,7 @@ arguments:
   data:
     original: (dataloader) A dataloader created with torch::dataloader()  used for
       learning rate finding.
-    translation: (dataloader) Une dataloader créée avec torch::dataloader() utilisée
+    translation: (dataloader) Un dataloader créé avec torch::dataloader(), utilisé
      pour le recherche de taux d'apprentissage.
   steps:
     original: '(integer) The number of steps to iterate over in the learning rate
@@ -27,7 +27,7 @@ arguments:
     original: '(logical) Whether to divide the range between start_lr and end_lr into
       log-spaced intervals (alternative: uniform intervals). Default: TRUE'
     translation: |
-      (logique) Doit-on découper logarithmiquement l'intervalle entre start_lr et end_lr  (Si FALSE : intervalles uniformes). Défaut : TRUE
+      (booléen) Doit-on découper logarithmiquement l'intervalle entre start_lr et end_lr  (Si FALSE : intervalles uniformes). Défaut : TRUE
   '...':
     original: Other arguments passed to \code{fit}.
     translation: Autres arguments passés à \code{fit}.

@@ -1,6 +1,6 @@
 title:
   original: Creates a dataloader from its input
-  translation: Crée un dataloader à partir de son entrée
+  translation: Crée un dataloader à partir de son entrée. 
 arguments:
   x:
     original: the input object.
@@ -13,8 +13,8 @@ arguments:
       (int, optional): how many samples per batch to load
       (default: \code{1}).
     translation: |-
-      (entier, facultatif) : nombre de séquences à charger par lot
-      (par défaut: \code{1}).
+      (entier, facultatif) : nombre d'observations par lot
+      (par défaut: \code{32}).
 description:
   original: |
     \code{as_dataloader} is used internally by luz to convert input
@@ -33,13 +33,12 @@ details:
     to create a \link[torch:dataset]{torch::dataset} and a \link[torch:dataloader]{torch::dataloader} in simple
     experiments.
   translation: |-
-    Les méthodes \code{as_dataloader} devraient avoir des paramètres par défaut choisis
-    avec attention pour la taille du lot, les workers parallèles, etc.
+    Les méthodes \code{as_dataloader} permettent de choisir finement les paramètres par défaut pour la taille du lot, les workers parallèles, etc.
 
     Elle permet aux utilisateurs de tester rapidement \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}} sans avoir besoin
     de créer un \link[torch:dataset]{torch::dataset} et un \link[torch:dataloader]{torch::dataloader} pour l'expérimentation.
 section{Methods (by class)}:
-  original: |-
+  original: |
     \itemize{
     \item \code{as_dataloader(dataset)}: Converts a \code{\link[torch:dataset]{torch::dataset()}} to a \code{\link[torch:dataloader]{torch::dataloader()}}.
 
@@ -67,7 +66,7 @@ section{Methods (by class)}:
     \item \code{as_dataloader(iterable_dataset)} : Convertit un \code{\link[torch:iterable_dataset]{torch::iterable_dataset()}} en 
     un \code{\link[torch:dataloader]{torch::dataloader()}}
 
-    \item \code{as_dataloader(list)} : Convertit une liste de tenseurs ou d'arrays avec la même
+    \item \code{as_dataloader(list)} : Convertit une liste de tenseurs ou d'arrays ayant tous la même
     taille dans leur première dimension en un \code{\link[torch:dataloader]{torch::dataloader()}}
 
     \item \code{as_dataloader(dataloader)} : Retourne le même dataloader

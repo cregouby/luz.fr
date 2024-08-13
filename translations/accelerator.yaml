@@ -1,6 +1,6 @@
 title:
   original: Create an accelerator
-  translation: Créer un accélérateur
+  translation: Crée un accélérateur 
 arguments:
   device_placement:
     original: |-
@@ -23,7 +23,7 @@ description:
   original: |
     Create an accelerator
   translation: |
-    Créer un accélérateur
+    Crée un accélérateur
 untranslatable:
 - alias
 - name

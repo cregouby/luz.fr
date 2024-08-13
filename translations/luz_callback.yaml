@@ -132,7 +132,7 @@ details:
     End Fit
     }\if{html}{\out{</div>}}
 
-    Every step market with \verb{on_*} is a point in the training procedure that
+    Every step marked with \verb{on_*} is a point in the training procedure that
     is available for callbacks to be called.
 
     The other important part of callbacks is the \code{ctx} (context) object. See
@@ -147,6 +147,7 @@ details:
     callbacks in luz already provide a weight value. For example, the
     \code{?luz_callback_early_stopping} has a weight of \code{Inf}, since in general
     we want to run it as the last thing in the loop.
+  
   translation: |-
     Nous allons implémenter un rappel qui affiche 'Itération \code{n}' (où \code{n} est le nombre d'itération)
     pour chaque lot du jeu de donnée d'entraînement et 'Fait' lorsqu'une époque est terminée.
@@ -242,6 +243,7 @@ details:
     d'attribut `weight` sont considérés comme ayant une valeur de \code{weight = 0}. Quelques callback intégrés 
     dans luz fournissent déjà une valeur de poids. Par exemple, le \code{?luz_callback_early_stopping} a un 
     poids de \code{Inf}, car nous voulons généralement l'exécuter comme la dernière chose dans la boucle.
+    
 section{Prediction callbacks}:
   original: |
     You can also use callbacks when using \code{\link[=predict]{predict()}}. In this case the supported

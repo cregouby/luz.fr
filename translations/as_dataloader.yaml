@@ -38,7 +38,7 @@ details:
     Elle permet aux utilisateurs de tester rapidement \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}} sans avoir besoin
     de créer un \link[torch:dataset]{torch::dataset} et un \link[torch:dataloader]{torch::dataloader} pour l'expérimentation.
 section{Methods (by class)}:
-  original: |
+  original: |-
     \itemize{
     \item \code{as_dataloader(dataset)}: Converts a \code{\link[torch:dataset]{torch::dataset()}} to a \code{\link[torch:dataloader]{torch::dataloader()}}.
 

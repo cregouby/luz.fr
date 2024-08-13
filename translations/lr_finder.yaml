@@ -18,16 +18,17 @@ arguments:
   start_lr:
     original: '(float) The smallest learning rate. Default: 1e-7.'
     translation: |
-      (réel) Le plus petit taux d'apprentissage. Défaut : 1e-7.
+      (réel) La limite basse du taux d'apprentissage.
   end_lr:
     original: '(float) The highest learning rate. Default: 1e-1.'
     translation: |
-      (réel) Le plus grand taux d'apprentissage. Défaut : 1e-1.
+      (réel) La limite haute du taux d'apprentissage.
   log_spaced_intervals:
     original: '(logical) Whether to divide the range between start_lr and end_lr into
       log-spaced intervals (alternative: uniform intervals). Default: TRUE'
     translation: |
-      (booléen) Doit-on découper logarithmiquement l'intervalle entre start_lr et end_lr  (Si FALSE : intervalles uniformes). Défaut : TRUE
+      (booléen) Doit-on découper logarithmiquement l'intervalle entre start_lr et end_lr  
+      (Si FALSE : intervalles uniformes). Défaut : TRUE
   '...':
     original: Other arguments passed to \code{fit}.
     translation: Autres arguments passés à \code{fit}.

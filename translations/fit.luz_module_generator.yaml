@@ -54,7 +54,7 @@ arguments:
       this case a random sample with size corresponding to that proportion from
       \code{data} will be used for validation.
     translation: |- 
-      (dataloader, dataset, liste ou scalaire; optionnel) Un dataloader créé avec \code{\link[torch:dataloader]{torch::dataloader()}}
+      (dataloader, dataset, liste ou réel; optionnel) Un dataloader créé avec \code{\link[torch:dataloader]{torch::dataloader()}}
       ou un jeu de données créé avec \code{\link[torch:dataset]{torch::dataset()}} qui sera utilisé 
       pendant la procédure de validation. Ils doivent retourner une liste contenant (input, target). Si \code{data}
       est un \code{\link[torch:dataset]{torch::dataset()}} ou une liste, vous pouvez également fournir une valeur 
@@ -91,14 +91,14 @@ arguments:
     translation: |- 
       Options utilisées lors de la création d'un dataloader. Voir
       \code{\link[torch:dataloader]{torch::dataloader()}}. \code{shuffle=TRUE} par défaut pour les données d'entraînement et
-      \code{batch_size=32} par défaut. Il produira une erreur si ce n'est pas \code{NULL} si \code{data} est déjà un dataloader.
+      \code{batch_size=32} par défaut. Il y aura erreur si ce n'est pas \code{NULL} quand \code{data} est déjà un dataloader.
 value:
   original: |
     A fitted object that can be saved with \code{\link[=luz_save]{luz_save()}} and can be
     printed with \code{\link[=print]{print()}} and plotted with \code{\link[=plot]{plot()}}.
   translation: | 
-    Un objet entraîné qui peut être enregistré avec \code{\link[=luz_save]{luz_save()}} 
-    et peut être affiché avec \code{\link[=print]{print()}} et visualisé avec \code{\link[=plot]{plot()}}.
+    Un objet entraîné qui peut être enregistré avec \code{\link[=luz_save]{luz_save()}}, 
+    affiché avec \code{\link[=print]{print()}} et visualisé avec \code{\link[=plot]{plot()}}.
 description:
   original: |
     Fit a \code{nn_module}
@@ -109,7 +109,7 @@ seealso:
     to create modules that can be trained with \\code{fit}.\n\nOther training: \n\\code{\\link{evaluate}()},\n\\code{\\link{predict.luz_module_fitted}()},\n\\code{\\link{setup}()}\n"
   translation: | 
     \code{\link[=predict.luz_module_fitted]{predict.luz_module_fitted()}}
-    pour savoir comment créer des prédictions.\code{\link[=setup]{setup()}} pour trouver comment
+    pour savoir comment créer des prédictions. \code{\link[=setup]{setup()}} pour trouver comment
     créer des modules qui peuvent être entraînés avec \code{fit}.
     Autres entraînement
     \code{\link{evaluate}()}, \code{\link{predict.luz_module_fitted}()}, \code{\link{setup}()}

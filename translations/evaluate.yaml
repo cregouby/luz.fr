@@ -14,14 +14,14 @@ arguments:
       module and the second will be used as a target for the loss function.
     translation: |-
       (dataloader, dataset ou liste) Un dataloader créé avec 
-      \code{\link[torch:dataloader]{torch::dataloader()}} utilisé pour l'entraînement du modèle, ou un dataset
+      \code{\link[torch:dataloader]{torch::dataloader()}} sur lequel évaluer le modèle, ou un dataset
       créé avec \code{\link[torch:dataset]{torch::dataset()}} ou une liste. Les dataloaders
       et les datasets doivent retourner une liste avec au plus 2 items. 
-      Le premier sera utilisé comme prédicteurs pour le module et le second 
+      Le premier item sera utilisé comme prédicteurs pour le module et le second 
       sera utilisé comme variable à prédire pour la fonction de perte.
   '...':
     original: Currently unused.
-    translation: ~
+    translation: Inutilisé
   metrics:
     original: |-
       A list of luz metrics to be tracked during evaluation. If \code{NULL}
@@ -36,7 +36,7 @@ arguments:
       callbacks \code{\link[=luz_callback_metrics]{luz_callback_metrics()}}, \code{\link[=luz_callback_progress]{luz_callback_progress()}} and
       \code{\link[=luz_callback_train_valid]{luz_callback_train_valid()}} are always added by default.
     translation: |-
-      (liste, facultatif) Une liste de callbacks définis avec
+      (facultatif) Une liste de callbacks définis avec
       \code{\link[=luz_callback]{luz_callback()}} qui seront appelés pendant la procédure d'entraînement. Les callbacks 
       \code{\link[=luz_callback_metrics]{luz_callback_metrics()}}, \code{\link[=luz_callback_progress]{luz_callback_progress()}} et
       \code{\link[=luz_callback_train_valid]{luz_callback_train_valid()}} sont toujours ajoutés par défaut.
@@ -46,7 +46,7 @@ arguments:
       used to configure device placement of the components like \link{nn_module}s,
       optimizers and batches of data.
     translation: |-
-      (accélérateur, facultatif) Un accélérateur \code{\link[=accelerator]{accelerator()}} à utiliser 
+      Un accélérateur \code{\link[=accelerator]{accelerator()}} à utiliser 
       pour le calcul des objets tels que les modules \verb{nn}, les optimiseurs et les batch de données.
   verbose:
     original: |-
@@ -55,7 +55,7 @@ arguments:
       By default, it will produce output if \code{\link[=interactive]{interactive()}} is \code{TRUE}, otherwise
       it won't print to the console.
     translation: |-
-      (valeur logique, facultative) Une valeur indiquant si la procédure d'entraînement doit produire des messages
+      (booléen) La procédure d'entraînement doit-elle produire des messages
       dans la console. Par défaut, elle produira des messages s'il y a une interface graphique 
       (c'est-à-dire si \code{\link[=interactive]{interactive()}} est vrai), sinon elle ne produira pas de messages.
   dataloader_options:
@@ -72,7 +72,7 @@ description:
   original: |
     Evaluates a fitted model on a dataset
   translation: |
-    Évalue un modèle entraîné sur un jeu de données
+    Évalue un modèle entraîné sur un jeu de données 
 details:
   original: |
     Once a model has been trained you might want to evaluate its performance
@@ -101,7 +101,7 @@ details:
   translation: |-
     Une fois que vous avez entraîné un modèle, vous pouvez évaluer sa performance
     sur un autre jeu de données. Pour cela, luz fournit la 
-    fonction \code{?evaluate}. Cette dernière prend en argument un modèle entraîné 
+    fonction \code{evaluate}. Cette dernière prend en argument un modèle entraîné 
     et un jeu de données, puis calcule les métriques liées au modèle.
 
     La fonction \code{evaluate} retourne un objet \code{luz_module_evaluation}, que vous pouvez consulter

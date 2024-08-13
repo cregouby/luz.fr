@@ -148,8 +148,8 @@ details:
     \code{?luz_callback_early_stopping} has a weight of \code{Inf}, since in general
     we want to run it as the last thing in the loop.
   translation: |-
-    Nous allons implémenter un rappel qui affiche « Itération \code{n} » (où \code{n} est le nombre d'itération)
-    pour chaque lot du jeu de donnée d'entraînement et « Fait » lorsqu'une époque est terminée.
+    Nous allons implémenter un rappel qui affiche 'Itération \code{n}' (où \code{n} est le nombre d'itération)
+    pour chaque lot du jeu de donnée d'entraînement et 'Fait' lorsqu'une époque est terminée.
     Pour ce faire, nous utilisons la fonction \code{luz_callback} :
 
     \if{html}{\out{<div class="sourceCode r">}}\preformatted{print_callback <- luz_callback(
@@ -166,12 +166,12 @@ details:
     )
     }\if{html}{\out{</div>}}
 
-    La fonction de callback `luz_callback()` accepte des fonctions nommées en tant qu'arguments dans \code{...}, 
-    où le nom indique le moment auquel la fonction de callback devrait être appelée. Par exemple,
+    La fonction de callback \code{luz_callback()} accepte des fonctions nommées en tant qu'arguments dans \code{...}, 
+    où le nom indique le moment auquel la fonction de callback devra être appelée. Par exemple,
     \code{on_train_batch_end()} est appelée à chaque lot à la fin du processus d'apprentissage, 
     et \code{on_epoch_end()} est appelée à la fin de chaque époque.
 
-    La valeur renvoyée par `luz_callback()` est une fonction qui initialise une instance du callback. 
+    La valeur renvoyée par \code{luz_callback()} est une fonction qui initialise une instance du callback. 
     Les callbacks peuvent avoir des paramètres d'initialisation, comme le nom d'un fichier dans lequel
     enregistrer les résultats. Dans ce cas, vous pouvez passer une méthode d'initialisation \code{initialize}
     lors de la définition de la fonction de callback et sauvegarder ces paramètres dans l'objet \code{self}.

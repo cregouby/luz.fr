@@ -16,7 +16,7 @@ arguments:
     translation: Amélioration minimale pour réinitialiser le compteur de patience.
   patience:
     original: Number of epochs without improving until stoping training.
-    translation: Nombre d'époques sans amélioration avant que l'entraînement s'arrête.
+    translation: Nombre d'époques sans amélioration avant de stopper l'entraînement.
   mode:
     original: |-
       Specifies the direction that is considered an improvement. By default
@@ -45,7 +45,7 @@ description:
   original: |
     Stops training when a monitored metric stops improving
   translation: |
-    Arrête l'entraînement lorsque le métrique suivie cesse de s'améliorer
+    Stoppe l'entraînement lorsque le métrique suivie cesse de s'améliorer
 note:
   original: |
     This callback adds a \code{on_early_stopping} callback that can be used to

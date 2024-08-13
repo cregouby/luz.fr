@@ -24,10 +24,10 @@ details:
   translation: |
     Ce callback s'occupe de 2 attributs de  \link{ctx}:
     \itemize{
-    \item \code{ctx$metrics}: stocke les objets de métriques courants qui sont initialisés une fois par époque,
-    et sont plus tard mis à jour pas \code{update()} et calculés pas \code{compute()} à chaque batch. 
+    \item \code{ctx$metrics}: stocke les objets de métriques courants qui sont réinitialisés une fois par époque,
+    et qui seront plus tard mis à jour pas \code{update()} et calculés pas \code{compute()} à chaque lot. 
     Vous aurez rarement besoin de travailler avec ces métriques.
-    \item \code{ctx$records$metrics}: Stocke les métriques pour chaque entraînement/validation et chaque époque. 
+    \item \code{ctx$records$metrics}: Stocke les métriques pour entraînement et validation pour chaque époque. 
     La structure est très similaire à \code{ctx$losses}.
     }
 note:

@@ -36,8 +36,8 @@ description:
   translation: |-
     Mise en œuvre de \href{https://arxiv.org/abs/1710.09412}{'mixup: Beyond Empirical Risk Minimization'}.
     Actuellement testé uniquement pour les données catégorielles,
-    où les variables à prédire sont encodées comme des entiers, pas des encodées en binaire un-contre-tous.
-    Ce callback est censé être utilisé ensemble avec `nn_mixup_loss()`.
+    où les variables à prédire sont encodées comme des entiers, et pas encodées en binaire un-contre-tous.
+    Ce callback doit être utilisé simultanément avec `nn_mixup_loss()`.
 details:
   original: |
     Overall, we follow the \href{https://github.com/fastai/fastai/blob/master/fastai/callback/mixup.py}{fastai implementation}

@@ -12,7 +12,7 @@ arguments:
       You can use \code{\link[=sprintf]{sprintf()}} to quickly format quantities, for example:\code{'{epoch:02d}'}.
     translation: |-
       Chemin pour sauvegarder le modèle sur disque dur. Le chemin est interpolé avec \code{glue},
-      donc vous pouvez utiliser tout attribut dans le \link{ctx} en utilisant \code{'{ctx$epoch}'}. PAr exemple,
+      donc vous pouvez utiliser tout attribut dans le \link{ctx} en utilisant \code{'{ctx$epoch}'}. Par exemple,
       les valeurs \code{epoch} et \code{monitor} sont déjà présentes dans l'environnement. Si le chemin spécifié
       est un répertoire (se termine par \code{/} ou \verb{\\}), alors les modèles sont sauvegardés avec le nom fourni par
       \verb{epoch-{epoch:02d}-{self$monitor}-{monitor:.3f}.pt}. Voir les exemples.

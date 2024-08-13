@@ -19,12 +19,13 @@ details:
     \item \strong{fit} time for the entire fit procedure.
     \item \strong{epoch} times per epoch
     }
-  translation: |
+  translation: |-
     Les valeurs sont enregistrés dans \code{ctx$records$profile}. Les temps sont en secondes.
     Les données sont stockées avec la structure suivante :
     \itemize{
     \item \strong{fit} temps de l'ensemble de la precedure \code{fit}.
     \item \strong{epoch} temps par époque.
+    }
 note:
   original: |
     In general you don't need to use these callback by yourself because it's always

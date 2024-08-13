@@ -17,7 +17,7 @@ value:
   original: |
     The same luz module
   translation: |
-    The même module luz
+    Le même module luz
 description:
   original: |
     This function is used to define hyper-parameters before calling \code{fit} for

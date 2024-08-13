@@ -58,8 +58,8 @@ description:
     The setup function is used to set important attributes and method for \code{nn_modules}
     to be used with luz.
   translation: |-
-    La fonction d'initialiation est utilisée pour définir les attributs et les méthodes 
-    importantes pour le  \code{nn_modules} fonctionne avec luz.
+    La fonction d'initialiation, utilisée pour définir les attributs et les méthodes 
+    importantes pour que le \code{nn_modules} fonctionne avec luz.
 details:
   original: |
     It makes sure the module have all the necessary ingredients in order to be fitted.

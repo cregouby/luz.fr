@@ -13,7 +13,7 @@ arguments:
       the model.
     translation: |-
       Les paramètres passés ici seront utilisés pour initialiser les optimiseurs. 
-      Par exemple, si votre optimiseur est \code{optim_adam} et vous passez\code{lr=0.1}, alors 
+      Par exemple, si votre optimiseur est \code{optim_adam} et vous passez \code{lr=0.1}, alors 
       la fonction  \code{optim_adam} est appelée avec \code{optim_adam(parameters, lr=0.1)} 
       lors de l'entraînement du modèle.
 

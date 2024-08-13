@@ -1,6 +1,6 @@
 title:
   original: Train-eval callback
-  translation: callback train-eval
+  translation: callback train-eval 
 value:
   original: |
     A \code{luz_callback}
@@ -32,7 +32,7 @@ details:
 
 note:
   original: |
-    In general you won't need to explicitly use the metrics callback as it's
+    In general you won't need to explicitly use the train_valid callback as it's
     used by default in \code{\link[=fit.luz_module_generator]{fit.luz_module_generator()}}.
   translation: |
     En général, vous n'avez pas besoin d'utiliser explicitement le callback train-eval

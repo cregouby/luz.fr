@@ -1,10 +1,10 @@
 title:
   original: Fit a \code{nn_module}
-  translation: Entraîne un \code{nn_module}
+  translation: Entraîne un \code{nn_module} 
 arguments:
   object:
     original: An \code{nn_module} that has been \code{\link[=setup]{setup()}}.
-    translation: Un \code{nn_module} qui a été \code{\link[=setup]{setup()}}.
+    translation: Un \code{nn_module} qui est passé par la commande \code{\link[=setup]{setup()}}.
   data:
     original: |-
       (dataloader, dataset or list) A dataloader created with
@@ -40,7 +40,7 @@ arguments:
       callbacks \code{\link[=luz_callback_metrics]{luz_callback_metrics()}}, \code{\link[=luz_callback_progress]{luz_callback_progress()}} and
       \code{\link[=luz_callback_train_valid]{luz_callback_train_valid()}} are always added by default.
     translation: |- 
-      (liste, optionnel) Une liste de callbacks définis avec
+      (optionnel) Une liste de callbacks définis avec
       \code{\link[=luz_callback]{luz_callback()}} qui seront appelés pendant la procédure d'entraînement. 
       Les callbacks \code{\link[=luz_callback_metrics]{luz_callback_metrics()}}, \code{\link[=luz_callback_progress]{luz_callback_progress()}} et
       \code{\link[=luz_callback_train_valid]{luz_callback_train_valid()}} sont toujours ajoutés par défaut.

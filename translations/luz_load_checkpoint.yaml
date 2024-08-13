@@ -1,9 +1,9 @@
 title:
   original: Loads a checkpoint
-  translation: Charge un instantanné
+  translation: Charge un instantanné 
 arguments:
   obj:
-    original: Object to which we want to laod the checkpoint.
+    original: Object to which we want to load the checkpoint.
     translation: L'objet dans lequel charger l'instantané.
   path:
     original: Path of the checkpoint on disk.

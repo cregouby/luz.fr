@@ -85,7 +85,7 @@ details:
        \code{metrics} \tab Une \code{list()} des objet de métrique en cours \code{update}és à chaqe \code{on_train_batch_end()} ou \code{on_valid_batch_end()}. Voir aussi \code{help("luz_callback_metrics")} \cr
        \code{records} \tab Une \code{list()} enregitrant toutes les valeurs des métriques d'entraînement et de validation. Voir aussi \code{help("luz_callback_metrics")}. Contient aussi les métrique sde profiling. Voir \code{help("luz_callback_profile")} pour plus d'information. \cr
        \code{handlers} \tab Une \code{list()} nommée des \code{handlers} transférée à \code{rlang::with_handlers()} pendant la boucle d'entraînement, qui permet de gérer des erreurs ou des conditions levées par d'autres callbacks. \cr
-       \code{epoch_handlers} \tabUne \code{list()} nommée des \code{handlers} utilisée avec \code{rlang::with_handlers()}. Ces handlers sont utilisés à l'intérieur de la boucle de l'époque, et vous permettent de gérer des évènements spécifiques à l'époque, sans pour autant arrêter l'entraînement. \cr
+       \code{epoch_handlers} \tab Une \code{list()} nommée des \code{handlers} utilisée avec \code{rlang::with_handlers()}. Ces handlers sont utilisés à l'intérieur de la boucle de l'époque, et vous permettent de gérer des évènements spécifiques à l'époque, sans pour autant arrêter l'entraînement. \cr
     }
 
 

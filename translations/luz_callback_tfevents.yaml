@@ -24,8 +24,8 @@ description:
     Assuming tensorboard is installed, result can be visualized with
   translation: |
     Enregistre des métriques et d'autres informations du modèle sous forme
-    de fichier tfevents. Quand tensorboard est installé, les résultats peuvent être visualisés avec
-    ...
+    de fichier tfevents. Quand tensorboard est installé, il peut être utilisé pour 
+    visualiser les résultats.
 details:
   original: |
     \if{html}{\out{<div class="sourceCode">}}\preformatted{tensorboard --logdir=logs

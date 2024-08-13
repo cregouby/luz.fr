@@ -39,6 +39,7 @@ value:
     }
     \item \code{weight}, les poids de mélange
     }
+    }
 description:
   original: |
     Logic underlying \code{\link[=luz_callback_mixup]{luz_callback_mixup()}}.

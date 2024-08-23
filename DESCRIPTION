@@ -19,3 +19,4 @@ Translates: luz (== 0.4.0)
 LazyData: true
 imports:
     rhelpi18n
+RoxygenNote: 7.3.2

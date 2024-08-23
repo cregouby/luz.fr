@@ -1,16 +1,14 @@
-![logo luz.fr](images/luz.fr.png){width="258"}
-
-# luz.fr
+# luz.fr <img src="images/luz.fr.png" align="right" style="width: 15%"/>
 
 <!-- badges: start -->
 
 <!-- badges: end -->
 
-Le paquet d'internationalisation de {luz} en français (fr_FR)
+Le paquet d'internationalisation de **{luz}** en français (fr_FR)
 
 ## Installation
 
-Vous pouvez installer la version de development de {luz.fr} depuis [GitHub](https://github.com/) via:
+Vous pouvez installer la version de development de **{luz.fr}** depuis [GitHub](https://github.com/) via:
 
 ``` r
 # install.packages("devtools")
@@ -20,13 +18,13 @@ devtools::install_github("cregouby/luz.fr")
 
 ## Exemple
 
-Voici comment obtenir l'aide de {luz} en français :
+Voici comment utiliser {luz} avec l'aide en français :
 
 ``` r
 # configure la session en langue française
 Sys.setenv(LANGUAGE = "fr")
 
-# charge la librairie de traduction puis luz par sa traduction française
+# charge la librairie luz en traduction française
 library(luz.fr)
 
 # consulte l'aide normalement

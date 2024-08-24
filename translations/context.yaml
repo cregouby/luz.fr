@@ -118,9 +118,9 @@ section{Active bindings}:
 
     \item{\code{opt_hparams}}{liste de hyperparamètres utilisés pour initialiser les \code{ctx$optimizers}.}
 
-    \item{\code{train_data}}{dataloader utilisé pour l'entraînement du modèle}
+    \item{\code{train_data}}{chargeur de données utilisé pour l'entraînement du modèle}
 
-    \item{\code{valid_data}}{dataloader utilisé pendant la validation du modèle}
+    \item{\code{valid_data}}{chargeur de données utilisé pendant la validation du modèle}
 
     \item{\code{accelerator}}{un \code{\link[=accelerator]{accelerator()}} luz qui configure le 
     deploiement sur un device entre autre.}
@@ -145,7 +145,7 @@ section{Active bindings}:
 
     \item{\code{opt_name}}{nom de l'optimiseur actuel.}
 
-    \item{\code{data}}{dataloader en cours d'utilisation.}
+    \item{\code{data}}{chargeur de données en cours d'utilisation.}
 
     \item{\code{loss_fn}}{fonction de coût utilisée pour entraîner le modèle}
 

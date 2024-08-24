@@ -64,8 +64,8 @@ details:
        \code{model} \tab Un objet \code{nn_module} initialisé qui sera entraîné pendant le process de \code{fit}. \cr
        \code{optimizers} \tab Liste nommée d'optimateurs utilisés pendant l'entraînement. \cr
        \code{data} \tab Le dataloader en cours d'usage. Pendant l'entraînement, c'est \code{ctx$train_data}, pendant l'évaluation, c'est \code{ctx$valid_data}. It can also be the prediction dataset when in \code{predict}. \cr
-       \code{train_data} \tab Dataloader fourni comme argument \code{data} à \code{fit}. Modifié pour fournir les données au device cible. \cr
-       \code{valid_data} \tab Dataloader fourni comme argument \code{valid_data} à \code{fit}. Modifié pour fournir les données au device cible. \cr
+       \code{train_data} \tab Chargeur de données fourni comme argument \code{data} à \code{fit}. Modifié pour fournir les données au device cible. \cr
+       \code{valid_data} \tab Chargeur de données fourni comme argument \code{valid_data} à \code{fit}. Modifié pour fournir les données au device cible. \cr
        \code{min_epochs} \tab Nombre minimum d'époques que le modèle sera entraîné. \cr
        \code{max_epochs} \tab Nombre maximum d'époques que le modèle sera entraîné. \cr
        \code{epoch} \tab Époque actuelle de l'entraînement. \cr
@@ -74,9 +74,9 @@ details:
        \code{callbacks} \tab Liste des callbacks qui seront appelés pendant la procédure d'entraînement. C'est l'union de la liste passée à l'argument \code{callbacks} et des callbacks par défaut. \cr
        \code{step} \tab la closure qui sera utilisé pour faire un \code{step} du modèle. Elle est utilisée pour l'entraînement et la validation. Ne prends pas d'argument mais a accès à l'objet \code{ctx}. \cr
        \code{call_callbacks} \tab Appel des callbacks par leur nom. Par exemple \code{call_callbacks("on_train_begin")} appelle tous les callbacks qui fournissent des methodes pour ce point. \cr
-       \code{batch} \tab Dernier lot obtenu par le dataloader. le lot est \code{list()} de 2 éléments, l'un est utilisé comme \code{input} et l'autre come \code{target}. \cr
-       \code{input} \tab Premier élément de la liste du dernier lot obtenu par le dataloader actuel. \cr
-       \code{target} \tab Second élément de la liste du dernier lot obtenu par le dataloader actuel. \cr
+       \code{batch} \tab Dernier lot obtenu par le chargeur de données. le lot est \code{list()} de 2 éléments, l'un est utilisé comme \code{input} et l'autre come \code{target}. \cr
+       \code{input} \tab Premier élément de la liste du dernier lot obtenu par le chargeur de données actuel. \cr
+       \code{target} \tab Second élément de la liste du dernier lot obtenu par le chargeur de données actuel. \cr
        \code{pred} \tab Dernières prédictions obtenues par \code{ctx$model$forward} . \strong{Note:} cela peut être potentiellement modifié par les appels précédemment exécutés. Ne sera pas disponible si vous utilisez un pas d'entraînement personnalisé. \cr
        \code{loss_fn} \tab La fonction de coût active, qui sera minimisée pendant l'entraînement. \cr
        \code{loss} \tab La dernière valeur mesurée de la fonction de coût \strong{Note:} Ne sera pas disponible avec un pas d'entraînement personnalisé. \cr

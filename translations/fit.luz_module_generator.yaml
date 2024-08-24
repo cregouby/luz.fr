@@ -13,9 +13,9 @@ arguments:
       list with at most 2 items. The first item will be used as input for the
       module and the second will be used as a target for the loss function.
     translation: |- 
-      (dataloader, dataset ou list) Un dataloader créé avec
+      (dataloader, dataset ou list) Un chargeur de donnée créé avec
       \code{\link[torch:dataloader]{torch::dataloader()}} utilisé pour l'entraînement du modèle, ou un jeu de données créé avec
-      \code{\link[torch:dataset]{torch::dataset()}} ou une liste. Les dataloaders et les jeux de données doivent renvoyer 
+      \code{\link[torch:dataset]{torch::dataset()}} ou une liste. Les chargeurs de donnée et les jeux de données doivent renvoyer 
       une liste contenant au plus 2 éléments. Le premier élément sera utilisé comme entrée pour le module et 
       le second comme variable à prédire pour la fonction de perte.
   epochs:
@@ -54,7 +54,7 @@ arguments:
       this case a random sample with size corresponding to that proportion from
       \code{data} will be used for validation.
     translation: |- 
-      (dataloader, dataset, liste ou réel; optionnel) Un dataloader créé avec \code{\link[torch:dataloader]{torch::dataloader()}}
+      (dataloader, dataset, liste ou réel; optionnel) Un chargeur de donnée créé avec \code{\link[torch:dataloader]{torch::dataloader()}}
       ou un jeu de données créé avec \code{\link[torch:dataset]{torch::dataset()}} qui sera utilisé 
       pendant la procédure de validation. Ils doivent retourner une liste contenant (input, target). Si \code{data}
       est un \code{\link[torch:dataset]{torch::dataset()}} ou une liste, vous pouvez également fournir une valeur 
@@ -89,9 +89,9 @@ arguments:
       \code{batch_size=32} by default. It will error if not \code{NULL} and \code{data} is
       already a dataloader.
     translation: |- 
-      Options utilisées lors de la création d'un dataloader. Voir
+      Options utilisées lors de la création d'un chargeur de donnée. Voir
       \code{\link[torch:dataloader]{torch::dataloader()}}. \code{shuffle=TRUE} par défaut pour les données d'entraînement et
-      \code{batch_size=32} par défaut. Il y aura erreur si ce n'est pas \code{NULL} quand \code{data} est déjà un dataloader.
+      \code{batch_size=32} par défaut. Il y aura erreur si ce n'est pas \code{NULL} quand \code{data} est déjà un chargeur de donnée.
 value:
   original: |
     A fitted object that can be saved with \code{\link[=luz_save]{luz_save()}} and can be

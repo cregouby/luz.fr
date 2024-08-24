@@ -8,7 +8,7 @@ arguments:
   data:
     original: (dataloader) A dataloader created with torch::dataloader()  used for
       learning rate finding.
-    translation: (dataloader) Un dataloader créé avec torch::dataloader(), utilisé
+    translation: (dataloader) Un chargeur de donnée créé avec torch::dataloader(), utilisé
      pour le recherche de taux d'apprentissage.
   steps:
     original: '(integer) The number of steps to iterate over in the learning rate

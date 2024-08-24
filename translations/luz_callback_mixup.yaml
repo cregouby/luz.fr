@@ -55,7 +55,7 @@ details:
     décrite \href{https://forums.fast.ai/t/mixup-data-augmentation/22764}{ici}.
     À savoir,
     \itemize{
-    \item Nous travaillons avec un seul dataloader, en mélangeant deux observations aléatoirement à partir du même lot.
+    \item Nous travaillons avec un seul chargeur de donnée, en mélangeant deux observations aléatoirement à partir du même lot.
     \item Nous combinons linéairement les pertes calculées pour les deux cibles :
     \code{loss(output, new_target) = weight * loss(output, target1) + (1-weight) * loss(output, target2)}
     \item Nous tirons des coefficients de mélange différents pour chaque paire.

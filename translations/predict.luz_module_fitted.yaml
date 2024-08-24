@@ -52,9 +52,9 @@ arguments:
       \code{batch_size=32} by default. It will error if not \code{NULL} and \code{data} is
       already a dataloader.
     translation: |-
-      Options utilisées lors de la création d'un dataloader. Voir \code{\link[torch:dataloader]{torch::dataloader()}}. 
+      Options utilisées lors de la création d'un chargeur de donnée. Voir \code{\link[torch:dataloader]{torch::dataloader()}}. 
       \code{shuffle=TRUE} par défaut pour les données d'entraînement et \code{batch_size=32} par défaut. 
-      Il produira une erreur si ce n'est pas \code{NULL} et que \code{data} est déjà un dataloader.
+      Il produira une erreur si ce n'est pas \code{NULL} et que \code{data} est déjà un chargeur de donnée.
 
 description:
   original: |

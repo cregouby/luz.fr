@@ -13,9 +13,9 @@ arguments:
       list with at most 2 items. The first item will be used as input for the
       module and the second will be used as a target for the loss function.
     translation: |-
-      (dataloader, dataset ou liste) Un dataloader créé avec 
+      (dataloader, dataset ou liste) Un chargeur de données créé avec 
       \code{\link[torch:dataloader]{torch::dataloader()}} sur lequel évaluer le modèle, ou un dataset
-      créé avec \code{\link[torch:dataset]{torch::dataset()}} ou une liste. Les dataloaders
+      créé avec \code{\link[torch:dataset]{torch::dataset()}} ou une liste. Les chargeur de donnéess
       et les datasets doivent retourner une liste avec au plus 2 items. 
       Le premier item sera utilisé comme prédicteurs pour le module et le second 
       sera utilisé comme variable à prédire pour la fonction de perte.
@@ -65,9 +65,9 @@ arguments:
       \code{batch_size=32} by default. It will error if not \code{NULL} and \code{data} is
       already a dataloader.
     translation: |-
-      Des options utilisées lors de la création d'un dataloader. Voir 
+      Des options utilisées lors de la création d'un chargeur de données. Voir 
       \code{\link[torch:dataloader]{torch::dataloader()}}. Par défaut\code{shuffle=TRUE} pour les données d'entraînement 
-      et \code{batch_size=32}. Il y aura une erreur si non \code{NULL} et si \code{data} est déja un dataloader.
+      et \code{batch_size=32}. Il y aura une erreur si non \code{NULL} et si \code{data} est déja un chargeur de données.
 description:
   original: |
     Evaluates a fitted model on a dataset

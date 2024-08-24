@@ -82,7 +82,7 @@ details:
     Cette fonction est\nappelée pour chaque époque dans les boucles d'entraînement et de 
     validation.\n\\item \\code{update}: met à jour l'état interne de la métrique. Cette 
     fonction est appelée\nà chaque étape d'entraînement et de validation avec les prédictions 
-    obtenues par le modèle\net les valeurs cibles obtenues à partir du dataloader.\n
+    obtenues par le modèle\net les valeurs cibles obtenues à partir du chargeur de donnée.\n
     \\item \\code{compute}: utilise l'état interne pour calculer les valeurs du métrique. 
     Cette\nfonction est appelée chaque fois que nous devons obtenir la valeur actuelle du métrique.
     \nEg, elle est appelée chaque étape d'entraînement pour les métriques affichées dans la\nbare 

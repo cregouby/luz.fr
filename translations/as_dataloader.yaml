@@ -1,6 +1,6 @@
 title:
   original: Creates a dataloader from its input
-  translation: Crée un dataloader à partir de son entrée. 
+  translation: Crée un chargeur de données à partir de son entrée. 
 arguments:
   x:
     original: the input object.
@@ -69,15 +69,15 @@ section{Methods (by class)}:
     \item \code{as_dataloader(list)} : Convertit une liste de tenseurs ou d'arrays ayant tous la même
     taille dans leur première dimension en un \code{\link[torch:dataloader]{torch::dataloader()}}
 
-    \item \code{as_dataloader(dataloader)} : Retourne le même dataloader
+    \item \code{as_dataloader(dataloader)} : Retourne le même chargeur de données
 
-    \item \code{as_dataloader(matrix)} : Convertit la matrice en un dataloader
+    \item \code{as_dataloader(matrix)} : Convertit la matrice en un chargeur de données
 
-    \item \code{as_dataloader(numeric)} : Convertit le vecteur numérique en un dataloader
+    \item \code{as_dataloader(numeric)} : Convertit le vecteur numérique en un chargeur de données
 
-    \item \code{as_dataloader(array)} : Convertit l'array en un dataloader
+    \item \code{as_dataloader(array)} : Convertit l'array en un chargeur de données
 
-    \item \code{as_dataloader(torch_tensor)} : Convertit le tenseur en un dataloader
+    \item \code{as_dataloader(torch_tensor)} : Convertit le tenseur en un chargeur de données
     }
 section{Overriding}:
   original: |

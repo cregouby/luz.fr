@@ -24,8 +24,9 @@ Voici comment utiliser {luz} avec l'aide en français :
 # configure la session en langue française
 Sys.setenv(LANGUAGE = "fr")
 
-# charge la librairie luz en traduction française
+# charge la librairie d'aide de luz en traduction française et {luz}
 library(luz.fr)
+library(luz)
 
 # consulte l'aide normalement
 ??lr_finder

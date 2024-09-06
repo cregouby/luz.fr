@@ -1,0 +1,71 @@
+---
+title: "Accelerator API"
+output: rmarkdown::html_vignette
+lang: fr
+vignette: >
+  %\VignetteIndexEntry{Accelerator API}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(luz)
+```
+
+
+L'API Accélérateur est un portage simplifié de la bibliothèque [Hugging Face accelerate](https://github.com/huggingface/accelerate).
+Il permet aux utilisateurs d'éviter le code de gestion nécessaire pour écrire des boucles d'entraînement qui fonctionnent correctement sur les CPUs et GPUs.
+Actuellement, il ne gère que l'utilisation du CPU et d'une GPU unique.
+
+Cette API est destinée à vous rendre l'usage du paquet luz le plus flexible possible.
+Avec l'API Accélérateur, vous écrivez la boucle d'entraînement de torch brute et, avec quelques changements de code, vous gérez automatiquement le déplacement sur un périphérique de calcul du modèle, des optimisations et des chargeurs de données, de sorte que vous n'avez pas besoin d'ajouter des appels multiples à `$to(device="cuda")` dans votre code, ni de penser à l'ordre dans lequel créer le modèle et les optimisations.
+
+## Exemple
+
+L'API Accélérateur est plus facile à comprendre par l'exemple. Étudions la différence diff de code d'une boucle d'entraînement de torch brute.
+
+```diff
+library(torch)
++ library(luz)
+
++ acc <- accelerator()
+- device <- "cpu"
+
+data <- tensor_dataset(
+  x = torch_randn(100, 10),
+  y = torch_rand(100, 1)
+)
+
+dl <- dataloader(data, batch_size = 10)
+
+model <- nn_linear(10, 1)
+- model$to(device = device)
+opt <- optim_adam(model$parameters)
+
++ c(model, opt, dl) %<-% acc$prepare(model, opt, dl)
+
+model$train()
+coro::loop(for (batch in dl) {
+
+  opt$zero_grad()
+
+-  preds <- model(batch$x$to(device = device))
++  preds <- model(batch$x)
+-  loss <- nnf_mse_loss(preds, batch$y$to(device = device))
++  loss <- nnf_mse_loss(preds, batch$y)
+
+  loss$backward()
+  opt$step()
+})
+```
+
+Avec les modifications de code listées, vous réalisez que vous n'avez plus besoin de déplacer manuellement les données et les paramètres entre les périphériques de calcul, ce qui rend votre code plus facile à lire et moins sujet aux erreurs.
+
+Vous pouvez trouver de la documentation supplémentaire en utilisant `help(accelerator)`.

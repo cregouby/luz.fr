@@ -1,9 +1,9 @@
 ---
-title: "Accelerator API"
+title: "API des accélérateurs"
 output: rmarkdown::html_vignette
 lang: fr
 vignette: >
-  %\VignetteIndexEntry{Accelerator API}
+  %\VignetteIndexEntry{API des accélérateurs}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -19,17 +19,17 @@ knitr::opts_chunk$set(
 library(luz)
 ```
 
+L'API des accélérateurs est une version simplifiée de la [bibliothèque Accelerate](https://github.com/huggingface/accelerate) de Hugging Face.
+Elle permet aux utilisateurs d'éviter le code de gestion nécessaire pour écrire les boucles d'apprentissage qui fonctionnent correctement sur plusieurs périphériques de calcul (les CPUs et les GPUs).
+Actuellement, elle ne gère que l'utilisation des CPUs et d'un unique GPU.
 
-L'API Accélérateur est un portage simplifié de la bibliothèque [Hugging Face accelerate](https://github.com/huggingface/accelerate).
-Il permet aux utilisateurs d'éviter le code de gestion nécessaire pour écrire des boucles d'entraînement qui fonctionnent correctement sur les CPUs et GPUs.
-Actuellement, il ne gère que l'utilisation du CPU et d'une GPU unique.
-
-Cette API est destinée à vous rendre l'usage du paquet luz le plus flexible possible.
-Avec l'API Accélérateur, vous écrivez la boucle d'entraînement de torch brute et, avec quelques changements de code, vous gérez automatiquement le déplacement sur un périphérique de calcul du modèle, des optimisations et des chargeurs de données, de sorte que vous n'avez pas besoin d'ajouter des appels multiples à `$to(device="cuda")` dans votre code, ni de penser à l'ordre dans lequel créer le modèle et les optimisations.
+Cette API est conçue pour être la méthode la plus flexible possible de l'utilisation du package luz. 
+Avec l'API des accélérateurs, vous écrivez le code torch d'apprentissage brut et, après quelques modifications, vous gérez automatiquement son deploiement sur les périphériques de calcul du modèle, des optimiseurs et des chargeurs de donnée, donc vous n'avez pas besoin 
+d'ajouter partout des `$to(device="cuda")` dans votre code ou penser à l'ordre dans lequel créer le modèle et les optimiseurs.
 
 ## Exemple
 
-L'API Accélérateur est plus facile à comprendre par l'exemple. Étudions la différence diff de code d'une boucle d'entraînement de torch brute.
+L'API des accélérateurs est mieux expliquée sur un exemple de différence `diff` du code dans une boucle d'apprentissage torch brut.
 
 ```diff
 library(torch)
@@ -66,6 +66,6 @@ coro::loop(for (batch in dl) {
 })
 ```
 
-Avec les modifications de code listées, vous réalisez que vous n'avez plus besoin de déplacer manuellement les données et les paramètres entre les périphériques de calcul, ce qui rend votre code plus facile à lire et moins sujet aux erreurs.
+Avec les modifications de code montrées, vous n'avez plus besoin de déplacer manuellement les données et les paramètres entre périphériques, ce qui rend votre code plus facile à lire et moins sujet aux erreurs.
 
-Vous pouvez trouver de la documentation supplémentaire en utilisant `help(accelerator)`.
+Vous pouvez trouver des informations supplémentaires en utilisant `help(accelerator)`.

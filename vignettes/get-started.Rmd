@@ -87,13 +87,13 @@ fitted <- net %>%
 
 Voyons en détail ce qui se passe dans ce bloc de code :
 
-1. La fonction `setup` vous permet de configurer la fonction de coût (objectif) et l'optimiseur que vous utiliserez pour former votre modèle. En option, vous pouvez passer une liste de métriques qui sont suivies pendant la procédure d'entraînement. **Note:** la fonction de coût peut être n'importe quelle fonction prenant en entrée `input` et `target` et renvoyant une valeur de tenseur scalaire, et l'optimiseur peut être n'importe quel optimisation de torch de base ou personnalisé créé avec la fonction `torch::optimizer()`.
-2. La fonction `set_hparams()` vous permet de définir des hyperparamètres qui seront passés à la méthode `initialise()` du module. Par exemple, dans ce cas, nous passons `num_classes = 10`.
-3. La fonction `set_opt_hparams()` vous permet de passer des hyperparamètres utilisés par la fonction d'optimisation. Par exemple, `optim_adam()` peut prendre le paramètre `lr` spécifiant le taux d'apprentissage et nous le spécifions avec `lr = 0.003`.
-4. La méthode `fit` prendra les spécifications du modèle fournies par `setup()` et exécutera la procédure d'entraînement en utilisant les jeux de donnée d'entraînement et de validation spécifiés dans des `torch::dataloaders()` ainsi que le nombre d'époques. **Note:** nous réutiliserons à nouveau les structures de données de base de torch, au lieu de fournir notre propre fonctionnalité de chargement de données.
-5. L ' objet retourné `fitted` contient le modèle entraîné ainsi que le relevé des métriques et des pertes produites au cours de l'entraînement; il peut également servir à établir des predictions et à évaluer le modèle entraîné sur d'autres jeux de données.
+1. La fonction `setup` vous permet de configurer la fonction de coût (objectif) et l'optimiseur que vous utiliserez pour entraîner votre modèle. En option, vous pouvez passer une liste de métriques qui sont suivies pendant la procédure d'apprentissage. **Remarque** : la fonction de coût peut être n'importe quelle fonction prenant en entrée `input` et `target` et retournant une valeur de tenseur scalaire, et l'optimiseur peut être n'importe quel optimiseur de torch natif ou personnalisé, créé avec la fonction `torch::optimizer()`.
+2. La fonction `set_hparams()` permet de définir les hyper-paramètres qui doivent être passées à la méthode `initialize()` du module. Par exemple dans ce cas nous passons `num_classes = 10`.
+3. La fonction `set_opt_hparams()` vous permet de passer des hyper-paramètres utilisés par la fonction d'optimisation. Par exemple, `optim_adam()` peut prendre le paramètre `lr` spécifiant le taux d'apprentissage et nous le spécifions avec `lr = 0.003`.
+4. La méthode `fit` va prendre les spécifications du modèle fournies par `setup()` et exécuter le processus d'apprentissage en utilisant les jeux de donnée d'entraînement et de validation spécifiés dans des `torch::dataloaders()` ainsi que le nombre d'époques. **Remarque** : nous réutilisons les structures de données de base de torch pour les chargeurs de donnée, au lieu de recréer notre propre fonctionnalité de chargement de données.
+5. L ' objet retourné `fitted` contient le modèle entraîné ainsi que le registre de métriques et de pertes produites au cours de l'apprentissage. Il peut également être utilisé pour la production de prédictions et l'évaluation du modèle entraîné sur d'autres jeux de données.
 
-Au moment de l'installation, luz utilisera l'accélérateur le plus rapide possible; si un GPU compatible CUDA est disponible, il sera utilisé, sinon le calcul sera affecté à la CPU.
+Au moment du déploiement du calcul, luz utilisera l'accélérateur le plus rapide possible; si un GPU doté de CUDA est disponible, il sera utilisé, sinon le calcul sera affecté sur la CPU.
 Il déplace également automatiquement les données, les optimisateurs et les modèles vers le périphérique sélectionné afin que vous n'ayez pas besoin de les manipuler manuellement (qui constitue une grande source d'erreurs en général).
 
 Pour créer des prédictions à partir du modèle entraîné, vous pouvez utiliser la méthode `predict`:
@@ -105,38 +105,38 @@ predictions <- predict(fitted, test_dl)
 
 ## La boucle d'entraînement
 
-Vous avez maintenant une idée générale de la façon d'utiliser la fonction `fit`. Maintenant il est important d'avoir un aperçu de ce qui se passe à l'intérieur.
+Maintenant que vous avez une idée générale de la façon d'utiliser la fonction `fit`, il est important d'avoir un aperçu de ce qui se passe à l'intérieur.
 Voici ce que `fit` exécute (en pseudocode).
 Ce n'est pas détaillé complètement, mais celà devrait vous aider à construire votre intuition:
 
 ```{r, eval = FALSE}
-# -> Initialize objects: model, optimizers.
-# -> Select fitting device.
-# -> Move data, model, optimizers to the selected device.
-# -> Start training
+# -> Initialiser les objets : modèle, optimiseurs.
+# -> Sélectionner le périphérique d'apprentissage.
+# -> Déplacer les données, le modèle et les optimiseurs vers le dispositif sélectionné.
+# -> Lancer l'apprentissage
 for (epoch in 1:epochs) {
-  # -> Training procedure
+  # -> Procédure d'apprentissage
   for (batch in train_dl) {
-    # -> Calculate model `forward` method.
-    # -> Calculate the loss
-    # -> Update weights
-    # -> Update metrics and tracking loss
+    # -> Calculer la méthode `forward` du modèle.
+    # -> Calculer la perte.
+    # -> Mettre à jour les poids.
+    # -> Mettre à jour les métriques et suivre la perte.
   }
-  # -> Validation procedure
+  # -> Procédure de validation
   for (batch in valid_dl) {
-    # -> Calculate model `forward` method.
-    # -> Calculate the loss
-    # -> Update metrics and tracking loss
+    # -> Calculer la méthode `forward` du modèle.
+    # -> Calculer la perte.
+    # -> Mettre à jour les métriques et suivre la perte.
   }
 }
-# -> End training
+# -> Fin de l'apprentissage
 ```
 
 
-Les métriques
+## Les métriques
 
-L'une des parties les plus importantes des projets d'apprentissage automatique est le choix des métriques.
-Luz permet de suivre de nombreuses métriques différentes pendant l'entraînement avec des changements de code minimes.
+L'une des parties les plus importantes des projets d'apprentissage automatique est le choix de la métrique d'évaluation.
+Luz permet de suivre de nombreuses métriques différentes pendant l'apprentissage avec des changements de code minimes.
 
 Pour suivre les métriques, il suffit de modifier le paramètre `metrics` dans la fonction `setup`:
 
@@ -153,57 +153,52 @@ fitted <- net %>%
 
 
 Luz fournit des implémentations de quelques-unes des métriques les plus utilisées.
-Si une métrique n'est pas disponible, vous pouvez toujours en implémenter une nouvelle en utilisant la fonction `luz_metric`.
+Si une métrique n'est pas disponible, vous pouvez toujours la mettre en place à l'aide de la fonction `luz_metric`.
 
 ```{r, child='../man/rmd/metrics.Rmd'}
 ```
 
-## Évaluer
+## Évaluation
 
 ```{r, child='../man/rmd/evaluate.Rmd'}
 ```
 
 
-Personnalisation avec les callbacks
+## Personnalisation avec les callbacks
 
-Luz fournit différentes façons de personnaliser la boucle d'entraînement, en fonction du niveau de contrôle dont vous avez besoin pendant qu'elle s'exécute.
-Le moyen le plus rapide et le plus « réutilisable » est via les **callbacks**. Ils permettent de créer des modifications d'entraînement qui peuvent être utilisées dans de nombreuses situations.
+Luz fournit différentes façons de personnaliser la boucle d'apprentissage, en fonction du niveau de contrôle dont vous avez besoin pendant qu'elle s'exécute.
+La façon la plus rapide et la plus « réutilisable » est via les **callbacks**. Ils permettent de créer des modifications d'apprentissage qui peuvent être utilisées dans de nombreuses situations.
 
-La boucle d'entraînement en luz a de nombreux *points d'arrêt* qui peuvent appeler des fonctions R arbitraires.
-Cette fonctionnalité vous permet de personnaliser le processus de formation sans avoir à modifier la logique générale de formation.
+La boucle d'apprentissage en luz a de nombreux *points d'arrêt* qui peuvent appeler des fonctions R arbitraires.
+Cette fonctionnalité vous permet de personnaliser le processus d'apprentissage sans avoir à modifier la logique générale de l'apprentissage.
 
-Luz implémente 3 callbacks par défaut qui se produisent dans chaque procédure de formation :
+Luz implémente 3 callbacks par défaut qui se produisent dans chaque procédure d'apprentissage :
 
-- ** callback train-eval**: Définit le modèle à "train()" ou "eval()" selon que la procédure est en cours de  d'entraînement ou de validation.
+-   **callback train-eval**: Bascule le modèle en `train()` ou `eval()` selon si la procédure est en cours de  d'entraînement ou de validation.
 
-- ** callback mesurable** : évaluer les paramètres au cours du processus d'entraînement et de validation.
+-   **callback metrics** : évaluer les paramètres au cours du processus d'entraînement et de validation.
 
-- ** callback sur les progrès** : implémente une barre de progression et imprime les informations sur les progrès au cours de l'entraînement.
+-   **callback progress** : implémente une barre de progression et imprime des informations sur la progression pendant l'apprentissage.
 
-Vous pouvez également implémenter des callbacks personnalisés qui modifient ou agissent spécifiquement pour votre procédure d'entraînement.
+Vous pouvez également mettre en place des callbacks personnalisés qui modifient ou agissent spécifiquement pour votre procédure d'apprentissage.
 Par exemple:
-```{r}
-#| child: ../man/rmd/callbacks.Rmd
 
-
+```{r, child='../man/rmd/callbacks.Rmd'}
 ```
 
-```{r}
-#| child: ../man/rmd/ctx.Rmd
-
-
+```{r, child='../man/rmd/ctx.Rmd'}
 ```
 
 
 
 Les attributs de `ctx` peuvent être utilisés pour produire le comportement souhaité des callbacks.
-Vous pouvez trouver des informations sur l'objet contextuel en utilisant `help("ctx")`.
-Dans notre exemple, nous utilisons l'attribut `ctx$iter` pour imprimer le numéro d'itération pour chaque lot d'entraînement.
+Vous pouvez trouver de plus amples informations sur l'objet de contexte à l'aide de `help("ctx")`. 
+Dans notre exemple, nous utilisons l'attribut `ctx$iter` pour imprimer le numéro d'itération pour chaque lot d'apprentissage.
 
-Prochaines étapes
+## Étapes suivantes
 
 Dans cet article, vous avez appris à entraîner votre premier modèle en utilisant luz et les bases de la personnalisation en utilisant à la fois des métriques personnalisées et des callbacks.
 
-Luz permet également des modifications plus souples de la boucle d'entraînement décrite dans la rubrique "vignette("custom-loop")".
+Luz permet également des modifications plus flexibles du processus d'apprentissage décrites dans `vignette("custom-loop")`.
 
-Vous devriez maintenant être en mesure de suivre les exemples marqués avec la catégorie de base dans la [ galerie d'exemples] (https://mlverse.github.io/luz/articles/examples/index.html).
+Vous devriez maintenant être en mesure de suivre les exemples marqués avec la catégorie 'basique' dans la [galerie d'exemples](https://mlverse.github.io/luz/articles/examples/index.html).

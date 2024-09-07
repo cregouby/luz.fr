@@ -1,0 +1,225 @@
+---
+title: "Sauvegarder des instantannés de vos modèle"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(luz)
+library(torch)
+set.seed(1)
+torch::torch_manual_seed(1703)
+```
+
+Lorsque vous entraînez des modèles qui prennent trop de temps, vous avez besoin d'enregistrer l'état intermédiaire sur le disque,
+ainsi si quelque chose se passe mal pendant l'apprentissage (par exemple, processus annihilé, réseau échoué, etc)
+vous pouvez récupérer à partir là où il s'arrêtait. 
+
+Vous pourriez aussi vouloir récupérer les résultats intermédiaires pour évaluer le modèle en différents
+moments de l'apprentissage, comme comparer les résultats après 10 époches et après 30 époches.
+
+Cet article décrit les caractéristiques de luz qui sont conçues pour gérer ces cas. Ces caractéristiques
+sont facultatives et sont activées une fois que vous ajoutez des `callbacks` spécifiques à votre appel à `fit`.
+
+## Relancer des apprentissages qui ont échoués
+
+Si vous avez un long processus d'apprentissage qui peut échouer pour n'importe quelle raison (ordinateur coupé, noeud d'un cluster perdu, etc), on recommande d'ajouter `luz_callback_autoresume()`
+à votre liste de `callbacks`.
+
+`luz_callback_autoresume()` sauvegardera automatiquement tout l'état de votre
+modèle à la fin de chaque époque. Si quelque chose se passe mal pendant l'apprentissage, vous pouvez simplement
+relancer le même script, sans aucun changement et l'instantanné sera rechargé
+et l'apprentissage reprendra là où il s'est arrêté.
+
+Pour exemple, prennons un jeu de données d'entraînement aléatoire généré et un modèle linéaire pour montrer comment fonctionne `autoresume`.
+
+Voici les données d'entraînement :
+
+  ```{r}
+x <- torch_randn(1000, 10)
+y <- torch_randn(1000, 1)
+```
+
+Et la définition du modèle :
+
+  ```{r}
+model <- nn_linear %>%
+  setup(optimizer = optim_sgd, loss = nnf_mse_loss) %>%
+  set_hparams(in_features = 10, out_features = 1) %>%
+  set_opt_hparams(lr = 0.01)
+```
+
+Voici comment créer un `callbacks` qui simule une erreur aléatoire.
+Ce `callbacks` lève juste une erreur d'exécution R à la 5ème époque d'apprentissage du modèle.
+
+```{r}
+interrupt <- luz_callback(
+  "interrupt",
+  failed = FALSE,
+  on_epoch_end = function() {
+    if (ctx$epoch == 5 && !self$failed) {
+      self$failed <- TRUE
+      stop("Error on epoch 5")
+    }
+  }
+)
+```
+
+Ccommençons par entraîner en ajoutant le `luz_callback_auto_resume()`:
+  
+```{r, error=TRUE}
+autoresume <- luz_callback_auto_resume(path = "state.pt")
+inter <- interrupt()
+
+# Une erreur se produira à la 5ème époque et le modèle sera arrêté.
+results <- model %>% fit(
+  list(x, y),
+  callbacks = list(inter, autoresume),
+  verbose = FALSE
+)
+```
+
+Pour relancer l'apprentissage du modèle exactement là où il s'est arrêté vous n'avez qu'à relancer la fonction `fit()` avec le même modèle, les `callbacks`, etc. :
+  
+```{r}
+results <- model %>% fit(
+  list(x, y),
+  callbacks = list(inter, autoresume),
+  verbose = FALSE
+)
+```
+
+Ainsi, le processus l'apprentissage du modèle continuera exactement là où il s'est arrêté. 
+Les relevés (métriques et pertes), optimiseur et état du modèle sont récupérés à partir des précédents pour avoir les résultats complets :
+  
+```{r}
+plot(results)
+```
+
+
+## Sauvegarde automatique 
+
+Parfois, vous voulez avoir un contrôle plus grand sur la façon dont les sauvegardes sont gérées. 
+Dans ce cas, vous pouvez utiliser `luz_callback_model_checkpoint()` pour enregistrer des sauvegardes dans un fichier ou un répertoire spécifié.
+
+Essayons d'utiliser le même exemple que dans la section précédente :
+Nous générerons d'abord quelques données.
+
+```{r}
+x <- torch_randn(1000, 10)
+y <- torch_randn(1000, 1)
+```
+
+Définissons ensuite notre modèle :
+
+```{r}
+model <- nn_linear %>%
+  setup(optimizer = optim_sgd, loss = nnf_mse_loss) %>%
+  set_hparams(in_features = 10, out_features = 1) %>%
+  set_opt_hparams(lr = 0.01)
+```
+
+Entraînons maintenant le modèle en utilisant `luz_callback_model_checkpoint()`.
+
+```{r}
+checkpoint <- luz_callback_model_checkpoint(
+  path = "checkpoints/", 
+  monitor = "train_loss"
+)
+
+results <- model %>% fit(
+  list(x, y),
+  callbacks = list(checkpoint),
+  verbose = FALSE
+)
+```
+
+Vous pouvez maintenant voir que le répertoire `checkpoints` contient des fichiers avec des sauvegardes de l'état pour chaque epoch. Par défaut, `luz_callback_model_checkpoint` 
+enregistrera l'état pour chaque epochs et formattera le nom en y incluant la perte résultante. Cela peut être configuré 
+dans le paramètre path, voir `?luz_callback_model_checkpoint` pour plus de détails.
+
+```{r}
+fs::dir_ls("checkpoints")
+```
+
+Enfin, vous pouvez charger une sauvegarde spécifique dans le modèle entrainé à l'aide de `luz_load_checkpoint`. Notez que la chargement de la sauvegarde dans un module `fitted` change les poids du modèle in-place. 
+
+```{r}
+luz_load_checkpoint(results, fs::dir_ls("checkpoints")[1])
+```
+
+Vous pouvez ensuite commencer à faire des prédictions ou évaluer votre modèle avec les poids tout juste chargés.
+
+Si vous voullez démarrer une nouvelle époque d'apprentissage depuis une sauvegarde, vous pouvez utiliser 
+`luz_callback_resume_from_checkpoint()` . Par défaut, il n'aura enregistré que les poids du modèle dans le fichier de sauvegarde, mais vous pouvez configurer pour restorer aussi les 
+registres, `callbacks` et états de l'appelant et l'optimiseur. Si le répertoire des sauvegardes est fourni, alors l'apprentissage sera reprie à partir du dernier fichier de sauvegarde renvoyé par
+`fs::dir_ls`.
+
+Voici comment utiliser ce `callbacks` :
+
+```{r}
+resume <- luz_callback_resume_from_checkpoint(path = "checkpoints/")
+results <- model %>% fit(
+  list(x, y),
+  callbacks = list(resume),
+  verbose = FALSE
+)
+plot(results)
+```
+
+```{r include=FALSE}
+fs::dir_delete("checkpoints")
+```
+
+### Etats des `callbacks` personnalisés
+
+Parfois, les rappels ont également besoin de conserver leurs états internes afin de continuer l'apprentissage exactement à partir là où il s'est arrêté. Dans ce cas, les  `callbacks` peuvent mettre en œuvre les méthodes `state_dict()` et le `load_state_dict()` qui sont appelées automatiquement lors des sauvegardes et rechargements.
+
+Par exemple, imaginez que vous avez un `callbacks` qui suit des gradients pour les poids à chaque epoch. Vous voulez utiliser les poids suivis pour analyser plus en profondeur la procédure d'apprentissage. Il pourrait être modifié comme suit:
+
+```{r}
+cb_weight_grad <- luz_callback(
+  "weight_grad",
+  gradients = list(),
+  initialize = function(track_weights) {
+    self$track_weights
+  },
+  on_train_batch_before_step = function() {
+    gradients[[ctx$epoch]] <- list()
+    for (w in self$track_weights) {
+      gradients[[ctx$epoch]][[w]] <- self$model$parameters[[w]]
+    }
+  }
+)
+```
+
+Dans l'exemple ci-dessus, le champ `gradients` est un **état** dans le `callbacks`. Si l'apprentissage échoue pour une raison quelconque, les états seront perdues. 
+
+Nous pouvons le rendre plus robuste en utilisant les méthodes `state_dict()` et `load_state_dict()` comme suit :
+
+```{r}
+cb_weight_grad <- luz_callback(
+  "weight_grad",
+  gradients = list(),
+  initialize = function(track_weights) {
+    self$track_weights
+  },
+  on_train_batch_before_step = function() {
+    gradients[[ctx$epoch]] <- list()
+    for (w in self$track_weights) {
+      gradients[[ctx$epoch]][[w]] <- self$model$parameters[[w]]
+    }
+  },
+  state_dict = function() {
+    list(gradients = self$gradients)
+  },
+  load_state_dict = function(d) {
+    self$gradients <- d$gradients
+  }
+)
+```

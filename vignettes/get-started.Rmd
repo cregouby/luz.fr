@@ -21,7 +21,7 @@ library(torch)
 ```
 
 
-Luz est une API de haut niveau pour torch qui vise à encapsuler la boucle d'**entraînement** dans un ensemble de blocs de code réutilisables.
+Luz est une API de haut niveau pour torch qui vise à encapsuler la **boucle d'entraînement** dans un ensemble de blocs de code réutilisables.
 Luz réduit le code de gestion requis pour former un modèle avec torch et évite les erreurs fréquentes sur la séquence des appels à `zero_grad()` - `backward()` - `step()`, et simplifie également le processus de déplacement des données et des modèles entre les CPUs et la GPU.
 Luz est conçu pour être très flexible en fournissant une API en couches qui lui permet d'être utile quel que soit le niveau de contrôle dont vous avez besoin pour votre boucle d'entraînement.
 

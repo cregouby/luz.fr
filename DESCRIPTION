@@ -15,6 +15,7 @@ Description: Une interface de haut niveau pour « torch » fournissant des utili
     PyTorch Lightning' de Falcon et al. (2019) <doi:10.5281/zenodo.3828935>.
 License: MIT + file LICENSE
 BugReports: https://github.com/cregouby/luz.fr/issues
+Encoding: UTF-8
 Language: fr
 Translates: luz (== 0.4.0)
 LazyData: true

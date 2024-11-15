@@ -21,6 +21,7 @@ Translates: luz (== 0.4.0)
 LazyData: true
 Imports:
     rhelpi18n
-Remotes:  
+Remotes: 
     eliocamp/rhelpi18n
 RoxygenNote: 7.3.2
+URL: https://cregouby.github.io/luz.fr/

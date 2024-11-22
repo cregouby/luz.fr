@@ -1,0 +1,32 @@
+La variable `ctx` est un objet utilisé dans luz pour partager des informations entre le boucle d'entraînement et les callbacks, les méthodes du modèle et les métriques. La table suivante décrit les informations disponibles par défaut dans `ctx`. D'autres rappels peuvent potentiellement modifier ces attributs ou en ajouter de nouveaux.
+
+<!-- Il est recommandé d'utiliser l'éditeur visuel RStudio pour éditer cette table. -->
+
+| Attribut | Description |
+|--|---------|
+| `verbose` | La valeur (`TRUE` ou `FALSE`) attribuée à l'argument `verbose` dans la fonction `fit`. |
+| `accelerator` | Objet accélérateur utilisé pour interroger le bon périphérique de calcul (cuda, ...) sur lequel placer les modèles, les données, etc. Il repose sur la valeur passée au paramètre `accelerator` dans `fit`. |
+| `model` | Objet `nn_module` initialisé, qui sera entraîné pendant la procédure `fit`. |
+| `optimizers` | Une liste nommée d'optimiseurs utilisés lors de l'entraînement. |
+| `data` | Le chargeur de données actuellement en cours d'utilisation. Lors de l'entraînement, c'est `ctx$train_data`, lors de la validation, c'est `ctx$valid_data`. Il peut également s'agir du jeu de données de prédiction lorsque dans `predict`. |
+| `train_data` | Chargeur de données passé à l'argument `data` dans `fit`. Modifié pour produire des données sur le périphérique de calcul sélectionné. |
+| `valid_data` | Chargeur de données passé à l'argument `valid_data` dans `fit`. Modifié pour produire des données sur le périphérique de calcul sélectionné. |
+| `min_epochs` | Nombre minimum d'époques pendant lesquelles le modèle sera entraîné. |
+| `max_epochs` | Nombre maximum d'époques pendant lesquelles le modèle sera entraîné. |
+| `epoch` | Époque actuelle de l'entraînement. |
+| `iter` | Itération actuelle de l'entraînement. Elle est réinitialisée à chaque époque et lorsque l'on passe de la phase d'apprentissage à la validation. |
+| `training` | `TRUE` si le modèle est en mode entraînement, `FALSE` sinon. Voir également `help("luz_callback_train_valid")`. |
+| `callbacks` | Liste des rappels qui seront appelés pendant la procédure d'entraînement. C'est l'union de la liste passée à l'argument `callbacks` et des rappels par défaut. |
+| `step` | Closure qui sera utilisée pour faire une étape du modèle. Elle est utilisée pour les deux phases : apprentissage et validation. Elle ne prend pas d'arguments, mais peut accéder à la variable `ctx`. |
+| `call_callbacks` | Appeler les rappels par nom. Par exemple `call_callbacks("on_train_begin")` appellera tous les rappels qui fournissent des méthodes pour ce point. |
+| `batch` | Dernier lot obtenu par le chargeur de données. Un lot est une liste() avec 2 éléments, l'un servant d'entrée et l'autre de sortie. |
+| `input` | Premier élément du dernier lot obtenu par le chargeur de données actuel. |
+| `target` | Deuxième élément du dernier lot obtenu par le chargeur de données actuel. |
+| `pred` | Dernières prédictions obtenues par `ctx$model$forward`. **Remarque** : il peut être potentiellement modifié par les rappels précédemment appelés. On notera également qu'il ne sera pas disponible si vous avez utilisé une étape d'entraînement personnalisée. |
+| `loss_fn` | La fonction de coût active que l'on veut minimiser pendant l'apprentissage. |
+| `loss` | Dernière valeur de coût obtenue. |
+| `handlers` | Les gestionnaires actuels, c'est-à-dire les fonctions qui sont appelées en cas d'erreur. |
+| `epoch_handlers` | Liste des gestionnaires utilisés à l'intérieur de la boucle d'époque. Ils peuvent être utilisés pour gérer des conditions spécifiques aux époques, sans nécessairement mettre fin à l'apprentissage. |
+
+: Attributs du contexte
+

@@ -1,9 +1,9 @@
 ---
-title: "Get started with luz"
+title: "Bien démarrer avec luz"
 output: rmarkdown::html_vignette
 lang: fr
 vignette: >
-  %\VignetteIndexEntry{Get started with luz}
+  %\VignetteIndexEntry{Bien démarrer avec luz}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

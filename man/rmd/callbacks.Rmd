@@ -1,0 +1,89 @@
+Implémentons un callback qui imprime 'Itération `n`' (où `n` est le numéro d'itération) pour chaque batch dans le jeu de données d'apprentissage et 'Fini!' lorsque la fin d'une époque est atteinte.
+                                                            
+Pour cela, nous utilisons la fonction `luz_callback()` :
+                                                            
+```{r, eval = FALSE}       
+print_callback <- luz_callback(
+  name = "print_callback",
+  initialize = function(message) {
+    self$message <- message
+  },
+  on_train_batch_end = function() {
+    cat("Itération ", ctx$iter, "\n")
+  },
+  on_epoch_end = function() {
+    cat(self$message, "\n")
+  }
+)
+```                                                                                                                     
+
+
+`luz_callback()` prend des fonctions nommées en argument `...`, où le nom indique le moment auquel le callback doit être appelé. 
+Par exemple, `on_train_batch_end()` est appelé pour chaque fin de batch lors du processus d'apprentissage, et `on_epoch_end()` est appelé à la fin de chaque époque.
+
+La valeur retournée par `luz_callback()` est une fonction qui initie une instance du callback. 
+Les callbacks peuvent avoir besoin de paramètres d'initialisation, comme le nom d'un fichier où vous souhaitez logger les résultats. 
+Dans ce cas, vous pouvez passer par une méthode `initialize` lors de la définition du callback, et sauvegarder ces paramètres dans l'objet `self`. 
+Dans l'exemple ci-dessus, le callback a un paramètre `message` qui est imprimé à la fin de chaque épisode.
+
+Une fois que le callback est défini, il peut être passé à la fonction `fit` via le paramètre `callbacks` :
+
+```{r, eval = FALSE}
+fitted <- net %>%
+  setup(...) %>%
+  fit(..., callbacks = list(
+    print_callback(message = "Fini!")
+  ))
+```
+
+Les callbacks peuvent être appelés à de nombreux endroits de la boucle d'apprentissage, y compris en combinaison les uns avec les autres. 
+Voici un aperçu des endroits possibles pour insérer les callbacks :
+
+    Début de boucle d'ajustement
+       - on_fit_begin
+      Début de l'époque
+         - on_epoch_begin
+        Début de l'apprentissage
+           - on_train_begin
+          Début de la boucle de batch
+             - on_train_batch_begin
+              Début du pas d'apprentissage par défaut
+                - on_train_batch_after_pred
+                - on_train_batch_after_loss
+                - on_train_batch_before_backward
+                - on_train_batch_before_step
+                - on_train_batch_after_step
+              Fin du pas d'apprentissage par défaut :
+             - on_train_batch_end
+          Fin de la boucle de batch
+           - on_train_end
+        Fin de l'apprentissage
+        Début de la validation
+           - on_valid_begin
+          Début de la boucle de batch
+             - on_valid_batch_begin
+              Début du pas de validation par défaut
+                - on_valid_batch_after_pred
+                - on_valid_batch_after_loss
+              Fin du pas de validation par défaut
+             - on_valid_batch_end
+          Fin de la boucle de batch
+           - on_valid_end
+        Fin de la validation
+          - on_epoch_end
+      Fin de l'époque
+       - on_fit_end
+    Fin de l'ajustement
+
+Chaque étape marquée avec `on_*` est un point dans le processus d'apprentissage qui est disponible pour les callbacks pour être appelés.
+
+L'autre partie importante des callbacks est l'objet `ctx` (contexte). 
+Voir `help("ctx")` pour plus de détails.
+
+Par défaut, les callbacks sont appelés dans l'ordre dans lequel ils ont été passés à `fit` (ou `predict` ou `evaluate`), mais vous pouvez fournir un attribut `weight` qui contrôlera l'ordre croissant dans lequel il sera appelé. 
+Par exemple, si un callback a `weight = 10` et un autre a `weight = 1`, alors le premier est appelé après le second.
+Les callbacks qui ne spécifient pas d'attribut de poids sont considérés comme ayant un `weight = 0`. 
+Certains callbacks intégrés dans luz fournissent déjà une valeur de poids. 
+Par exemple, `?luz_callback_early_stopping` a une valeur de poids de `Inf`, puisque en général on souhaite l'exécuter à la toute fin dans la boucle.
+
+Notez que les callbacks peuvent être combinés pour effectuer des opérations complexes sur le processus d'apprentissage.

@@ -1,0 +1,61 @@
+template:
+  bootstrap: 5
+
+navbar:
+ structure:
+   left:  [articles, examples, reference, news]
+   right: [github]
+ components:
+  articles:
+    text: Articles
+    menu:
+      - text: "Using luz"
+      - text: Get started
+        href: articles/get-started.html
+      - text: Custom loops
+        href: articles/custom-loop.html
+      - text: Accelerator API
+        href: articles/accelerator.html
+      - text: "Guides"
+      - text: "Using the lr_finder"
+        href: articles/lr-finder.html
+      - text: "Checkpoints models"
+        href: articles/checkpoints.html
+  examples:
+    text: Examples
+    href: articles/examples/index.html
+
+reference:
+  - title: "Training"
+  - contents:
+    - setup
+    - starts_with("fit")
+    - starts_with("predict")
+    - starts_with("evaluate")
+    - set_hparams
+    - set_opt_hparams
+    - get_metrics
+    - ctx
+    - context
+    - lr_finder
+    - as_dataloader
+  - title: "Metrics"
+  - contents:
+    - starts_with("luz_metric")
+  - title: "Misc"
+  - contents:
+    - starts_with("nn_")
+    - starts_with("nnf_")
+  - title: "Callbacks"
+  - contents:
+    - starts_with("luz_callback")
+  - title: "Accelerator"
+    contents:
+    - accelerator
+  - title: "Serialization"
+    contents:
+    - luz_save
+    - luz_load
+    - luz_save_model_weights
+    - luz_load_model_weights
+    - luz_load_checkpoint

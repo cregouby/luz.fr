@@ -1,0 +1,163 @@
+---
+title: "Texte de classification à partir de zéro"
+desc: "Implémente la classification de texte à partir de zéro."
+category: 'basic'
+editor_options: 
+  chunk_output_type: console
+---
+
+Cet exemple est une version adaptée de ['Texte de classification à partir de zéro'](https://keras.io/examples/nlp/text_classification_from_scratch/) de la documentation Keras, par Mark Omerick et François Chollet.
+
+Nous commençons par implémenter un jeu de données torch qui télécharge et pré-traite les données.
+La méthode `initialize` est appelée lorsque nous instancions un jeu de données. 
+Notre implémentation :
+
+- Télécharge le dataset IMDB s'il n'existe pas dans le répertoire `root`.
+- Extraire les fichiers dans `root`.
+- Crée un tokeniseur à partir des fichiers du jeu d'entraînement.
+
+Nous implémentons également la méthode `.getitem` qui est utilisée pour extraire un élément unique 
+du dataset et pré-traiter le contenu des fichiers.
+
+```{r, eval = FALSE}
+library(torch)
+library(tok)
+library(luz)
+
+vocab_size <- 20000 # nombre maximum d'éléments dans le vocabulaire
+output_length <- 500 # longueur de padding et de troncature.
+embedding_dim <- 128 # taille des vecteurs d'embedding
+
+imdb_dataset <- dataset(
+  initialize = function(output_length, vocab_size, root, split = "train", download = TRUE) {
+    
+    url <- "https://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz"
+    fpath <- file.path(root, "aclImdb")
+    
+    # télécharge si le fichier n'existe pas encore
+    if (!dir.exists(fpath) && download) {
+    # télécharge dans un répertoire temporaire, puis extrait et déplace dans le répertoire root
+        withr::with_tempfile("file", {
+        download.file(url, file)
+        untar(file, exdir = root)
+      })  
+    }
+    
+    # maintenant liste les fichiers pour la séparation train-test
+    self$data <- rbind(
+      data.frame(
+        fname = list.files(file.path(fpath, split, "pos"), full.names = TRUE),
+        y = 1
+      ),
+      data.frame(
+        fname = list.files(file.path(fpath, split, "neg"), full.names = TRUE),
+        y = 0
+      )
+    )
+    
+    # entraîne un tokeniseur sur le jeu de données d'entraînement (s'il n'existe pas déjà)
+    tokenizer_path <- file.path(root, glue::glue("tokenizer-{vocab_size}.json"))
+    if (!file.exists(tokenizer_path)) {
+      self$tok <- tok::tokenizer$new(tok::model_bpe$new())
+      self$tok$pre_tokenizer <- tok::pre_tokenizer_whitespace$new()
+      
+      files <- list.files(file.path(fpath, "train"), recursive = TRUE, full.names = TRUE)
+      self$tok$train(files, tok::trainer_bpe$new(vocab_size = vocab_size))
+      
+      self$tok$save(tokenizer_path)  
+    } else {
+      self$tok <- tok::tokenizer$from_file(tokenizer_path)
+    }
+    
+    self$tok$enable_padding(length = output_length)
+    self$tok$enable_truncation(max_length = output_length)
+  },
+  .getitem = function(i) {
+    item <- self$data[i,]
+    
+    # prend l'élément i, lit le contenu du fichier dans une chaîne de caractères
+    # puis convertit tout en minuscules et supprime les tags HTML et la ponctuation
+    # puis utilise le tokeniseur pour encoder le texte.
+    text <- item$fname %>% 
+      readr::read_file() %>% 
+      stringr::str_to_lower() %>% 
+      stringr::str_replace_all("<br />", " ") %>% 
+      stringr::str_remove_all("[:punct:]") %>% 
+      self$tok$encode()
+  
+    list(
+      x = text$ids + 1L,
+      y = item$y
+    )
+  },
+  .length = function() {
+    nrow(self$data)
+  }
+)
+
+train_ds <- imdb_dataset(output_length, vocab_size,  "./imdb", split = "train")
+test_ds <- imdb_dataset(output_length, vocab_size,  "./imdb", split = "test")
+```
+
+Nous définissons maintenant le modèle que nous souhaitons entraîner. Le modèle est un réseau de convolution 1D qui commence par une couche d'embedding et on y connecte un classifieur de sortie.
+
+```{r, eval = FALSE}
+model <- nn_module(
+  initialize = function(vocab_size, embedding_dim) {
+    self$embedding <- nn_sequential(
+      nn_embedding(num_embeddings = vocab_size, embedding_dim = embedding_dim),
+      nn_dropout(0.5)
+    )
+
+    self$convs <- nn_sequential(
+      nn_conv1d(embedding_dim, 128, kernel_size = 7, stride = 3, padding = "valid"),
+      nn_relu(),
+      nn_conv1d(128, 128, kernel_size = 7, stride = 3, padding = "valid"),
+      nn_relu(),
+      nn_adaptive_max_pool2d(c(128, 1)) # reduction à la dimension d'embedding
+    )
+    
+    self$classifier <- nn_sequential(
+      nn_flatten(),
+      nn_linear(128, 128),
+      nn_relu(),
+      nn_dropout(0.5),
+      nn_linear(128, 1)
+    )
+  },
+  forward = function(x) {
+    emb <- self$embedding(x)
+    out <- emb$transpose(2, 3) %>% 
+      self$convs() %>% 
+      self$classifier()
+    # on élimine la derniere dimension pour obtenir une dimension (B) au lieu de (B, 1)
+    out$squeeze(2)
+  }
+)
+
+# tester le modèle pour un lot d'exemples
+# m <- model(vocab_size, embedding_dim)
+# x <- torch_randint(1, 20000, size = c(32, 500), dtype = "int")
+# m(x)
+```
+
+Nous pouvons maintenant entraîner le modèle :
+
+```{r, eval = FALSE}
+fitted_model <- model %>% 
+  setup(
+    loss = nnf_binary_cross_entropy_with_logits,
+    optimizer = optim_adam,
+    metrics = luz_metric_binary_accuracy_with_logits()
+  ) %>% 
+  set_hparams(vocab_size = vocab_size, embedding_dim = embedding_dim) %>% 
+  fit(train_ds, epochs = 3)
+```
+
+Nous pouvons finalement obtenir les métriques sur le jeu de données de test :
+
+```{r, eval = FALSE}
+fitted_model %>% evaluate(test_ds)
+```
+
+N'oubliez pas que pour faire une inférence sur des textes, il faut appliquer le même prétraitement que celui appliqué dans la définition du jeu de données.

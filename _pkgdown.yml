@@ -3,7 +3,7 @@ template:
 
 navbar:
  structure:
-   left:  [articles, examples, reference, news]
+   left:  [articles, examples, news]
    right: [github]
  components:
   articles:

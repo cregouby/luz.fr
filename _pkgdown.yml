@@ -1,5 +1,4 @@
 url: https://cregouby.github.io/luz.fr/
-
 template:
   bootstrap: 5
 
@@ -23,41 +22,3 @@ navbar:
         href: articles/lr-finder.html
       - text: "Checkpoints models"
         href: articles/checkpoints.html
-  examples:
-    text: Examples
-    href: articles/examples/index.html
-
-reference:
-  - title: "Training"
-  - contents:
-    - setup
-    - starts_with("fit")
-    - starts_with("predict")
-    - starts_with("evaluate")
-    - set_hparams
-    - set_opt_hparams
-    - get_metrics
-    - ctx
-    - context
-    - lr_finder
-    - as_dataloader
-  - title: "Metrics"
-  - contents:
-    - starts_with("luz_metric")
-  - title: "Misc"
-  - contents:
-    - starts_with("nn_")
-    - starts_with("nnf_")
-  - title: "Callbacks"
-  - contents:
-    - starts_with("luz_callback")
-  - title: "Accelerator"
-    contents:
-    - accelerator
-  - title: "Serialization"
-    contents:
-    - luz_save
-    - luz_load
-    - luz_save_model_weights
-    - luz_load_model_weights
-    - luz_load_checkpoint

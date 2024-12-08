@@ -1,0 +1,96 @@
+---
+title: "Augmentation MixUp"
+desc: "Démonstration de l'utilisation du `callback` MixUp"
+category: "intermediate"
+---
+
+```{r, eval = FALSE}
+# Packages ----------------------------------------------------------------
+library(torch)
+library(torchvision)
+library(luz)
+
+set.seed(1)
+torch_manual_seed(1)
+
+# Jeu de données et chargeurs de données ----------------------------------------------------
+
+dir <- "./mnist" # répertoire de mise en cache
+
+train_ds <- mnist_dataset(
+  dir,
+  download = TRUE,
+  transform = transform_to_tensor
+)
+
+test_ds <- mnist_dataset(
+  dir,
+  train = FALSE,
+  transform = transform_to_tensor
+)
+
+train_dl <- dataloader(train_ds, batch_size = 128, shuffle = TRUE)
+test_dl <- dataloader(test_ds, batch_size = 128)
+
+
+# Construction du réseau ---------------------------------------------------
+
+net <- nn_module(
+  "Net",
+  initialize = function() {
+    self$conv1 <- nn_conv2d(1, 32, 3, 1)
+    self$conv2 <- nn_conv2d(32, 64, 3, 1)
+    self$dropout1 <- nn_dropout(0.25)
+    self$dropout2 <- nn_dropout(0.5)
+    self$fc1 <- nn_linear(9216, 128)
+    self$fc2 <- nn_linear(128, 10)
+  },
+  forward = function(x) {
+    x %>% 
+      self$conv1() %>% 
+      nnf_relu() %>% 
+      self$conv2() %>% 
+      nnf_relu() %>% 
+      nnf_max_pool2d(2) %>% 
+      self$dropout1() %>% 
+      torch_flatten(start_dim = 2) %>% 
+      self$fc1() %>% 
+      nnf_relu() %>% 
+      self$dropout2() %>% 
+      self$fc2()
+  }
+)
+
+# Entraînement du modèle -------------------------------------------------------------------
+
+fitted <- net %>%
+  setup(
+   # nous devons utiliser une fonction de coût non réduite pour permettre le mélange des données
+    loss = nn_cross_entropy_loss(reduction = "none"), 
+    optimizer = optim_adam,
+    metrics = luz_metric_set(
+      valid_metrics = luz_metric_accuracy()
+    )
+  ) %>%
+  fit(
+    train_dl, epochs = 10, valid_data = test_dl, 
+    callbacks = list(
+      luz_callback_mixup(
+        alpha = 0.4, 
+        auto_loss = TRUE # la fonction de coût est automatiquement modifiée par le callback MixUp
+      )
+    )
+  )
+
+# Inférence ------------------------------------------------------
+
+preds <- predict(fitted, test_dl)
+preds$shape
+
+
+# Sérialisation -----------------------------------------------------------
+
+luz_save(fitted, "mnist-mixup.pt")
+```
+
+

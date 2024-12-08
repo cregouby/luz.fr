@@ -1,0 +1,89 @@
+---
+title: "CharGPT"
+desc: "Un modèle de langage au niveau caractère avec GPT-2 sur des textes shakespeariens."
+category: 'intermédiaire'
+---
+
+Cet exemple est inspiré du projet [chargpt](https://github.com/karpathy/minGPT/tree/master/projects/chargpt) par 
+Andrey Karpathy.
+Nous allons créer un modèle de langage au niveau caractère sur des textes shakespeariens.
+
+Tout d’abord, nous chargeons les bibliothèques que nous comptons utiliser :
+
+```{r, eval = FALSE}
+library(torch)
+library(luz)
+library(zeallot)
+```
+
+
+Ensuite, nous définissons le jeu de données torch qui prépare les données pour le modèle. Il divise le texte en un vecteur de caractères, chaque élément contenant exactement un caractère.
+
+Puis il liste tous les caractères uniques dans l'attribut `vocab`. L'ordre des caractères dans le vocabulaire est utilisé pour encoder chaque caractère sous forme d'une valeur entière, qui sera utilisée dans la couche d'embeddings.
+
+La méthode `.getitem()` peut prendre des blocs de `block_size` caractères et les encoder en leur représentation sous forme d'entiers.
+
+```{r, eval=FALSE}
+url <- "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt"
+
+dataset <- torch::dataset(
+    initialize = function(data, block_size = 128) {
+        self$block_size <- block_size
+        self$data <- stringr::str_split_1(data, "")
+
+        self$data_size <- length(self$data)
+        self$vocab <- unique(self$data)
+        self$vocab_size <- length(self$vocab)
+    },
+    .getitem = function(i) {
+        chunk <- self$data[i + seq_len(self$block_size + 1)]
+        idx <- match(chunk, self$vocab)
+        list(
+            x = head(idx, self$block_size),
+            y = tail(idx, self$block_size)
+        )
+    },
+    .length = function() {
+        self$data_size - self$block_size - 1L # cela permet de tenir compte de la dernière valeur
+    }
+)
+
+dataset <- char_dataset(readr::read_file(url))
+dataset[1] # visualisons un élément du jeu de données
+```
+
+Nous définissons ensuite le réseau de neurones que nous allons entraîner. Définir un modèle GPT-2 est assez verbeux, 
+donc on va utiliser directement l'implémentation {minhub}. Vous pouvez trouver la définition complète du modèle 
+[ici](https://github.com/mlverse/minhub/blob/main/R/gpt2.R), 
+avec un code tout à fait autonome, vous n'avez pas besoin d'installer minhub si vous ne le souhaitez pas.
+
+Nous avons également implémenté la méthode `generate` pour le modèle, qui permet de générer des auto-complétions en utilisant le modèle.
+Il s'agit d'appliquer le modèle en boucle, à chaque itération, il prédit quel est le caractère suivant.
+
+```{r, eval=FALSE}
+fitted <- model |>
+    setup(
+        loss = nn_cross_entropy_loss(),
+        optimizer = optim_adam
+    ) |>
+    set_opt_hparams(lr = 5e-4) |>
+    set_hparams(vocab_size = dataset$vocab_size) |>
+    fit(
+      dataset,
+      dataloader_options = list(batch_size = 128, shuffle = TRUE),
+      epochs = 1,
+      callbacks = list(
+        display_cb(iter = 500),
+        luz_callback_gradient_clip(max_norm = 1)
+      )
+    )
+```
+
+Un entrâinement d'une époque est raisonnable pour ce jeu de données et prend ~1h sur le M1 MBP.
+Vous pouvez générer des nouveaux textes avec :
+
+```{r, eval=FALSE}
+context <- "O Dieu, O Dieu !"
+text <- generate(fitted$model, dataset$vocab, context, iter = 100)
+cat(text)
+```

@@ -86,7 +86,7 @@ results <- model %>% fit(
 
 Pour relancer l'apprentissage du modèle exactement là où il s'est arrêté vous n'avez qu'à relancer la fonction `fit()` avec le même modèle, les `callbacks`, etc. :
   
-```{r}
+```{r resume fit}
 results <- model %>% fit(
   list(x, y),
   callbacks = list(inter, autoresume),
@@ -95,9 +95,9 @@ results <- model %>% fit(
 ```
 
 Ainsi, le processus l'apprentissage du modèle continuera exactement là où il s'est arrêté. 
-Les relevés (métriques et pertes), optimiseur et état du modèle sont récupérés à partir des précédents pour avoir les résultats complets :
+Les relevés (de métriques et de pertes), optimiseur et état du modèle sont récupérés à partir de l'état précédent pour avoir les résultats complets :
   
-```{r}
+```{r plots}
 plot(results)
 ```
 

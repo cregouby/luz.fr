@@ -1,5 +1,4 @@
 Package: luz.fr
-Type: Translation-module
 Title: Une interface de programmation de haut-niveau pour 'torch' 
 Version: 0.4.0
 Date: 2024-05-26
@@ -20,7 +19,10 @@ Language: fr
 Translates: luz (== 0.4.0)
 LazyData: true
 Imports:
+    luz,
     rhelpi18n
+Suggest:
+    yaml
 Remotes: 
     eliocamp/rhelpi18n
 RoxygenNote: 7.3.2

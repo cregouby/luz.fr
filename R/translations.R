@@ -7,6 +7,7 @@ rd_flat_read <- function(file) {
 
 
 #' @export
+#' @noRd
 translations <- (function() {
   files <- list.files("translations/", full.names = TRUE)
   translations <- lapply(files, rd_flat_read)

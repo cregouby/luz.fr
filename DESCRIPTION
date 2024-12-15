@@ -3,7 +3,7 @@ Type: Translation-module
 Title: Une interface de programmation de haut-niveau pour 'torch' 
 Version: 0.4.0
 Date: 2024-05-26
-Author@R: c(
+Authors@R: c(
     person("Christophe", "Regouby", email = "christophe.regouby@free.fr", role = c("aut", "cre", "cph")),
     )
 Description: Une interface de haut niveau pour « torch » fournissant des utilitaires 

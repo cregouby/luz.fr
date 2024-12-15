@@ -40,14 +40,14 @@ Pour exemple, prennons un jeu de données d'entraînement aléatoire généré e
 
 Voici les données d'entraînement :
 
-  ```{r}
+```{r}
 x <- torch_randn(1000, 10)
 y <- torch_randn(1000, 1)
 ```
 
 Et la définition du modèle :
 
-  ```{r}
+```{r}
 model <- nn_linear %>%
   setup(optimizer = optim_sgd, loss = nnf_mse_loss) %>%
   set_hparams(in_features = 10, out_features = 1) %>%

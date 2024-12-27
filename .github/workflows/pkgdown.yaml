@@ -2,7 +2,6 @@ on:
   push:
     branches:
       - main
-      - master
 
 name: pkgdown
 
@@ -33,11 +32,19 @@ jobs:
           install.packages("pkgdown")
         shell: Rscript {0}
 
-      - name: Install package
-        run: R CMD INSTALL .
-
-      - name: Deploy package
+      - name: Clone original luz package
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
+          mkdir inst
+          cd inst
+          git clone -b main https://github.com/mlverse/luz.git .
+          rm -r .git/
+          mv ./R/* ../R
+          mv DESCRIPTION ../
+          mv NAMESPACE ../
+
+      - name: Install package
+        run: |
+          R CMD INSTALL .
           Rscript -e 'pkgdown::deploy_to_branch(new_process = FALSE)'

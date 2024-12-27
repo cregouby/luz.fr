@@ -1,6 +1,8 @@
 template:
   bootstrap: 5
 
+lang: fr
+
 navbar:
  structure:
    left:  [articles, examples, news]

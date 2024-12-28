@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Texte de classification à partir de zéro • luz.fr</title>
+<title>Classification de texte à partir de zéro • luz.fr</title>
 <script src="../../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../../deps/headroom-0.11.0/headroom.min.js"></script><script src="../../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../../deps/search-1.0.0/fuse.min.js"></script><script src="../../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../../pkgdown.js"></script><meta property="og:title" content="Texte de classification à partir de zéro">
+<script src="../../deps/headroom-0.11.0/headroom.min.js"></script><script src="../../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../../deps/search-1.0.0/fuse.min.js"></script><script src="../../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../../pkgdown.js"></script><meta property="og:title" content="Classification de texte à partir de zéro">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Passer au contenu</a>
@@ -59,7 +59,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Texte de classification à partir de zéro</h1>
+      <h1>Classification de texte à partir de zéro</h1>
             
       
       <small class="dont-index">Source : <a href="https://github.com/cregouby/luz.fr/blob/HEAD/vignettes/examples/text-classification.Rmd" class="external-link"><code>vignettes/examples/text-classification.Rmd</code></a></small>
@@ -68,9 +68,9 @@
 
     
     
-<p>Cet exemple est une version adaptée de <a href="https://keras.io/examples/nlp/text_classification_from_scratch/" class="external-link">‘Texte
-de classification à partir de zéro’</a> de la documentation Keras, par
-Mark Omerick et François Chollet.</p>
+<p>Cet exemple est une version adaptée de <a href="https://keras.io/examples/nlp/text_classification_from_scratch/" class="external-link">‘Classification
+de texte à partir de zéro’</a> de la documentation Keras, par Mark
+Omerick et François Chollet.</p>
 <p>Nous commençons par implémenter un jeu de données torch qui
 télécharge et pré-traite les données. La méthode <code>initialize</code>
 est appelée lorsque nous instancions un jeu de données. Notre
@@ -99,7 +99,7 @@ contenu des fichiers.</p>
 <span>    <span class="va">url</span> <span class="op">&lt;-</span> <span class="st">"https://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz"</span></span>
 <span>    <span class="va">fpath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">root</span>, <span class="st">"aclImdb"</span><span class="op">)</span></span>
 <span>    </span>
-<span>    <span class="co"># télécharge si le fichier n'existe pas encore</span></span>
+<span>    <span class="co"># télécharge sauf si le fichier existe déjà</span></span>
 <span>    <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.exists</a></span><span class="op">(</span><span class="va">fpath</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="va">download</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="co"># télécharge dans un répertoire temporaire, puis extrait et déplace dans le répertoire root</span></span>
 <span>        <span class="fu">withr</span><span class="fu">::</span><span class="fu"><a href="https://withr.r-lib.org/reference/with_tempfile.html" class="external-link">with_tempfile</a></span><span class="op">(</span><span class="st">"file"</span>, <span class="op">{</span></span>
@@ -141,7 +141,7 @@ contenu des fichiers.</p>
 <span>    <span class="va">item</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="va">data</span><span class="op">[</span><span class="va">i</span>,<span class="op">]</span></span>
 <span>    </span>
 <span>    <span class="co"># prend l'élément i, lit le contenu du fichier dans une chaîne de caractères</span></span>
-<span>    <span class="co"># puis convertit tout en minuscules et supprime les tags HTML et la ponctuation</span></span>
+<span>    <span class="co"># puis convertit tout en minuscules puis supprime les tags HTML et la ponctuation</span></span>
 <span>    <span class="co"># puis utilise le tokeniseur pour encoder le texte.</span></span>
 <span>    <span class="va">text</span> <span class="op">&lt;-</span> <span class="va">item</span><span class="op">$</span><span class="va">fname</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span> </span>
 <span>      <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_file.html" class="external-link">read_file</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span> </span>
@@ -194,16 +194,17 @@ d’embedding et on y connecte un classifieur de sortie.</p>
 <span>    <span class="va">out</span> <span class="op">&lt;-</span> <span class="va">emb</span><span class="op">$</span><span class="fu">transpose</span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span> </span>
 <span>      <span class="va">self</span><span class="op">$</span><span class="fu">convs</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span> </span>
 <span>      <span class="va">self</span><span class="op">$</span><span class="fu">classifier</span><span class="op">(</span><span class="op">)</span></span>
-<span>    <span class="co"># on élimine la derniere dimension pour obtenir une dimension (B) au lieu de (B, 1)</span></span>
+<span>    <span class="co"># on élimine la dernière dimension pour obtenir une forme (B) au lieu de (B, 1)</span></span>
 <span>    <span class="va">out</span><span class="op">$</span><span class="fu">squeeze</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># tester le modèle pour un lot d'exemples</span></span>
+<span><span class="co"># on vérifie le bon fonctionnement du modèle `m` pour un lot d'exemples `x` </span></span>
 <span><span class="co"># m &lt;- model(vocab_size, embedding_dim)</span></span>
 <span><span class="co"># x &lt;- torch_randint(1, 20000, size = c(32, 500), dtype = "int")</span></span>
 <span><span class="co"># m(x)</span></span></code></pre></div>
-<p>Nous pouvons maintenant entraîner le modèle :</p>
+<p>Nous pouvons maintenant entraîner le modèle sur notre jeu
+d’entrainement <code>train_ds</code> :</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fitted_model</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../../reference/setup.html">setup</a></span><span class="op">(</span></span>
@@ -213,8 +214,8 @@ d’embedding et on y connecte un classifieur de sortie.</p>
 <span>  <span class="op">)</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../../reference/set_hparams.html">set_hparams</a></span><span class="op">(</span>vocab_size <span class="op">=</span> <span class="va">vocab_size</span>, embedding_dim <span class="op">=</span> <span class="va">embedding_dim</span><span class="op">)</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">train_ds</span>, epochs <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p>Nous pouvons finalement obtenir les métriques sur le jeu de données
-de test :</p>
+<p>Nous pouvons finalement calculer les métriques sur le jeu de test
+<code>test_ds</code> :</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fitted_model</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../../reference/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">test_ds</span><span class="op">)</span></span></code></pre></div>
 <p>N’oubliez pas que pour faire une inférence sur des textes, il faut

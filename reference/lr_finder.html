@@ -17,13 +17,13 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><h6 class="dropdown-header" data-toc-skip>Using luz</h6></li>
-    <li><a class="dropdown-item" href="../articles/get-started.html">Get started</a></li>
-    <li><a class="dropdown-item" href="../articles/custom-loop.html">Custom loops</a></li>
-    <li><a class="dropdown-item" href="../articles/accelerator.html">Accelerator API</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><h6 class="dropdown-header" data-toc-skip>Utiliser luz</h6></li>
+    <li><a class="dropdown-item" href="../articles/get-started.html">Bien démarrer</a></li>
+    <li><a class="dropdown-item" href="../articles/custom-loop.html">Boucles personnalisées</a></li>
+    <li><a class="dropdown-item" href="../articles/accelerator.html">l'API des périphériques d'accélération</a></li>
     <li><h6 class="dropdown-header" data-toc-skip>Guides</h6></li>
-    <li><a class="dropdown-item" href="../articles/lr-finder.html">Using the lr_finder</a></li>
-    <li><a class="dropdown-item" href="../articles/checkpoints.html">Checkpoints models</a></li>
+    <li><a class="dropdown-item" href="../articles/lr-finder.html">Recherche du taux d'apprentissage avec lr_finder</a></li>
+    <li><a class="dropdown-item" href="../articles/checkpoints.html">Instantannés de modèles</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../articles/examples/index.html">Examples</a></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changements</a></li>
@@ -113,7 +113,7 @@
 <span class="r-in"><span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="set_hparams.html">set_hparams</a></span><span class="op">(</span>in_features <span class="op">=</span> <span class="fl">10</span>, out_features <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">records</span> <span class="op">&lt;-</span> <span class="fu">lr_finder</span><span class="op">(</span><span class="va">model</span>, <span class="va">dl</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">records</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">records</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="lr_finder-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>

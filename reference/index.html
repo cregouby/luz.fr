@@ -17,13 +17,13 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><h6 class="dropdown-header" data-toc-skip>Using luz</h6></li>
-    <li><a class="dropdown-item" href="../articles/get-started.html">Get started</a></li>
-    <li><a class="dropdown-item" href="../articles/custom-loop.html">Custom loops</a></li>
-    <li><a class="dropdown-item" href="../articles/accelerator.html">Accelerator API</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><h6 class="dropdown-header" data-toc-skip>Utiliser luz</h6></li>
+    <li><a class="dropdown-item" href="../articles/get-started.html">Bien démarrer</a></li>
+    <li><a class="dropdown-item" href="../articles/custom-loop.html">Boucles personnalisées</a></li>
+    <li><a class="dropdown-item" href="../articles/accelerator.html">l'API des périphériques d'accélération</a></li>
     <li><h6 class="dropdown-header" data-toc-skip>Guides</h6></li>
-    <li><a class="dropdown-item" href="../articles/lr-finder.html">Using the lr_finder</a></li>
-    <li><a class="dropdown-item" href="../articles/checkpoints.html">Checkpoints models</a></li>
+    <li><a class="dropdown-item" href="../articles/lr-finder.html">Recherche du taux d'apprentissage avec lr_finder</a></li>
+    <li><a class="dropdown-item" href="../articles/checkpoints.html">Instantannés de modèles</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../articles/examples/index.html">Examples</a></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changements</a></li>
@@ -40,7 +40,7 @@
     </div>
 
     <div class="section level2">
-      <h2 id="toutes-les-fonctions">Toutes les fonctions<a class="anchor" aria-label="anchor" href="#toutes-les-fonctions"></a></h2>
+      <h2 id="entra-nement">Entraînement<a class="anchor" aria-label="anchor" href="#entra-nement"></a></h2>
 
 
 
@@ -52,34 +52,10 @@
 
       <dl><dt>
 
-          <code><a href="accelerator.html">accelerator()</a></code>
+          <code><a href="setup.html">setup()</a></code>
 
         </dt>
-        <dd>Create an accelerator</dd>
-      </dl><dl><dt>
-
-          <code><a href="as_dataloader.html">as_dataloader()</a></code>
-
-        </dt>
-        <dd>Creates a dataloader from its input</dd>
-      </dl><dl><dt>
-
-          <code><a href="context.html">context</a></code>
-
-        </dt>
-        <dd>Context object</dd>
-      </dl><dl><dt>
-
-          <code><a href="ctx.html">ctx</a></code>
-
-        </dt>
-        <dd>Context object</dd>
-      </dl><dl><dt>
-
-          <code><a href="evaluate.html">evaluate()</a></code>
-
-        </dt>
-        <dd>Evaluates a fitted model on a dataset</dd>
+        <dd>Set's up a <code>nn_module</code> to use with luz</dd>
       </dl><dl><dt>
 
           <code><a href="fit.luz_module_generator.html">fit(<i>&lt;luz_module_generator&gt;</i>)</a></code>
@@ -88,10 +64,46 @@
         <dd>Fit a <code>nn_module</code></dd>
       </dl><dl><dt>
 
+          <code><a href="predict.luz_module_fitted.html">predict(<i>&lt;luz_module_fitted&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Create predictions for a fitted model</dd>
+      </dl><dl><dt>
+
+          <code><a href="evaluate.html">evaluate()</a></code>
+
+        </dt>
+        <dd>Evaluates a fitted model on a dataset</dd>
+      </dl><dl><dt>
+
+          <code><a href="set_hparams.html">set_hparams()</a></code>
+
+        </dt>
+        <dd>Set hyper-parameter of a module</dd>
+      </dl><dl><dt>
+
+          <code><a href="set_opt_hparams.html">set_opt_hparams()</a></code>
+
+        </dt>
+        <dd>Set optimizer hyper-parameters</dd>
+      </dl><dl><dt>
+
           <code><a href="get_metrics.html">get_metrics()</a></code>
 
         </dt>
         <dd>Get metrics from the object</dd>
+      </dl><dl><dt>
+
+          <code><a href="ctx.html">ctx</a></code>
+
+        </dt>
+        <dd>Context object</dd>
+      </dl><dl><dt>
+
+          <code><a href="context.html">context</a></code>
+
+        </dt>
+        <dd>Context object</dd>
       </dl><dl><dt>
 
           <code><a href="lr_finder.html">lr_finder()</a></code>
@@ -99,6 +111,117 @@
         </dt>
         <dd>Learning Rate Finder</dd>
       </dl><dl><dt>
+
+          <code><a href="as_dataloader.html">as_dataloader()</a></code>
+
+        </dt>
+        <dd>Creates a dataloader from its input</dd>
+      </dl></div><div class="section level2">
+      <h2 id="m-triques">Métriques<a class="anchor" aria-label="anchor" href="#m-triques"></a></h2>
+
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="luz_metric.html">luz_metric()</a></code>
+
+        </dt>
+        <dd>Creates a new luz metric</dd>
+      </dl><dl><dt>
+
+          <code><a href="luz_metric_accuracy.html">luz_metric_accuracy()</a></code>
+
+        </dt>
+        <dd>Accuracy</dd>
+      </dl><dl><dt>
+
+          <code><a href="luz_metric_binary_accuracy.html">luz_metric_binary_accuracy()</a></code>
+
+        </dt>
+        <dd>Binary accuracy</dd>
+      </dl><dl><dt>
+
+          <code><a href="luz_metric_binary_accuracy_with_logits.html">luz_metric_binary_accuracy_with_logits()</a></code>
+
+        </dt>
+        <dd>Binary accuracy with logits</dd>
+      </dl><dl><dt>
+
+          <code><a href="luz_metric_binary_auroc.html">luz_metric_binary_auroc()</a></code>
+
+        </dt>
+        <dd>Computes the area under the ROC</dd>
+      </dl><dl><dt>
+
+          <code><a href="luz_metric_mae.html">luz_metric_mae()</a></code>
+
+        </dt>
+        <dd>Mean absolute error</dd>
+      </dl><dl><dt>
+
+          <code><a href="luz_metric_mse.html">luz_metric_mse()</a></code>
+
+        </dt>
+        <dd>Mean squared error</dd>
+      </dl><dl><dt>
+
+          <code><a href="luz_metric_multiclass_auroc.html">luz_metric_multiclass_auroc()</a></code>
+
+        </dt>
+        <dd>Computes the multi-class AUROC</dd>
+      </dl><dl><dt>
+
+          <code><a href="luz_metric_rmse.html">luz_metric_rmse()</a></code>
+
+        </dt>
+        <dd>Root mean squared error</dd>
+      </dl><dl><dt>
+
+          <code><a href="luz_metric_set.html">luz_metric_set()</a></code>
+
+        </dt>
+        <dd>Creates a metric set</dd>
+      </dl></div><div class="section level2">
+      <h2 id="sp-cifique">Spécifique<a class="anchor" aria-label="anchor" href="#sp-cifique"></a></h2>
+
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="nn_mixup_loss.html">nn_mixup_loss()</a></code>
+
+        </dt>
+        <dd>Loss to be used with <code>callbacks_mixup()</code>.</dd>
+      </dl><dl><dt>
+
+          <code><a href="nnf_mixup.html">nnf_mixup()</a></code>
+
+        </dt>
+        <dd>Mixup logic</dd>
+      </dl></div><div class="section level2">
+      <h2 id="callbacks">Callbacks<a class="anchor" aria-label="anchor" href="#callbacks"></a></h2>
+
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
 
           <code><a href="luz_callback.html">luz_callback()</a></code>
 
@@ -200,6 +323,40 @@
 
         </dt>
         <dd>Train-eval callback</dd>
+      </dl></div><div class="section level2">
+      <h2 id="p-riph-riques-d-acc-l-ration">Périphériques d’accélération<a class="anchor" aria-label="anchor" href="#p-riph-riques-d-acc-l-ration"></a></h2>
+
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="accelerator.html">accelerator()</a></code>
+
+        </dt>
+        <dd>Create an accelerator</dd>
+      </dl></div><div class="section level2">
+      <h2 id="s-rialisation">Sérialisation<a class="anchor" aria-label="anchor" href="#s-rialisation"></a></h2>
+
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="luz_save.html">luz_save()</a></code>
+
+        </dt>
+        <dd>Saves luz objects to disk</dd>
       </dl><dl><dt>
 
           <code><a href="luz_load.html">luz_load()</a></code>
@@ -208,120 +365,19 @@
         <dd>Load trained model</dd>
       </dl><dl><dt>
 
-          <code><a href="luz_load_checkpoint.html">luz_load_checkpoint()</a></code>
-
-        </dt>
-        <dd>Loads a checkpoint</dd>
-      </dl><dl><dt>
-
           <code><a href="luz_load_model_weights.html">luz_load_model_weights()</a></code> <code><a href="luz_load_model_weights.html">luz_save_model_weights()</a></code>
 
         </dt>
         <dd>Loads model weights into a fitted object.</dd>
       </dl><dl><dt>
 
-          <code><a href="luz_metric.html">luz_metric()</a></code>
+          <code><a href="luz_load_checkpoint.html">luz_load_checkpoint()</a></code>
 
         </dt>
-        <dd>Creates a new luz metric</dd>
-      </dl><dl><dt>
-
-          <code><a href="luz_metric_accuracy.html">luz_metric_accuracy()</a></code>
-
-        </dt>
-        <dd>Accuracy</dd>
-      </dl><dl><dt>
-
-          <code><a href="luz_metric_binary_accuracy.html">luz_metric_binary_accuracy()</a></code>
-
-        </dt>
-        <dd>Binary accuracy</dd>
-      </dl><dl><dt>
-
-          <code><a href="luz_metric_binary_accuracy_with_logits.html">luz_metric_binary_accuracy_with_logits()</a></code>
-
-        </dt>
-        <dd>Binary accuracy with logits</dd>
-      </dl><dl><dt>
-
-          <code><a href="luz_metric_binary_auroc.html">luz_metric_binary_auroc()</a></code>
-
-        </dt>
-        <dd>Computes the area under the ROC</dd>
-      </dl><dl><dt>
-
-          <code><a href="luz_metric_mae.html">luz_metric_mae()</a></code>
-
-        </dt>
-        <dd>Mean absolute error</dd>
-      </dl><dl><dt>
-
-          <code><a href="luz_metric_mse.html">luz_metric_mse()</a></code>
-
-        </dt>
-        <dd>Mean squared error</dd>
-      </dl><dl><dt>
-
-          <code><a href="luz_metric_multiclass_auroc.html">luz_metric_multiclass_auroc()</a></code>
-
-        </dt>
-        <dd>Computes the multi-class AUROC</dd>
-      </dl><dl><dt>
-
-          <code><a href="luz_metric_rmse.html">luz_metric_rmse()</a></code>
-
-        </dt>
-        <dd>Root mean squared error</dd>
-      </dl><dl><dt>
-
-          <code><a href="luz_metric_set.html">luz_metric_set()</a></code>
-
-        </dt>
-        <dd>Creates a metric set</dd>
-      </dl><dl><dt>
-
-          <code><a href="luz_save.html">luz_save()</a></code>
-
-        </dt>
-        <dd>Saves luz objects to disk</dd>
-      </dl><dl><dt>
-
-          <code><a href="nn_mixup_loss.html">nn_mixup_loss()</a></code>
-
-        </dt>
-        <dd>Loss to be used with <code>callbacks_mixup()</code>.</dd>
-      </dl><dl><dt>
-
-          <code><a href="nnf_mixup.html">nnf_mixup()</a></code>
-
-        </dt>
-        <dd>Mixup logic</dd>
-      </dl><dl><dt>
-
-          <code><a href="predict.luz_module_fitted.html">predict(<i>&lt;luz_module_fitted&gt;</i>)</a></code>
-
-        </dt>
-        <dd>Create predictions for a fitted model</dd>
-      </dl><dl><dt>
-
-          <code><a href="set_hparams.html">set_hparams()</a></code>
-
-        </dt>
-        <dd>Set hyper-parameter of a module</dd>
-      </dl><dl><dt>
-
-          <code><a href="set_opt_hparams.html">set_opt_hparams()</a></code>
-
-        </dt>
-        <dd>Set optimizer hyper-parameters</dd>
-      </dl><dl><dt>
-
-          <code><a href="setup.html">setup()</a></code>
-
-        </dt>
-        <dd>Set's up a <code>nn_module</code> to use with luz</dd>
+        <dd>Loads a checkpoint</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table des matières"><h2>Sur cette page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">

@@ -32,13 +32,13 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><h6 class="dropdown-header" data-toc-skip>Using luz</h6></li>
-    <li><a class="dropdown-item" href="../../articles/get-started.html">Get started</a></li>
-    <li><a class="dropdown-item" href="../../articles/custom-loop.html">Custom loops</a></li>
-    <li><a class="dropdown-item" href="../../articles/accelerator.html">Accelerator API</a></li>
+<li><h6 class="dropdown-header" data-toc-skip>Utiliser luz</h6></li>
+    <li><a class="dropdown-item" href="../../articles/get-started.html">Bien démarrer</a></li>
+    <li><a class="dropdown-item" href="../../articles/custom-loop.html">Boucles personnalisées</a></li>
+    <li><a class="dropdown-item" href="../../articles/accelerator.html">l'API des périphériques d'accélération</a></li>
     <li><h6 class="dropdown-header" data-toc-skip>Guides</h6></li>
-    <li><a class="dropdown-item" href="../../articles/lr-finder.html">Using the lr_finder</a></li>
-    <li><a class="dropdown-item" href="../../articles/checkpoints.html">Checkpoints models</a></li>
+    <li><a class="dropdown-item" href="../../articles/lr-finder.html">Recherche du taux d'apprentissage avec lr_finder</a></li>
+    <li><a class="dropdown-item" href="../../articles/checkpoints.html">Instantannés de modèles</a></li>
   </ul>
 </li>
 <li class="active nav-item"><a class="nav-link" href="../../articles/examples/index.html">Examples</a></li>
@@ -69,8 +69,9 @@
     
     
 <p>Cette galerie d’exemples utilise luz pour entraîner et valider une
-gamme de architectures de deep learning courantes. La galerie démontre
-également un utilisation basique et avancée de luz.</p>
+gamme d’architectures classique de réseaux d’apprentissage profond. La
+galerie propose également une utilisation de basique à avancée de
+luz.</p>
 <div class="container">
 <div class="row mt-3">
 <div class="col-6">
@@ -79,7 +80,7 @@ gamme de architectures de deep learning courantes. La galerie démontre
 <h5 class="card-title mb-1">
 CharGPT
 </h5>
-<span class="badge rounded-pill bg-light mb-1">intermédiaire</span>
+<span class="badge rounded-pill bg-warning mb-1">intermédiaire</span>
 <p class="card-text">
 Un modèle de langage au niveau caractère avec GPT-2 sur des textes
 shakespeariens.
@@ -94,7 +95,7 @@ shakespeariens.
 <h5 class="card-title mb-1">
 Classifieur binaire
 </h5>
-<span class="badge rounded-pill bg-success mb-1">basic</span>
+<span class="badge rounded-pill bg-light mb-1">basic</span>
 <p class="card-text">
 Démonstration de l’usage d’un réseau pré-entraîné pour construire un
 classifieur binaire
@@ -112,7 +113,7 @@ code</a>
 <h5 class="card-title mb-1">
 Autoencodeur
 </h5>
-<span class="badge rounded-pill bg-success mb-1">basic</span>
+<span class="badge rounded-pill bg-light mb-1">basic</span>
 <p class="card-text">
 Construit un autoencodeur pour le dataset MNIST. Démontre la possibilité
 de surcharger la méthode <code>predict</code>
@@ -127,7 +128,7 @@ de surcharger la méthode <code>predict</code>
 <h5 class="card-title mb-1">
 Illustration d’un lot d’entraînement de taille virtuelle
 </h5>
-<span class="badge rounded-pill bg-danger mb-1">advanced</span>
+<span class="badge rounded-pill bg-light mb-1">advanced</span>
 <p class="card-text">
 Montre comment créer une étape personnalisée de traitement sur un lot
 virtuel au cours de l’entraînement
@@ -145,7 +146,7 @@ code</a>
 <h5 class="card-title mb-1">
 Réseau de convolution (CNN) simple
 </h5>
-<span class="badge rounded-pill bg-success mb-1">basic</span>
+<span class="badge rounded-pill bg-light mb-1">basic</span>
 <p class="card-text">
 Entraîne un réseau convolutif (CNN) similaire à un AlexNet pour
 classifier les chiffres du jeu de données MNIST
@@ -160,7 +161,7 @@ classifier les chiffres du jeu de données MNIST
 <h5 class="card-title mb-1">
 DCGAN
 </h5>
-<span class="badge rounded-pill bg-warning mb-1">intermediate</span>
+<span class="badge rounded-pill bg-light mb-1">intermediate</span>
 <p class="card-text">
 Réseau neuronal profond convolutionnel génératif et discriminant pour la
 génération d’images.
@@ -177,7 +178,7 @@ génération d’images.
 <h5 class="card-title mb-1">
 Augmentation MixUp
 </h5>
-<span class="badge rounded-pill bg-warning mb-1">intermediate</span>
+<span class="badge rounded-pill bg-light mb-1">intermediate</span>
 <p class="card-text">
 Démonstration de l’utilisation du <code>callback</code> MixUp
 </p>
@@ -191,7 +192,7 @@ Démonstration de l’utilisation du <code>callback</code> MixUp
 <h5 class="card-title mb-1">
 Triplet loss
 </h5>
-<span class="badge rounded-pill bg-warning mb-1">intermediate</span>
+<span class="badge rounded-pill bg-light mb-1">intermediate</span>
 <p class="card-text">
 Train an embedding model to minimized the triplet loss.
 </p>
@@ -207,7 +208,7 @@ Train an embedding model to minimized the triplet loss.
 <h5 class="card-title mb-1">
 Implémentation de UNET
 </h5>
-<span class="badge rounded-pill bg-warning mb-1">intermediate</span>
+<span class="badge rounded-pill bg-light mb-1">intermediate</span>
 <p class="card-text">
 Implémente un modèle UNET pour segmenter le fond des images de chats et
 de chiens.
@@ -222,7 +223,7 @@ de chiens.
 <h5 class="card-title mb-1">
 Texte de classification à partir de zéro
 </h5>
-<span class="badge rounded-pill bg-success mb-1">basic</span>
+<span class="badge rounded-pill bg-light mb-1">basic</span>
 <p class="card-text">
 Implémente la classification de texte à partir de zéro.
 </p>
@@ -238,7 +239,7 @@ Implémente la classification de texte à partir de zéro.
 <h5 class="card-title mb-1">
 Entraîner un modèle linguistique causal à partir de zéro
 </h5>
-<span class="badge rounded-pill bg-danger mb-1">advanced</span>
+<span class="badge rounded-pill bg-light mb-1">advanced</span>
 <p class="card-text">
 Implémente des jeux de données et entraîne un modèle linguistique causal
 à partir de zéro en utilisant le code source R.

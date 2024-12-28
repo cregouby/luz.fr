@@ -32,13 +32,13 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><h6 class="dropdown-header" data-toc-skip>Using luz</h6></li>
-    <li><a class="dropdown-item" href="../articles/get-started.html">Get started</a></li>
-    <li><a class="dropdown-item" href="../articles/custom-loop.html">Custom loops</a></li>
-    <li><a class="dropdown-item" href="../articles/accelerator.html">Accelerator API</a></li>
+<li><h6 class="dropdown-header" data-toc-skip>Utiliser luz</h6></li>
+    <li><a class="dropdown-item" href="../articles/get-started.html">Bien démarrer</a></li>
+    <li><a class="dropdown-item" href="../articles/custom-loop.html">Boucles personnalisées</a></li>
+    <li><a class="dropdown-item" href="../articles/accelerator.html">l'API des périphériques d'accélération</a></li>
     <li><h6 class="dropdown-header" data-toc-skip>Guides</h6></li>
-    <li><a class="dropdown-item" href="../articles/lr-finder.html">Using the lr_finder</a></li>
-    <li><a class="dropdown-item" href="../articles/checkpoints.html">Checkpoints models</a></li>
+    <li><a class="dropdown-item" href="../articles/lr-finder.html">Recherche du taux d'apprentissage avec lr_finder</a></li>
+    <li><a class="dropdown-item" href="../articles/checkpoints.html">Instantannés de modèles</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../articles/examples/index.html">Examples</a></li>
@@ -165,7 +165,7 @@ d’apprentissage à chaque étape. Vous pouvez utiliser la méthode de
 visualisation intégrée pour afficher les résultats exacts, ainsi qu’une
 valeur de perte lissée exponentiellement.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">records</span><span class="op">)</span> <span class="op">+</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">records</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="lr-finder_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>On peut voir que avec des taux d’apprentissage faibles la perte ne

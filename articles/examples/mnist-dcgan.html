@@ -32,13 +32,13 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><h6 class="dropdown-header" data-toc-skip>Using luz</h6></li>
-    <li><a class="dropdown-item" href="../../articles/get-started.html">Get started</a></li>
-    <li><a class="dropdown-item" href="../../articles/custom-loop.html">Custom loops</a></li>
-    <li><a class="dropdown-item" href="../../articles/accelerator.html">Accelerator API</a></li>
+<li><h6 class="dropdown-header" data-toc-skip>Utiliser luz</h6></li>
+    <li><a class="dropdown-item" href="../../articles/get-started.html">Bien démarrer</a></li>
+    <li><a class="dropdown-item" href="../../articles/custom-loop.html">Boucles personnalisées</a></li>
+    <li><a class="dropdown-item" href="../../articles/accelerator.html">l'API des périphériques d'accélération</a></li>
     <li><h6 class="dropdown-header" data-toc-skip>Guides</h6></li>
-    <li><a class="dropdown-item" href="../../articles/lr-finder.html">Using the lr_finder</a></li>
-    <li><a class="dropdown-item" href="../../articles/checkpoints.html">Checkpoints models</a></li>
+    <li><a class="dropdown-item" href="../../articles/lr-finder.html">Recherche du taux d'apprentissage avec lr_finder</a></li>
+    <li><a class="dropdown-item" href="../../articles/checkpoints.html">Instantannés de modèles</a></li>
   </ul>
 </li>
 <li class="active nav-item"><a class="nav-link" href="../../articles/examples/index.html">Examples</a></li>
@@ -91,7 +91,7 @@
 <span>    <span class="va">img</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">img</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span>,,,<span class="va">newaxis</span><span class="op">]</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
 <span>    <span class="va">img</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/torch_stack.html" class="external-link">torch_stack</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">img</span>, <span class="va">img</span>, <span class="va">img</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">[</span><span class="va">..</span>,<span class="fl">1</span><span class="op">]</span></span>
 <span>    <span class="va">img</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/as.raster.html" class="external-link">as.raster</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/torch/man/as_array.html" class="external-link">as_array</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span><span class="op">)</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -229,7 +229,7 @@
 <span><span class="va">img</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">img</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span>,,,<span class="va">newaxis</span><span class="op">]</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
 <span><span class="va">img</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/torch_stack.html" class="external-link">torch_stack</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">img</span>, <span class="va">img</span>, <span class="va">img</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">[</span><span class="va">..</span>,<span class="fl">1</span><span class="op">]</span></span>
 <span><span class="va">img</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/as.raster.html" class="external-link">as.raster</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/torch/man/as_array.html" class="external-link">as_array</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Sérialisation ----------------------------------------------------</span></span>
 <span></span>

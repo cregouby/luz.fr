@@ -42,6 +42,7 @@
   </ul>
 </li>
 <li class="active nav-item"><a class="nav-link" href="../../articles/examples/index.html">Examples</a></li>
+<li class="nav-item"><a class="nav-link" href="../../reference/index.html">Référence</a></li>
 <li class="nav-item"><a class="nav-link" href="../../news/index.html">Changements</a></li>
       </ul>
 <ul class="navbar-nav">
@@ -342,11 +343,11 @@ de 100 époques.</p>
 <span>    verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
-<span><span class="fu">luz</span><span class="fu">::</span><span class="fu">luz_save</span><span class="op">(</span><span class="va">fitted</span>, <span class="st">"model.pt"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">luz</span><span class="fu">::</span><span class="fu"><a href="https://mlverse.github.io/luz/reference/luz_save.html" class="external-link">luz_save</a></span><span class="op">(</span><span class="va">fitted</span>, <span class="st">"model.pt"</span><span class="op">)</span></span></code></pre></div>
 <p>Ensuite, nous pouvons utiliser le modèle pour générer du texte en
 fonction d’un prompt avec :</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fitted</span> <span class="op">&lt;-</span> <span class="fu">luz</span><span class="fu">::</span><span class="fu">luz_load</span><span class="op">(</span><span class="st">"model.pt"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">fitted</span> <span class="op">&lt;-</span> <span class="fu">luz</span><span class="fu">::</span><span class="fu"><a href="https://mlverse.github.io/luz/reference/luz_load.html" class="external-link">luz_load</a></span><span class="op">(</span><span class="st">"model.pt"</span><span class="op">)</span></span>
 <span><span class="va">tok</span> <span class="op">&lt;-</span> <span class="fu">tok</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/tok/man/tokenizer.html" class="external-link">tokenizer</a></span><span class="op">$</span><span class="fu">from_file</span><span class="op">(</span><span class="st">"tokenizer-20000.json"</span><span class="op">)</span></span>
 <span><span class="va">context</span> <span class="op">&lt;-</span> <span class="st">"#' Crée un modèle linéaire</span></span>
 <span><span class="st">linear_model &lt;- function(x, y) {</span></span>

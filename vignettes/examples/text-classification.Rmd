@@ -1,12 +1,12 @@
 ---
-title: "Texte de classification à partir de zéro"
+title: "Classification de texte à partir de zéro"
 desc: "Implémente la classification de texte à partir de zéro."
 category: 'basic'
 editor_options: 
   chunk_output_type: console
 ---
 
-Cet exemple est une version adaptée de ['Texte de classification à partir de zéro'](https://keras.io/examples/nlp/text_classification_from_scratch/) de la documentation Keras, par Mark Omerick et François Chollet.
+Cet exemple est une version adaptée de ['Classification de texte à partir de zéro'](https://keras.io/examples/nlp/text_classification_from_scratch/) de la documentation Keras, par Mark Omerick et François Chollet.
 
 Nous commençons par implémenter un jeu de données torch qui télécharge et pré-traite les données.
 La méthode `initialize` est appelée lorsque nous instancions un jeu de données. 
@@ -34,7 +34,7 @@ imdb_dataset <- dataset(
     url <- "https://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz"
     fpath <- file.path(root, "aclImdb")
     
-    # télécharge si le fichier n'existe pas encore
+    # télécharge sauf si le fichier existe déjà
     if (!dir.exists(fpath) && download) {
     # télécharge dans un répertoire temporaire, puis extrait et déplace dans le répertoire root
         withr::with_tempfile("file", {
@@ -76,7 +76,7 @@ imdb_dataset <- dataset(
     item <- self$data[i,]
     
     # prend l'élément i, lit le contenu du fichier dans une chaîne de caractères
-    # puis convertit tout en minuscules et supprime les tags HTML et la ponctuation
+    # puis convertit tout en minuscules puis supprime les tags HTML et la ponctuation
     # puis utilise le tokeniseur pour encoder le texte.
     text <- item$fname %>% 
       readr::read_file() %>% 
@@ -130,18 +130,18 @@ model <- nn_module(
     out <- emb$transpose(2, 3) %>% 
       self$convs() %>% 
       self$classifier()
-    # on élimine la derniere dimension pour obtenir une dimension (B) au lieu de (B, 1)
+    # on élimine la dernière dimension pour obtenir une forme (B) au lieu de (B, 1)
     out$squeeze(2)
   }
 )
 
-# tester le modèle pour un lot d'exemples
+# on vérifie le bon fonctionnement du modèle `m` pour un lot d'exemples `x` 
 # m <- model(vocab_size, embedding_dim)
 # x <- torch_randint(1, 20000, size = c(32, 500), dtype = "int")
 # m(x)
 ```
 
-Nous pouvons maintenant entraîner le modèle :
+Nous pouvons maintenant entraîner le modèle sur notre jeu d'entrainement `train_ds` :
 
 ```{r, eval = FALSE}
 fitted_model <- model %>% 
@@ -154,7 +154,7 @@ fitted_model <- model %>%
   fit(train_ds, epochs = 3)
 ```
 
-Nous pouvons finalement obtenir les métriques sur le jeu de données de test :
+Nous pouvons finalement calculer les métriques sur le jeu de test `test_ds` :
 
 ```{r, eval = FALSE}
 fitted_model %>% evaluate(test_ds)

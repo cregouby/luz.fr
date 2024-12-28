@@ -1,4 +1,4 @@
-# luz.fr <img src="images/luz.fr.png" align="right" style="width: 15%"/>
+# luz.fr <img src="man/figures/luz.fr.png" align="right" style="width: 15%"/>
 
 <!-- badges: start -->
 
@@ -32,4 +32,4 @@ library(luz)
 ??lr_finder
 ```
 
-![exemple de page de documentation en français dans l'onglet Help de RStudio](images/clipboard-1010983901.png)
+![exemple de page de documentation en français dans l'onglet Help de RStudio](man/figures/clipboard-1010983901.png)

@@ -1,7 +1,7 @@
 ---
 title: "Classification de texte à partir de zéro"
 desc: "Implémente la classification de texte à partir de zéro."
-category: 'basic'
+category: 'basique'
 editor_options: 
   chunk_output_type: console
 ---

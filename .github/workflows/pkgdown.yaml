@@ -44,7 +44,8 @@ jobs:
           rm -rf .git/
           cp ./R/* ../R
           cp -r ./man/* ../man
-          head -n 20 ../DESCRIPTION > ../DESCRIPTION
+          mv ../DESCRIPTION ../DESCRIPTION.init
+          head -n 20 ../DESCRIPTION.init > ../DESCRIPTION
           tail -n 52 DESCRIPTION >> ../DESCRIPTION
           cp NAMESPACE ../
           cd ..

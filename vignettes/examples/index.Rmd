@@ -2,8 +2,8 @@
 title: "Exemples"
 ---
 
-Cette galerie d'exemples utilise luz pour entraîner et valider une gamme de architectures de deep learning courantes. 
-La galerie démontre également un utilisation basique et avancée de luz.
+Cette galerie d'exemples utilise luz pour entraîner et valider une gamme d'architectures classique de réseaux d'apprentissage profond. 
+La galerie propose également une utilisation de basique à avancée de luz.
 
 
 <div class="container">
@@ -19,11 +19,11 @@ examples <- lapply(examples, function(x) {
 card <- function(x) {
   
   badge_type <- 
-    if (x$category == "basic") 
+    if (x$category == "basique") 
       "success" 
-    else if (x$category == "intermediate")
+    else if (x$category == "intermédiaire")
       "warning"
-    else if (x$category == "advanced")
+    else if (x$category == "avancé")
       "danger"
     else
       "light"

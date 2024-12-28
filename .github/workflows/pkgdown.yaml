@@ -38,15 +38,15 @@ jobs:
           git config --local user.name "GitHub Actions"
           mkdir -p inst
           mkdir -p docs
-          rm R/*
+          mkdir -p man
           cd inst
           git clone -b main https://github.com/mlverse/luz.git .
-          rm -r .git/
-          mkdir -p ../R
+          rm -rf .git/
           mv ./R/* ../R
+          mv -r ./man/* ../man
           mv DESCRIPTION ../
           mv NAMESPACE ../
-          cd ../..
+          cd ..
 
       - name: Install package
         run: R CMD INSTALL .

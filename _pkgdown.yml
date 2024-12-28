@@ -5,7 +5,7 @@ lang: fr
 
 navbar:
  structure:
-   left:  [articles, examples, news]
+   left:  [articles, examples, reference, news]
    right: [github]
  components:
   articles:

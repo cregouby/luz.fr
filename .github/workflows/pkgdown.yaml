@@ -36,11 +36,13 @@ jobs:
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          mkdir inst
+          mkdir -p inst
+          mkdir -p docs
           rm R/*
           cd inst
           git clone -b main https://github.com/mlverse/luz.git .
           rm -r .git/
+          mkdir -p ../R
           mv ./R/* ../R
           mv DESCRIPTION ../
           mv NAMESPACE ../

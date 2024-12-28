@@ -1,7 +1,7 @@
 ---
 title: "Réseau de convolution (CNN) simple"
 desc: "Entraîne un réseau convolutif (CNN) similaire à un AlexNet pour classifier les chiffres du jeu de données MNIST"
-category: 'basic'
+category: 'basique'
 ---
 
 

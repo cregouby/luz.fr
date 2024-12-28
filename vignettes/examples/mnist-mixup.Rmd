@@ -1,7 +1,7 @@
 ---
 title: "Augmentation MixUp"
 desc: "Démonstration de l'utilisation du `callback` MixUp"
-category: "intermediate"
+category: "intermédiaire"
 ---
 
 ```{r, eval = FALSE}

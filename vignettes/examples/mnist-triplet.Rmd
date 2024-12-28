@@ -1,7 +1,7 @@
 ---
-title: "Triplet loss"
-desc: "Train an embedding model to minimized the triplet loss."
-category: "intermediate"
+title: "Fonction de coût en Triplet"
+desc: "Entraîne un modèle d'embedding qui minimise une fonction de coût en Triplet."
+category: "intermédiaire"
 ---
 
 ```{r, eval = FALSE}

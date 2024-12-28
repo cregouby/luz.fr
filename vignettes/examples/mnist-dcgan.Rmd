@@ -1,7 +1,7 @@
 ---
 title: "DCGAN"
-desc: "Réseau neuronal profond convolutionnel génératif et discriminant pour la génération d'images."
-category: 'intermediate'
+desc: "Réseau de convolution génératif et discriminant pour la génération d'images."
+category: 'intermédiaire'
 ---
 
 

@@ -1,7 +1,7 @@
 ---
 title: "Entraîner un modèle linguistique causal à partir de zéro"
 desc: "Implémente des jeux de données et entraîne un modèle linguistique causal à partir de zéro en utilisant le code source R."
-category: 'advanced'
+category: 'avancé'
 editor_options: 
   chunk_output_type: console
 ---
@@ -24,8 +24,8 @@ La première étape est d'implémenter un jeu de données torch qui rassemble de
 
 Cela signifie que nous devons :
 
-1. Télécharger les données
-2. Former un tokeniseur pour ce jeu de données
+1. Télécharger les données textuelles
+2. Entraîner un tokeniseur pour ce jeu de données
 3. Être en mesure de produire des séquences de tokens dans le format attendu par le modèle
 
 Nous allons utiliser 2 jeux de données disponibles sur le Hub d'Hugging Face. Le premier contient tous les codes sources des paquets R disponibles sur CRAN. Le second contient tous les codes R qui sont disponibles dans les dumps GitHub. 

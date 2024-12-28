@@ -1,7 +1,7 @@
 ---
 title: "Illustration d'un lot d'entraînement de taille virtuelle"
 desc: "Montre comment créer une étape personnalisée de traitement sur un lot virtuel au cours de l'entraînement"
-category: 'advanced'
+category: 'avancé'
 ---
 
 ```{r, eval = FALSE}

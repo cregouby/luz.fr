@@ -1,7 +1,7 @@
 ---
 title: "Implémentation de UNET"
 desc: "Implémente un modèle UNET pour segmenter le fond des images de chats et de chiens."
-category: 'intermediate'
+category: 'intermédiaire'
 editor_options: 
   chunk_output_type: console
 ---

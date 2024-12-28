@@ -1,7 +1,7 @@
 ---
 title: 'Classifieur binaire'
 desc: "Démonstration de l'usage d'un réseau pré-entraîné pour construire un classifieur binaire "
-category: 'basic'
+category: 'basique'
 ---
 
 ```{r, eval = FALSE}

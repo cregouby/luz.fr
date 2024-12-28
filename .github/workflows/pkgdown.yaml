@@ -44,11 +44,18 @@ jobs:
           rm -rf .git/
           cp ./R/* ../R
           cp -r ./man/* ../man
-          mv ../DESCRIPTION ../DESCRIPTION.init
-          head -n 20 ../DESCRIPTION.init > ../DESCRIPTION
-          tail -n 52 DESCRIPTION >> ../DESCRIPTION
           cp NAMESPACE ../
           cd ..
+
+      - name: Assemble necessary pieces of both DESCRIPTION
+        run: |
+          mv DESCRIPTION DESCRIPTION.init
+          head -n 20 DESCRIPTION.init > DESCRIPTION
+          tail -n 52 inst/DESCRIPTION | head -n 50 >> DESCRIPTION
+          echo "\t'translations.R'" >> DESCRIPTION
+          echo "\t'zzz.R'" >> DESCRIPTION
+          tail -n 2 inst/DESCRIPTION >> DESCRIPTION
+
 
       - name: Install package
         run: R CMD INSTALL .

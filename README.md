@@ -12,7 +12,6 @@ Vous pouvez installer la version de development de **{luz.fr}** depuis [GitHub](
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("eliocamp/rhelpi18n")
 devtools::install_github("cregouby/luz.fr")
 ```
 

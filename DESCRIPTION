@@ -5,14 +5,15 @@ Date: 2024-05-26
 Authors@R: c(
     person("Christophe", "Regouby", email = "christophe.regouby@free.fr", role = c("aut", "cre", "cph"))
     )
-Description: Une interface de haut niveau pour « torch » fournissant des utilitaires 
+Description: Une interface de haut niveau pour 'torch' fournissant des utilitaires 
     pour réduire la quantité de code nécessaire pour réaliser les tâches courantes, 
-    abstraire les détails de « torch » et faire fonctionner le même code à la fois sur
-    le « CPU » et la « GPU ». Il est suffisamment flexible pour permettre
-    d'expérimenter une large gamme de modèles. Il est fortement inspiré par « fastai » de 
+    abstraire les détails de 'torch' et faire fonctionner le même code à la fois sur
+    le 'CPU' et la 'GPU'. Il est suffisamment flexible pour permettre
+    d'expérimenter une large gamme de modèles. Il est fortement inspiré par 'fastai' de 
     Howard et al. (2020) <arXiv:2002.04688>, 'Keras' par Chollet et al. (2015) et 
-    PyTorch Lightning' de Falcon et al. (2019) <doi:10.5281/zenodo.3828935>.
+    'PyTorch Lightning' de Falcon et al. (2019) <doi:10.5281/zenodo.3828935>.
 License: MIT + file LICENSE
+URL: https://cregouby.github.io/luz.fr/
 BugReports: https://github.com/cregouby/luz.fr/issues
 Encoding: UTF-8
 Language: fr
@@ -26,4 +27,3 @@ Suggest:
 Remotes: 
     eliocamp/rhelpi18n
 RoxygenNote: 7.3.2
-URL: https://cregouby.github.io/luz.fr/

@@ -3,10 +3,17 @@ template:
 
 lang: fr
 
+url: https://cregouby.github.io/luz.fr
+
 navbar:
  structure:
-   left:  [articles, examples, reference, news]
-   right: [github]
+   left:  
+      - articles
+      - examples
+      - reference
+      - news
+   right: 
+      - github
  components:
   articles:
     text: Articles
@@ -26,38 +33,42 @@ navbar:
   examples:
     text: Examples
     href: articles/examples/index.html
+  github:
+    text: Contribuer
+    icon: fab fa-github fa-lg
+    href: https://github.com/mlverse/luz/
 
-reference:
-  - title: "Entraînement"
-  - contents:
-    - setup
-    - starts_with("fit")
-    - starts_with("predict")
-    - starts_with("evaluate")
-    - set_hparams
-    - set_opt_hparams
-    - get_metrics
-    - ctx
-    - context
-    - lr_finder
-    - as_dataloader
-  - title: "Métriques"
-  - contents:
-    - starts_with("luz_metric")
-  - title: "Spécifique"
-  - contents:
-    - starts_with("nn_")
-    - starts_with("nnf_")
-  - title: "Callbacks"
-  - contents:
-    - starts_with("luz_callback")
-  - title: "Périphériques d'accélération"
-    contents:
-    - accelerator
-  - title: "Sérialisation"
-    contents:
-    - luz_save
-    - luz_load
-    - luz_save_model_weights
-    - luz_load_model_weights
-    - luz_load_checkpoint
+  reference:
+    - title: "Entraînement"
+    - contents:
+      - setup
+      - starts_with("fit")
+      - starts_with("predict")
+      - starts_with("evaluate")
+      - set_hparams
+      - set_opt_hparams
+      - get_metrics
+      - ctx
+      - context
+      - lr_finder
+      - as_dataloader
+    - title: "Métriques"
+    - contents:
+      - starts_with("luz_metric")
+    - title: "Spécifique"
+    - contents:
+      - starts_with("nn_")
+      - starts_with("nnf_")
+    - title: "Callbacks"
+    - contents:
+      - starts_with("luz_callback")
+    - title: "Périphériques d'accélération"
+      contents:
+      - accelerator
+    - title: "Sérialisation"
+      contents:
+      - luz_save
+      - luz_load
+      - luz_save_model_weights
+      - luz_load_model_weights
+      - luz_load_checkpoint

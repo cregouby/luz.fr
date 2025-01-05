@@ -46,7 +46,7 @@
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changements</a></li>
       </ul>
 <ul class="navbar-nav">
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/cregouby/luz.fr/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/mlverse/luz/"><span class="fa fab fa-github fa-lg"></span> Contribuer</a></li>
       </ul>
 </div>
 
@@ -107,9 +107,9 @@ généré et un modèle linéaire pour montrer comment fonctionne
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/torch_randn.html" class="external-link">torch_randn</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p>Et la définition du modèle :</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="va">nn_linear</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/setup.html">setup</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="va">optim_sgd</span>, loss <span class="op">=</span> <span class="va">nnf_mse_loss</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/set_hparams.html">set_hparams</a></span><span class="op">(</span>in_features <span class="op">=</span> <span class="fl">10</span>, out_features <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="va">nn_linear</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/setup.html">setup</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="va">optim_sgd</span>, loss <span class="op">=</span> <span class="va">nnf_mse_loss</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/set_hparams.html">set_hparams</a></span><span class="op">(</span>in_features <span class="op">=</span> <span class="fl">10</span>, out_features <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/set_opt_hparams.html">set_opt_hparams</a></span><span class="op">(</span>lr <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></span></code></pre></div>
 <p>Voici comment créer un <code>callbacks</code> qui simule une erreur
 aléatoire. Ce <code>callbacks</code> lève juste une erreur d’exécution R
@@ -132,21 +132,23 @@ aléatoire. Ce <code>callbacks</code> lève juste une erreur d’exécution R
 <span><span class="va">inter</span> <span class="op">&lt;-</span> <span class="fu">interrupt</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Une erreur se produira à la 5ème époque et le modèle sera arrêté.</span></span>
-<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">fit</span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>,</span>
 <span>  callbacks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">inter</span>, <span class="va">autoresume</span><span class="op">)</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in get(paste0(generic, ".", class), envir = get_method_env()) : </span></span>
+<span><span class="co">#&gt;   objet 'type_sum.accel' introuvable</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `FUN()`:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Error while calling callback with class <span style="color: #0000BB;">&lt;interrupt/LuzCallback/R6&gt;</span> at</span></span>
 <span><span class="co">#&gt;   <span style="color: #00BB00;">on_epoch_end</span>.</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Caused by error in `self[[callback_nm]]()`:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Error on epoch 5</span></span></code></pre></div>
 <p>Pour relancer l’apprentissage du modèle exactement là où il s’est
-arrêté vous n’avez qu’à relancer la fonction <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code> avec le
+arrêté vous n’avez qu’à relancer la fonction <code>fit()</code> avec le
 même modèle, les <code>callbacks</code>, etc. :</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">fit</span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>,</span>
 <span>  callbacks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">inter</span>, <span class="va">autoresume</span><span class="op">)</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -156,7 +158,7 @@ là où il s’est arrêté. Les relevés (de métriques et de pertes),
 optimiseur et état du modèle sont récupérés à partir de l’état précédent
 pour avoir les résultats complets :</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <p><img src="checkpoints_files/figure-html/plots-1.png" width="700"></p>
 </div>
 <div class="section level2">
@@ -173,9 +175,9 @@ Nous générerons d’abord quelques données.</p>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/torch_randn.html" class="external-link">torch_randn</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p>Définissons ensuite notre modèle :</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="va">nn_linear</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/setup.html">setup</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="va">optim_sgd</span>, loss <span class="op">=</span> <span class="va">nnf_mse_loss</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/set_hparams.html">set_hparams</a></span><span class="op">(</span>in_features <span class="op">=</span> <span class="fl">10</span>, out_features <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="va">nn_linear</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/setup.html">setup</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="va">optim_sgd</span>, loss <span class="op">=</span> <span class="va">nnf_mse_loss</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/set_hparams.html">set_hparams</a></span><span class="op">(</span>in_features <span class="op">=</span> <span class="fl">10</span>, out_features <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/set_opt_hparams.html">set_opt_hparams</a></span><span class="op">(</span>lr <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></span></code></pre></div>
 <p>Entraînons maintenant le modèle en utilisant
 <code><a href="../reference/luz_callback_model_checkpoint.html">luz_callback_model_checkpoint()</a></code>.</p>
@@ -185,7 +187,7 @@ Nous générerons d’abord quelques données.</p>
 <span>  monitor <span class="op">=</span> <span class="st">"train_loss"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">fit</span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>,</span>
 <span>  callbacks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">checkpoint</span><span class="op">)</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -229,12 +231,12 @@ répertoire des sauvegardes est fourni, alors l’apprentissage sera reprie
 <p>Voici comment utiliser ce <code>callbacks</code> :</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">resume</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/luz_callback_resume_from_checkpoint.html">luz_callback_resume_from_checkpoint</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"checkpoints/"</span><span class="op">)</span></span>
-<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">fit</span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>,</span>
 <span>  callbacks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">resume</span><span class="op">)</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <p><img src="checkpoints_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 <div class="section level3">
 <h3 id="etats-des-callbacks-personnalisés">Etats des <code>callbacks</code> personnalisés<a class="anchor" aria-label="anchor" href="#etats-des-callbacks-personnalis%C3%A9s"></a>

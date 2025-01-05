@@ -46,7 +46,7 @@
 <li class="nav-item"><a class="nav-link" href="../../news/index.html">Changements</a></li>
       </ul>
 <ul class="navbar-nav">
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/cregouby/luz.fr/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/mlverse/luz/"><span class="fa fab fa-github fa-lg"></span> Contribuer</a></li>
       </ul>
 </div>
 
@@ -144,11 +144,11 @@ contenu des fichiers.</p>
 <span>    <span class="co"># prend l'élément i, lit le contenu du fichier dans une chaîne de caractères</span></span>
 <span>    <span class="co"># puis convertit tout en minuscules puis supprime les tags HTML et la ponctuation</span></span>
 <span>    <span class="co"># puis utilise le tokeniseur pour encoder le texte.</span></span>
-<span>    <span class="va">text</span> <span class="op">&lt;-</span> <span class="va">item</span><span class="op">$</span><span class="va">fname</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span> </span>
-<span>      <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_file.html" class="external-link">read_file</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span> </span>
-<span>      <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html" class="external-link">str_to_lower</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span> </span>
-<span>      <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html" class="external-link">str_replace_all</a></span><span class="op">(</span><span class="st">"&lt;br /&gt;"</span>, <span class="st">" "</span><span class="op">)</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span> </span>
-<span>      <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html" class="external-link">str_remove_all</a></span><span class="op">(</span><span class="st">"[:punct:]"</span><span class="op">)</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="va">text</span> <span class="op">&lt;-</span> <span class="va">item</span><span class="op">$</span><span class="va">fname</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>      <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_file.html" class="external-link">read_file</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>      <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html" class="external-link">str_to_lower</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>      <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html" class="external-link">str_replace_all</a></span><span class="op">(</span><span class="st">"&lt;br /&gt;"</span>, <span class="st">" "</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>      <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html" class="external-link">str_remove_all</a></span><span class="op">(</span><span class="st">"[:punct:]"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>      <span class="va">self</span><span class="op">$</span><span class="va">tok</span><span class="op">$</span><span class="fu">encode</span><span class="op">(</span><span class="op">)</span></span>
 <span>  </span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -192,8 +192,8 @@ d’embedding et on y connecte un classifieur de sortie.</p>
 <span>  <span class="op">}</span>,</span>
 <span>  forward <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">emb</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="fu">embedding</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span>    <span class="va">out</span> <span class="op">&lt;-</span> <span class="va">emb</span><span class="op">$</span><span class="fu">transpose</span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span> </span>
-<span>      <span class="va">self</span><span class="op">$</span><span class="fu">convs</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="va">out</span> <span class="op">&lt;-</span> <span class="va">emb</span><span class="op">$</span><span class="fu">transpose</span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>      <span class="va">self</span><span class="op">$</span><span class="fu">convs</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>      <span class="va">self</span><span class="op">$</span><span class="fu">classifier</span><span class="op">(</span><span class="op">)</span></span>
 <span>    <span class="co"># on élimine la dernière dimension pour obtenir une forme (B) au lieu de (B, 1)</span></span>
 <span>    <span class="va">out</span><span class="op">$</span><span class="fu">squeeze</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
@@ -207,18 +207,18 @@ d’embedding et on y connecte un classifieur de sortie.</p>
 <p>Nous pouvons maintenant entraîner le modèle sur notre jeu
 d’entrainement <code>train_ds</code> :</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fitted_model</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">fitted_model</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../../reference/setup.html">setup</a></span><span class="op">(</span></span>
 <span>    loss <span class="op">=</span> <span class="va">nnf_binary_cross_entropy_with_logits</span>,</span>
 <span>    optimizer <span class="op">=</span> <span class="va">optim_adam</span>,</span>
 <span>    metrics <span class="op">=</span> <span class="fu"><a href="../../reference/luz_metric_binary_accuracy_with_logits.html">luz_metric_binary_accuracy_with_logits</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="../../reference/set_hparams.html">set_hparams</a></span><span class="op">(</span>vocab_size <span class="op">=</span> <span class="va">vocab_size</span>, embedding_dim <span class="op">=</span> <span class="va">embedding_dim</span><span class="op">)</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">train_ds</span>, epochs <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../../reference/set_hparams.html">set_hparams</a></span><span class="op">(</span>vocab_size <span class="op">=</span> <span class="va">vocab_size</span>, embedding_dim <span class="op">=</span> <span class="va">embedding_dim</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">fit</span><span class="op">(</span><span class="va">train_ds</span>, epochs <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <p>Nous pouvons finalement calculer les métriques sur le jeu de test
 <code>test_ds</code> :</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fitted_model</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../../reference/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">test_ds</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fitted_model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../../reference/evaluate.html">evaluate</a></span><span class="op">(</span><span class="va">test_ds</span><span class="op">)</span></span></code></pre></div>
 <p>N’oubliez pas que pour faire une inférence sur des textes, il faut
 appliquer le même prétraitement que celui appliqué dans la définition du
 jeu de données.</p>

@@ -46,7 +46,7 @@
 <li class="nav-item"><a class="nav-link" href="../../news/index.html">Changements</a></li>
       </ul>
 <ul class="navbar-nav">
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/cregouby/luz.fr/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/mlverse/luz/"><span class="fa fab fa-github fa-lg"></span> Contribuer</a></li>
       </ul>
 </div>
 
@@ -92,7 +92,7 @@
 <span>    <span class="va">img</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">img</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span>,,,<span class="va">newaxis</span><span class="op">]</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
 <span>    <span class="va">img</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/torch_stack.html" class="external-link">torch_stack</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">img</span>, <span class="va">img</span>, <span class="va">img</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">[</span><span class="va">..</span>,<span class="fl">1</span><span class="op">]</span></span>
 <span>    <span class="va">img</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/as.raster.html" class="external-link">as.raster</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/torch/man/as_array.html" class="external-link">as_array</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span><span class="op">)</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -217,10 +217,10 @@
 <span>  <span class="op">}</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="va">dcgan</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../../reference/setup.html">setup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="../../reference/set_hparams.html">set_hparams</a></span><span class="op">(</span>latent_dim <span class="op">=</span> <span class="fl">100</span>, channels <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">train_dl</span>, epochs <span class="op">=</span> <span class="fl">10</span>, valid_data <span class="op">=</span> <span class="va">test_dl</span>, callbacks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu">plot_callback</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="va">dcgan</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../../reference/setup.html">setup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../../reference/set_hparams.html">set_hparams</a></span><span class="op">(</span>latent_dim <span class="op">=</span> <span class="fl">100</span>, channels <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">fit</span><span class="op">(</span><span class="va">train_dl</span>, epochs <span class="op">=</span> <span class="fl">10</span>, valid_data <span class="op">=</span> <span class="va">test_dl</span>, callbacks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu">plot_callback</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Génération d'images -------------------------------------------------</span></span>
 <span></span>
@@ -230,7 +230,7 @@
 <span><span class="va">img</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">img</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span>,,,<span class="va">newaxis</span><span class="op">]</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
 <span><span class="va">img</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/torch_stack.html" class="external-link">torch_stack</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">img</span>, <span class="va">img</span>, <span class="va">img</span><span class="op">)</span>, dim <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">[</span><span class="va">..</span>,<span class="fl">1</span><span class="op">]</span></span>
 <span><span class="va">img</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/as.raster.html" class="external-link">as.raster</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/torch/man/as_array.html" class="external-link">as_array</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Sérialisation ----------------------------------------------------</span></span>
 <span></span>

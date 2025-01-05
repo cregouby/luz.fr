@@ -46,7 +46,7 @@
 <li class="nav-item"><a class="nav-link" href="../../news/index.html">Changements</a></li>
       </ul>
 <ul class="navbar-nav">
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/cregouby/luz.fr/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/mlverse/luz/"><span class="fa fab fa-github fa-lg"></span> Contribuer</a></li>
       </ul>
 </div>
 
@@ -153,16 +153,16 @@
 <span></span>
 <span><span class="co"># Entraînement du modèle -------------------------------------------------------------------</span></span>
 <span></span>
-<span><span class="va">fitted</span> <span class="op">&lt;-</span> <span class="va">net</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../../reference/set_hparams.html">set_hparams</a></span><span class="op">(</span>accumulate_batches <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="va">fitted</span> <span class="op">&lt;-</span> <span class="va">net</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../../reference/set_hparams.html">set_hparams</a></span><span class="op">(</span>accumulate_batches <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../../reference/setup.html">setup</a></span><span class="op">(</span></span>
 <span>    loss <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/nn_cross_entropy_loss.html" class="external-link">nn_cross_entropy_loss</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    optimizer <span class="op">=</span> <span class="fu">torch</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/torch/man/optim_adam.html" class="external-link">optim_adam</a></span>,</span>
 <span>    metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>      <span class="fu"><a href="../../reference/luz_metric_accuracy.html">luz_metric_accuracy</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">train_dl</span>, valid_data <span class="op">=</span> <span class="va">test_dl</span>, epochs <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">fit</span><span class="op">(</span><span class="va">train_dl</span>, valid_data <span class="op">=</span> <span class="va">test_dl</span>, epochs <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Sérialisation -----------------------------------------------------------</span></span>

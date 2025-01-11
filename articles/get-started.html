@@ -77,39 +77,40 @@
 réutilisables. Luz réduit le code de gestion requis pour former un
 modèle avec torch et évite les erreurs fréquentes sur la séquence des
 appels à <code>zero_grad()</code> - <code>backward()</code> -
-<code><a href="https://rdrr.io/r/stats/step.html" class="external-link">step()</a></code>, et simplifie également le processus de déplacement
+<code><a href="https://rdrr.io/r/stats/step.html" class="external-link">step()</a></code>. Il simplifie également le processus de déplacement
 des données et des modèles entre les CPUs et la GPU. Luz est conçu pour
 être très flexible en fournissant une API en couches qui lui permet
 d’être utile quel que soit le niveau de contrôle dont vous avez besoin
 pour votre boucle d’entraînement.</p>
 <p>Luz est fortement inspiré par d’autres framework de haut-niveau pour
-l’apprentissage profond, pour citer quelques-uns:</p>
+l’apprentissage profond, pour n’en citer que quelques-uns:</p>
 <ul>
 <li><p><a href="https://docs.fast.ai/" class="external-link">FastAI</a>: nous avons été
 fortement inspirés par la bibliothèque FastAI, en particulier l’objet
 <code>Learner</code> et l’API callbacks.</p></li>
 <li><p><a href="https://keras.io/" class="external-link">Keras</a>: Nous sommes également
-fortement inspirés par Keras, en particulier les noms de callback.
+fortement inspirés par Keras, en particulier pour les noms des callback.
 L’interface du module <code>lightning</code> est aussi similaire à
 <code>compile</code>.</p></li>
 <li><p><a href="https://lightning.ai/pages/open-source/" class="external-link">PyTorch
 Lightning</a>: L’idée que le <code>luz_module</code> soit une
 sous-classe de <code>nn_module</code> s’inspire de l’objet
-<strong><code>LightningModule</code></strong> dans la
+<strong><code>LightningModule</code></strong> dans la librairie
 <code>lightning</code>.</p></li>
 <li><p><a href="https://huggingface.co/docs/accelerate/" class="external-link">HuggingFace
 Accelerate</a>: L’API interne de placement sur les périphériques de
 calcul est fortement inspirée par Accelerate, mais est beaucoup plus
-modeste dans les fonctionnalités.</p></li>
+modeste dans ses fonctionnalités.</p></li>
 </ul>
 <div class="section level2">
 <h2 id="entraînement-dun-nn_module">Entraînement d’un <code>nn_module</code><a class="anchor" aria-label="anchor" href="#entra%C3%AEnement-dun-nn_module"></a>
 </h2>
 <p>Luz tente, autant que possible, de réutiliser les structures
-existantes de torch. Un modèle en luz est défini de la même manière que
-vous le définiriez si vous utilisez torch brut. Par exemple, voici la
-définition d’un CNN feed-forward qui peut être utilisé pour classer les
-chiffres de l’ensemble de données MNIST:</p>
+existantes de torch. Aussi, un réseau de neurones est défini avec luz
+exactement de la même manière qu’avec torch brut. Par exemple, voici la
+définition d’un réseau convolutif (CNN feed-forward) qui peut être
+utilisé, par exemple, pour classer les images du jeu de données
+MNIST:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">net</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/nn_module.html" class="external-link">nn_module</a></span><span class="op">(</span></span>
 <span>  <span class="st">"Net"</span>,</span>
@@ -136,8 +137,8 @@ chiffres de l’ensemble de données MNIST:</p>
 <span>    <span class="va">x</span></span>
 <span>  <span class="op">}</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>Nous pouvons maintenant entraîner ce modèle dans le
-<code>train_dl</code> et l’évaluer dans le
+<p>Nous pouvons entraîner ce réseau en lui appliquant un jeu de données
+via le chargeur de donnée <code>train_dl</code> et l’évaluer grace au
 <code>torch::dataloaders()</code> nomé <code>test_dl</code> avec:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fitted</span> <span class="op">&lt;-</span> <span class="va">net</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -151,7 +152,8 @@ chiffres de l’ensemble de données MNIST:</p>
 <span>  <span class="fu"><a href="../reference/set_hparams.html">set_hparams</a></span><span class="op">(</span>num_class <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/set_opt_hparams.html">set_opt_hparams</a></span><span class="op">(</span>lr <span class="op">=</span> <span class="fl">0.003</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu">fit</span><span class="op">(</span><span class="va">train_dl</span>, epochs <span class="op">=</span> <span class="fl">10</span>, valid_data <span class="op">=</span> <span class="va">test_dl</span><span class="op">)</span></span></code></pre></div>
-<p>Voyons en détail ce qui se passe dans ce bloc de code :</p>
+<p>Voyons en détail ce qui se passe dans lee précédent bloc de code
+:</p>
 <ol style="list-style-type: decimal">
 <li>La fonction <code>setup</code> vous permet de configurer la fonction
 de coût (objectif) et l’optimiseur que vous utiliserez pour entraîner
@@ -165,34 +167,34 @@ personnalisé, créé avec la fonction
 <code><a href="https://rdrr.io/pkg/torch/man/optimizer.html" class="external-link">torch::optimizer()</a></code>.</li>
 <li>La fonction <code><a href="../reference/set_hparams.html">set_hparams()</a></code> permet de définir les
 hyper-paramètres qui doivent être passées à la méthode
-<code>initialize()</code> du module. Par exemple dans ce cas nous
-passons <code>num_classes = 10</code>.</li>
+<code>initialize()</code> du module. Par exemple, ici nous passons
+<code>num_classes = 10</code> qui définit la taille de la dernière
+couche du réseau.</li>
 <li>La fonction <code><a href="../reference/set_opt_hparams.html">set_opt_hparams()</a></code> vous permet de passer des
 hyper-paramètres utilisés par la fonction d’optimisation. Par exemple,
-<code><a href="https://rdrr.io/pkg/torch/man/optim_adam.html" class="external-link">optim_adam()</a></code> peut prendre le paramètre <code>lr</code>
-spécifiant le taux d’apprentissage et nous le spécifions avec
-<code>lr = 0.003</code>.</li>
+l’optimiseur choisi ici <code><a href="https://rdrr.io/pkg/torch/man/optim_adam.html" class="external-link">optim_adam()</a></code> peut prendre le
+paramètre <code>lr</code> spécifiant le taux d’apprentissage et nous le
+spécifions avec <code>lr = 0.003</code>.</li>
 <li>La méthode <code>fit</code> va prendre les spécifications du modèle
-fournies par <code><a href="../reference/setup.html">setup()</a></code> et exécuter le processus
-d’apprentissage en utilisant les jeux de donnée d’entraînement et de
-validation spécifiés dans des <code>torch::dataloaders()</code> ainsi
-que le nombre d’époques. <strong>Remarque</strong> : nous réutilisons
-les structures de données de base de torch pour les chargeurs de donnée,
-au lieu de recréer notre propre fonctionnalité de chargement de
-données.</li>
-<li>L ’ objet retourné <code>fitted</code> contient le modèle entraîné
-ainsi que le registre de métriques et de pertes produites au cours de
-l’apprentissage. Il peut également être utilisé pour la production de
-prédictions et l’évaluation du modèle entraîné sur d’autres jeux de
-données.</li>
+fournies par <code><a href="../reference/setup.html">setup()</a></code> et exécuter la boucle d’apprentissage
+en utilisant les jeux de donnée d’entraînement et de validation
+spécifiés dans des <code>torch::dataloaders()</code> pendant le nombre
+d’époques. <strong>Remarque</strong> : nous réutilisons les structures
+de données de base de torch pour les chargeurs de donnée, au lieu de
+recréer notre propre fonctionnalité de chargement de données.</li>
+<li>L’objet retourné <code>fitted</code> contient le modèle entraîné
+ainsi que le registre des métriques et de la fonction de pertes
+produites au cours de l’apprentissage. Il pourra être utilisé pour faire
+de prédictions sur des données nouvelles, et pour l’évaluation du modèle
+entraîné sur d’autres jeux de données.</li>
 </ol>
-<p>Au moment du déploiement du calcul, luz utilisera l’accélérateur le
-plus rapide possible; si un GPU doté de CUDA est disponible, il sera
-utilisé, sinon le calcul sera affecté sur la CPU. Il déplace également
-automatiquement les données, les optimisateurs et les modèles vers le
-périphérique sélectionné afin que vous n’ayez pas besoin de les
-manipuler manuellement (qui constitue une grande source d’erreurs en
-général).</p>
+<p>Au moment du lancement de la boucle de calcul, luz utilise
+l’accélérateur le plus rapide possible; si une carte graphique (GPU)
+doté de CUDA est disponible, elle sera utilisée, sinon le calcul sera
+affecté à la CPU. Il déplace également automatiquement les données, les
+optimisateurs et les modèles vers le périphérique sélectionné afin
+d’éviter de le programmer manuellement (qui constitue une grande source
+d’erreurs en général).</p>
 <p>Pour créer des prédictions à partir du modèle entraîné, vous pouvez
 utiliser la méthode <code>predict</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -201,15 +203,15 @@ utiliser la méthode <code>predict</code>:</p>
 <div class="section level2">
 <h2 id="la-boucle-dentraînement">La boucle d’entraînement<a class="anchor" aria-label="anchor" href="#la-boucle-dentra%C3%AEnement"></a>
 </h2>
-<p>Maintenant que vous avez une idée générale de la façon d’utiliser la
+<p>Maintenant que vous avez une idée générale sur la façon d’utiliser la
 fonction <code>fit</code>, il est important d’avoir un aperçu de ce qui
-se passe à l’intérieur. Voici ce que <code>fit</code> exécute (en
-pseudocode). Ce n’est pas détaillé complètement, mais celà devrait vous
-aider à construire votre intuition:</p>
+se passe à l’intérieur. Voici le pseudocode de ce que <code>fit</code>
+exécute. Sans vous montrer l’intégralité des opérations, cela devrait
+vous aider à construire votre intuition:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># -&gt; Initialiser les objets : modèle, optimiseurs.</span></span>
-<span><span class="co"># -&gt; Sélectionner le périphérique d'apprentissage.</span></span>
-<span><span class="co"># -&gt; Déplacer les données, le modèle et les optimiseurs vers le dispositif sélectionné.</span></span>
+<span><span class="co"># -&gt; Sélectionner le périphérique d'apprentissage (GPU, ...).</span></span>
+<span><span class="co"># -&gt; Déplacer les données, le modèle et les optimiseurs vers le périphérique sélectionné.</span></span>
 <span><span class="co"># -&gt; Lancer l'apprentissage</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">epoch</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">epochs</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="co"># -&gt; Procédure d'apprentissage</span></span>
@@ -217,13 +219,13 @@ aider à construire votre intuition:</p>
 <span>    <span class="co"># -&gt; Calculer la méthode `forward` du modèle.</span></span>
 <span>    <span class="co"># -&gt; Calculer la perte.</span></span>
 <span>    <span class="co"># -&gt; Mettre à jour les poids.</span></span>
-<span>    <span class="co"># -&gt; Mettre à jour les métriques et suivre la perte.</span></span>
+<span>    <span class="co"># -&gt; Enregistrer les métriques et suivre la perte.</span></span>
 <span>  <span class="op">}</span></span>
 <span>  <span class="co"># -&gt; Procédure de validation</span></span>
 <span>  <span class="kw">for</span> <span class="op">(</span><span class="va">batch</span> <span class="kw">in</span> <span class="va">valid_dl</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="co"># -&gt; Calculer la méthode `forward` du modèle.</span></span>
 <span>    <span class="co"># -&gt; Calculer la perte.</span></span>
-<span>    <span class="co"># -&gt; Mettre à jour les métriques et suivre la perte.</span></span>
+<span>    <span class="co"># -&gt; Enregistrer les métriques et suivre la perte.</span></span>
 <span>  <span class="op">}</span></span>
 <span><span class="op">}</span></span>
 <span><span class="co"># -&gt; Fin de l'apprentissage</span></span></code></pre></div>
@@ -231,10 +233,10 @@ aider à construire votre intuition:</p>
 <div class="section level2">
 <h2 id="les-métriques">Les métriques<a class="anchor" aria-label="anchor" href="#les-m%C3%A9triques"></a>
 </h2>
-<p>L’une des parties les plus importantes des projets d’apprentissage
+<p>L’un des paramêtres les plus importantes des projets d’apprentissage
 automatique est le choix de la métrique d’évaluation. Luz permet de
 suivre de nombreuses métriques différentes pendant l’apprentissage avec
-des changements de code minimes.</p>
+un effort de codage minime.</p>
 <p>Pour suivre les métriques, il suffit de modifier le paramètre
 <code>metrics</code> dans la fonction <code>setup</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>fitted <span class="ot">&lt;-</span> net <span class="sc">%&gt;%</span></span>
@@ -247,8 +249,7 @@ des changements de code minimes.</p>
 <span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>  <span class="fu">fit</span>(...)</span></code></pre></div>
 <p>Luz fournit des implémentations de quelques-unes des métriques les
 plus utilisées. Si une métrique n’est pas disponible, vous pouvez
-toujours la mettre en place à l’aide de la fonction
-<code>luz_metric</code>.</p>
+toujours la créer à l’aide de la fonction <code><a href="../reference/luz_metric.html">luz_metric()</a></code>.</p>
 <p>Pour implémenter une nouvelle métrique <code>luz_metric</code>, il
 faut définir 3 méthodes :</p>
 <ul>
@@ -256,15 +257,15 @@ faut définir 3 méthodes :</p>
 Cette fonction est appelée à chaque époque pour les boucles
 d’entraînement et de validation.</p></li>
 <li><p><code>update</code> : met à jour l’état interne de la métrique.
-Cette fonction est appelée à chaque étape d’entraînement et de
-validation avec les prédictions obtenues par le modèle et les valeurs
-cibles renvoyées par le chargeur de données.</p></li>
+Cette fonction est appelée après chaque lot d’entraînement et de
+validation en comparant les prédictions obtenues par le modèle et les
+valeurs cibles renvoyées par le chargeur de données.</p></li>
 <li><p><code>compute</code> : utilise l’état interne pour calculer les
 valeurs de la métrique. Cette fonction est appelée toutes les fois où il
-faut obtenir la valeur actuelle de la métrique. Par exemple, elle est
-appelée à chaque étape d’entraînement pour afficher les informations de
-progression, mais seulement appelée une fois par époque pour enregistrer
-sa valeur lorsqu’il n’y a pas de barre de progression.</p></li>
+faut mettre à jour la métrique. Par exemple, elle est appelée après
+chaque lot d’entraînement pour afficher les informations de progression,
+mais seulement appelée une fois par époque pour enregistrer sa valeur
+lorsqu’il n’y a pas de barre de progression.</p></li>
 </ul>
 <p>Vous pouvez définir un champ optionnel <code>abbrev</code> qui donne
 à la métrique une abréviation utilisée lors de l’affichage des
@@ -280,12 +281,12 @@ métrique :</p>
 <span>  <span class="co"># lors de l'affichage des informations de progression</span></span>
 <span>  abbrev <span class="op">=</span> <span class="st">"Acc"</span>, </span>
 <span>  <span class="co"># Initialisation pour la métrique. Les métriques sont initialisées</span></span>
-<span>  <span class="co"># à chaque époque, pour les entraînements et les validations.</span></span>
+<span>  <span class="co"># à chaque époque, pour les entraînements et pour les validations.</span></span>
 <span>  initialize <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">self</span><span class="op">$</span><span class="va">correct</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
 <span>    <span class="va">self</span><span class="op">$</span><span class="va">total</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
 <span>  <span class="op">}</span>,</span>
-<span>  <span class="co"># Mise à jour à chaque étape d'entraînement ou de validation.</span></span>
+<span>  <span class="co"># Mise à jour à chaque lot d'entraînement ou de validation.</span></span>
 <span>  <span class="co"># La fonction update prend `preds` </span></span>
 <span>  <span class="co"># et `target` en paramètres et met à jour l'état interne `self`.</span></span>
 <span>  update <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">preds</span>, <span class="va">target</span><span class="op">)</span> <span class="op">{</span></span>
@@ -302,19 +303,19 @@ métrique :</p>
 <span>  <span class="op">}</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><strong>Remarque</strong>: Il est préférable que la fonction
-<code>compute</code> retourne des valeurs R régulières plutôt
+<code>compute</code> retourne des valeurs R natives plutôt
 qu’éventuellement des tenseurs torch. D’autres parties de luz
-s’attendent à cela et s’y attacheront.</p>
+s’attendent à des valeurs R et s’y attacheront.</p>
 </div>
 <div class="section level2">
 <h2 id="évaluation">Évaluation<a class="anchor" aria-label="anchor" href="#%C3%A9valuation"></a>
 </h2>
-<p>Une fois un modèle entraîné, vous voulez peut-être évaluer sa
+<p>Une fois le modèle entraîné, vous voulez certainement évaluer sa
 performance sur un autre jeu de données. Pour cela, luz fournit la
 fonction <code><a href="../reference/evaluate.html">?evaluate</a></code> qui prend, en entrée, un modèle ajusté
 et un jeu de données et calcule les métriques attachées au modèle.</p>
-<p>L’opération <code><a href="../reference/evaluate.html">evaluate()</a></code> retourne un objet
-<code>luz_module_evaluation</code> que vous pouvez interroger pour des
+<p>La fonction <code><a href="../reference/evaluate.html">evaluate()</a></code> retourne un objet de type
+<code>luz_module_evaluation</code>. Vous pouvez l’interroger pour les
 métriques à l’aide de la fonction <code><a href="../reference/get_metrics.html">get_metrics()</a></code> ou
 simplement imprimer pour voir les résultats.</p>
 <p>Par exemple :</p>
@@ -332,36 +333,37 @@ simplement imprimer pour voir les résultats.</p>
 <span><span class="co">#&gt; rmse: 1.2826</span></span></code></pre>
 </div>
 <div class="section level2">
-<h2 id="personnalisation-avec-les-callbacks">Personnalisation avec les callbacks<a class="anchor" aria-label="anchor" href="#personnalisation-avec-les-callbacks"></a>
+<h2 id="personnalisation-avec-les-points-darrêt-ou-callbacks">Personnalisation avec les points d’arrêt ou callbacks<a class="anchor" aria-label="anchor" href="#personnalisation-avec-les-points-darr%C3%AAt-ou-callbacks"></a>
 </h2>
 <p>Luz fournit différentes façons de personnaliser la boucle
 d’apprentissage, en fonction du niveau de contrôle dont vous avez besoin
 pendant qu’elle s’exécute. La façon la plus rapide et la plus «
-réutilisable » est via les <strong>callbacks</strong>. Ils permettent de
-créer des modifications d’apprentissage qui peuvent être utilisées dans
-de nombreuses situations.</p>
-<p>La boucle d’apprentissage en luz a de nombreux <em>points
-d’arrêt</em> qui peuvent appeler des fonctions R arbitraires. Cette
+réutilisable » est via les rappels ou <strong>callbacks</strong>. Ils
+permettent de créer des modifications d’apprentissage qui peuvent être
+utiles dans diverses situations.</p>
+<p>La boucle d’apprentissage de luz dispose de nombreux <em>rappels</em>
+qui peuvent, chacuns, appeler des fonctions R arbitraires. Cette
 fonctionnalité vous permet de personnaliser le processus d’apprentissage
-sans avoir à modifier la logique générale de l’apprentissage.</p>
-<p>Luz implémente 3 callbacks par défaut qui se produisent dans chaque
+sans entrer dans la logique générale de l’apprentissage.</p>
+<p>Luz implémente 3 rappels par défaut qui se produisent dans chaque
 procédure d’apprentissage :</p>
 <ul>
-<li><p><strong>callback train-eval</strong>: Bascule le modèle en
+<li><p><strong>callback train-eval</strong>: bascule le modèle en mode
 <code>train()</code> ou <code><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval()</a></code> selon si la procédure est en
-cours de d’entraînement ou de validation.</p></li>
-<li><p><strong>callback metrics</strong> : évaluer les paramètres au
-cours du processus d’entraînement et de validation.</p></li>
+cours d’entraînement ou de validation.</p></li>
+<li><p><strong>callback metrics</strong> : évalue les métriques au cours
+du processus d’entraînement et de validation.</p></li>
 <li><p><strong>callback progress</strong> : implémente une barre de
-progression et imprime des informations sur la progression pendant
-l’apprentissage.</p></li>
+progression et affiche des informations sur la progression des lots et
+des époques pendant l’apprentissage.</p></li>
 </ul>
-<p>Vous pouvez également mettre en place des callbacks personnalisés qui
+<p>Vous pouvez également mettre en place des rappels personnalisés qui
 modifient ou agissent spécifiquement pour votre procédure
-d’apprentissage. Par exemple:</p>
-<p>Implémentons un callback qui imprime ‘Itération <code>n</code>’ (où
-<code>n</code> est le numéro d’itération) pour chaque batch dans le jeu
-de données d’apprentissage et ‘Fini!’ lorsque la fin d’une époque est
+d’apprentissage, c’est ce que nous allons montrer dans l’exemple
+suivant.</p>
+<p>Implémentons un callback qui affiche ‘Itération <code>n</code>’ (où
+<code>n</code> est le numéro d’itération) pour chaque lot du jeu de
+données d’apprentissage et ‘Fini!’ lorsque la fin d’une époque est
 atteinte.</p>
 <p>Pour cela, nous utilisons la fonction <code><a href="../reference/luz_callback.html">luz_callback()</a></code>
 :</p>
@@ -381,16 +383,17 @@ atteinte.</p>
 <p><code><a href="../reference/luz_callback.html">luz_callback()</a></code> prend des fonctions nommées en argument
 <code>...</code>, où le nom indique le moment auquel le callback doit
 être appelé. Par exemple, <code>on_train_batch_end()</code> est appelé
-pour chaque fin de batch lors du processus d’apprentissage, et
+pour chaque fin de lot lors du processus d’apprentissage, et
 <code>on_epoch_end()</code> est appelé à la fin de chaque époque.</p>
 <p>La valeur retournée par <code><a href="../reference/luz_callback.html">luz_callback()</a></code> est une fonction
-qui initie une instance du callback. Les callbacks peuvent avoir besoin
-de paramètres d’initialisation, comme le nom d’un fichier où vous
-souhaitez logger les résultats. Dans ce cas, vous pouvez passer par une
-méthode <code>initialize</code> lors de la définition du callback, et
-sauvegarder ces paramètres dans l’objet <code>self</code>. Dans
-l’exemple ci-dessus, le callback a un paramètre <code>message</code> qui
-est imprimé à la fin de chaque épisode.</p>
+qui s’intancie au moment du callback. Les callbacks peuvent avoir besoin
+de paramètres d’initialisation, comme par exemple le nom d’un fichier où
+vous souhaitez enregistrer les résultats. Dans ce cas, vous pouvez
+passer par une méthode <code>initialize</code> lors de la définition du
+callback, et disposer ces paramètres dans l’objet <code>self</code>.
+Dans l’exemple ci-dessus, le callback a un paramètre
+<code>message</code> qui sera utilisé pour etre affiché à la fin de
+chaque époque.</p>
 <p>Une fois que le callback est défini, il peut être passé à la fonction
 <code>fit</code> via le paramètre <code>callbacks</code> :</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -399,9 +402,9 @@ est imprimé à la fin de chaque épisode.</p>
 <span>  <span class="fu">fit</span><span class="op">(</span><span class="va">...</span>, callbacks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="fu">print_callback</span><span class="op">(</span>message <span class="op">=</span> <span class="st">"Fini!"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Les callbacks peuvent être appelés à de nombreux endroits de la
+<p>Les callbacks peuvent être déclenchés à de nombreuses positions de la
 boucle d’apprentissage, y compris en combinaison les uns avec les
-autres. Voici un aperçu des endroits possibles pour insérer les
+autres. Voici un aperçu des positions possibles pour insérer les
 callbacks :</p>
 <pre><code>Début de boucle d'ajustement
    - on_fit_begin
@@ -409,56 +412,58 @@ callbacks :</p>
      - on_epoch_begin
     Début de l'apprentissage
        - on_train_begin
-      Début de la boucle de batch
+      Début de la boucle sur le lot
          - on_train_batch_begin
-          Début du pas d'apprentissage par défaut
+          Début du lot d'apprentissage par défaut
             - on_train_batch_after_pred
             - on_train_batch_after_loss
             - on_train_batch_before_backward
             - on_train_batch_before_step
             - on_train_batch_after_step
-          Fin du pas d'apprentissage par défaut :
+          Fin du lot d'apprentissage par défaut :
          - on_train_batch_end
       Fin de la boucle de batch
        - on_train_end
     Fin de l'apprentissage
     Début de la validation
        - on_valid_begin
-      Début de la boucle de batch
+      Début de la boucle sur le lot
          - on_valid_batch_begin
-          Début du pas de validation par défaut
+          Début du lot de validation par défaut
             - on_valid_batch_after_pred
             - on_valid_batch_after_loss
-          Fin du pas de validation par défaut
+          Fin du lot de validation par défaut
          - on_valid_batch_end
-      Fin de la boucle de batch
+      Fin de la boucle sur le lot
        - on_valid_end
     Fin de la validation
       - on_epoch_end
   Fin de l'époque
    - on_fit_end
 Fin de l'ajustement</code></pre>
-<p>Chaque étape marquée avec <code>on_*</code> est un point dans le
-processus d’apprentissage qui est disponible pour les callbacks pour
-être appelés.</p>
-<p>L’autre partie importante des callbacks est l’objet <code>ctx</code>
-(contexte). Voir <code><a href="../reference/ctx.html">help("ctx")</a></code> pour plus de détails.</p>
-<p>Par défaut, les callbacks sont appelés dans l’ordre dans lequel ils
-ont été passés à <code>fit</code> (ou <code>predict</code> ou
+<p>Chaque étape marquée avec <code>on_*</code> est une position dans le
+processus d’apprentissage qui est disponible pour déclencher les
+callbacks.</p>
+<p>L’autre partie importante des callbacks est l’objet contexte
+<code>ctx</code> . Voir <code><a href="../reference/ctx.html">help("ctx")</a></code> pour plus de
+détails.</p>
+<p>Par défaut, les callbacks sont déclenchés dans l’ordre dans lequel
+ils ont été passés à <code>fit</code> (ou <code>predict</code> ou
 <code>evaluate</code>), mais vous pouvez fournir un attribut
 <code>weight</code> qui contrôlera l’ordre croissant dans lequel il sera
-appelé. Par exemple, si un callback a <code>weight = 10</code> et un
-autre a <code>weight = 1</code>, alors le premier est appelé après le
-second. Les callbacks qui ne spécifient pas d’attribut de poids sont
-considérés comme ayant un <code>weight = 0</code>. Certains callbacks
-intégrés dans luz fournissent déjà une valeur de poids. Par exemple,
+appelé. Par exemple, si un callback a un <code>weight = 10</code> et un
+autre a un <code>weight = 1</code>, alors le premier est appelé
+<strong>après</strong> le second. Les callbacks qui ne spécifient pas
+d’attribut de poids sont considérés comme ayant un
+<code>weight = 0</code>. Certains callbacks intégrés dans luz
+fournissent déjà une valeur de poids. Par exemple,
 <code><a href="../reference/luz_callback_early_stopping.html">?luz_callback_early_stopping</a></code> a une valeur de poids de
 <code>Inf</code>, puisque en général on souhaite l’exécuter à la toute
 fin dans la boucle.</p>
 <p>Notez que les callbacks peuvent être combinés pour effectuer des
 opérations complexes sur le processus d’apprentissage.</p>
 <p>La variable <code>ctx</code> est un objet utilisé dans luz pour
-partager des informations entre le boucle d’entraînement et les
+partager des informations entre la boucle d’entraînement et les
 callbacks, les méthodes du modèle et les métriques. La table suivante
 décrit les informations disponibles par défaut dans <code>ctx</code>.
 D’autres rappels peuvent potentiellement modifier ces attributs ou en
@@ -544,7 +549,7 @@ validation.</td>
 </tr>
 <tr class="odd">
 <td><code>callbacks</code></td>
-<td>Liste des rappels qui seront appelés pendant la procédure
+<td>Liste des rappels qui seront déclenchés pendant la procédure
 d’entraînement. C’est l’union de la liste passée à l’argument
 <code>callbacks</code> et des rappels par défaut.</td>
 </tr>
@@ -557,9 +562,10 @@ prend pas d’arguments, mais peut accéder à la variable
 </tr>
 <tr class="odd">
 <td><code>call_callbacks</code></td>
-<td>Appeler les rappels par nom. Par exemple
+<td>Appeler les rappels par position. Par exemple
 <code>call_callbacks("on_train_begin")</code> appellera tous les rappels
-qui fournissent des méthodes pour ce point.</td>
+qui fournissent des méthodes pour cette position dans la boucle
+d’apprentissage.</td>
 </tr>
 <tr class="even">
 <td><code>batch</code></td>
@@ -580,9 +586,9 @@ actuel.</td>
 <tr class="odd">
 <td><code>pred</code></td>
 <td>Dernières prédictions obtenues par <code>ctx$model$forward</code>.
-<strong>Remarque</strong> : il peut être potentiellement modifié par les
-rappels précédemment appelés. On notera également qu’il ne sera pas
-disponible si vous avez utilisé une étape d’entraînement
+<strong>Remarque</strong> : elles peuvent être potentiellement modifiées
+par les rappels précédemment déclenchés. On notera également qu’elles ne
+seront pas disponibles si vous avez utilisé une étape d’entraînement
 personnalisée.</td>
 </tr>
 <tr class="even">
@@ -596,8 +602,8 @@ l’apprentissage.</td>
 </tr>
 <tr class="even">
 <td><code>handlers</code></td>
-<td>Les gestionnaires actuels, c’est-à-dire les fonctions qui sont
-appelées en cas d’erreur.</td>
+<td>Les gestionnaires d’erreur actuels, c’est-à-dire les fonctions qui
+sont appelées en cas d’erreur.</td>
 </tr>
 <tr class="odd">
 <td><code>epoch_handlers</code></td>
@@ -612,7 +618,7 @@ l’apprentissage.</td>
 le comportement souhaité des callbacks. Vous pouvez trouver de plus
 amples informations sur l’objet de contexte à l’aide de
 <code><a href="../reference/ctx.html">help("ctx")</a></code>. Dans notre exemple, nous utilisons l’attribut
-<code>ctx$iter</code> pour imprimer le numéro d’itération pour chaque
+<code>ctx$iter</code> pour afficher le numéro d’itération pour chaque
 lot d’apprentissage.</p>
 </div>
 <div class="section level2">
@@ -622,7 +628,8 @@ lot d’apprentissage.</p>
 en utilisant luz et les bases de la personnalisation en utilisant à la
 fois des métriques personnalisées et des callbacks.</p>
 <p>Luz permet également des modifications plus flexibles du processus
-d’apprentissage décrites dans <code>vignette("custom-loop")</code>.</p>
+d’apprentissage décrites dans la
+<code>vignette("custom-loop")</code>.</p>
 <p>Vous devriez maintenant être en mesure de suivre les exemples marqués
 avec la catégorie ‘basique’ dans la <a href="https://mlverse.github.io/luz/articles/examples/index.html" class="external-link">galerie
 d’exemples</a>.</p>

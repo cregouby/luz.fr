@@ -19,7 +19,7 @@ articles:
   examples/pets-unet: examples/pets-unet.html
   examples/text-classification: examples/text-classification.html
   examples/text-generation: examples/text-generation.html
-last_built: 2025-01-11T18:22Z
+last_built: 2025-01-11T18:45Z
 urls:
   reference: https://cregouby.github.io/luz.fr/reference
   article: https://cregouby.github.io/luz.fr/articles

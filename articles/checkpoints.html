@@ -74,31 +74,32 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://torch.mlverse.org/docs" class="external-link">torch</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu">torch</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/torch/man/torch_manual_seed.html" class="external-link">torch_manual_seed</a></span><span class="op">(</span><span class="fl">1703</span><span class="op">)</span></span></code></pre></div>
-<p>Lorsque vous entraînez des modèles qui prennent trop de temps, vous
-avez besoin d’enregistrer l’état intermédiaire sur le disque, ainsi si
-quelque chose se passe mal pendant l’apprentissage (par exemple,
-processus annihilé, réseau échoué, etc) vous pouvez récupérer à partir
-là où il s’arrêtait.</p>
-<p>Vous pourriez aussi vouloir récupérer les résultats intermédiaires
-pour évaluer le modèle en différents moments de l’apprentissage, comme
-comparer les résultats après 10 époches et après 30 époches.</p>
-<p>Cet article décrit les caractéristiques de luz qui sont conçues pour
-gérer ces cas. Ces caractéristiques sont facultatives et sont activées
-une fois que vous ajoutez des <code>callbacks</code> spécifiques à votre
-appel à <code>fit</code>.</p>
+<p>Lorsque vous entraînez des modèles qui prennent beaucoup de temps,
+vous souhaitez peut-être enregistrer l’état intermédiaire du modèle sur
+disque. Ainsi, si quelque chose se passe mal pendant l’apprentissage
+(par exemple, un processus annihilé, une coupure réseau, un manque de
+mémoire, etc), vous pourrez reprendre l’entraînement à partir là où il
+s’est arrêté.</p>
+<p>Vous pouvez aussi avoir besoin des états intermédiaires pour évaluer
+le modèle à différents moments de l’apprentissage, par exemple comparer
+les résultats après 10 époques et après 30 époques.</p>
+<p>Cet article décrit les fonctionnalités de luz qui sont conçues à cet
+effet. Ces fonctionnalités sont facultatives et sont activées seulement
+si vous ajoutez des <code>callbacks</code> spécifiques à votre appel à
+<code>fit</code>.</p>
 <div class="section level2">
 <h2 id="relancer-des-apprentissages-qui-ont-échoués">Relancer des apprentissages qui ont échoués<a class="anchor" aria-label="anchor" href="#relancer-des-apprentissages-qui-ont-%C3%A9chou%C3%A9s"></a>
 </h2>
 <p>Si vous avez un long processus d’apprentissage qui peut échouer pour
 n’importe quelle raison (ordinateur coupé, noeud d’un cluster perdu,
-etc), on recommande d’ajouter <code>luz_callback_autoresume()</code> à
-votre liste de <code>callbacks</code>.</p>
+etc), il est recommandé d’ajouter <code>luz_callback_autoresume()</code>
+à votre liste de <code>callbacks</code>.</p>
 <p><code>luz_callback_autoresume()</code> sauvegardera automatiquement
 tout l’état de votre modèle à la fin de chaque époque. Si quelque chose
 se passe mal pendant l’apprentissage, vous pouvez simplement relancer le
-même script, sans aucun changement et l’instantanné sera rechargé et
-l’apprentissage reprendra là où il s’est arrêté.</p>
-<p>Pour exemple, prennons un jeu de données d’entraînement aléatoire
+même script, sans aucun changement, le dernier instantanné du modèle
+sera rechargé et l’apprentissage reprendra là où il s’est arrêté.</p>
+<p>Par exemple, prennons un jeu de données d’entraînement aléatoire
 généré et un modèle linéaire pour montrer comment fonctionne
 <code>autoresume</code>.</p>
 <p>Voici les données d’entraînement :</p>
@@ -145,7 +146,7 @@ aléatoire. Ce <code>callbacks</code> lève juste une erreur d’exécution R
 <span><span class="co">#&gt; <span style="font-weight: bold;">Caused by error in `self[[callback_nm]]()`:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Error on epoch 5</span></span></code></pre></div>
 <p>Pour relancer l’apprentissage du modèle exactement là où il s’est
-arrêté vous n’avez qu’à relancer la fonction <code>fit()</code> avec le
+arrêté, vous n’avez qu’à relancer la fonction <code>fit()</code> avec le
 même modèle, les <code>callbacks</code>, etc. :</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">fit</span><span class="op">(</span></span>
@@ -154,9 +155,9 @@ même modèle, les <code>callbacks</code>, etc. :</p>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Ainsi, le processus l’apprentissage du modèle continuera exactement
-là où il s’est arrêté. Les relevés (de métriques et de pertes),
-optimiseur et état du modèle sont récupérés à partir de l’état précédent
-pour avoir les résultats complets :</p>
+là où il s’est arrêté. Les registres (de métriques et de pertes),
+l’optimiseur et l’état du modèle sont récupérés à partir de l’état
+précédent pour avoir les résultats complets :</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <p><img src="checkpoints_files/figure-html/plots-1.png" width="700"></p>
@@ -164,8 +165,8 @@ pour avoir les résultats complets :</p>
 <div class="section level2">
 <h2 id="sauvegarde-automatique">Sauvegarde automatique<a class="anchor" aria-label="anchor" href="#sauvegarde-automatique"></a>
 </h2>
-<p>Parfois, vous voulez avoir un contrôle plus grand sur la façon dont
-les sauvegardes sont gérées. Dans ce cas, vous pouvez utiliser
+<p>Si vous désirez avoir un contrôle plus fin sur la façon dont les
+sauvegardes sont gérées, vous pouvez utiliser
 <code><a href="../reference/luz_callback_model_checkpoint.html">luz_callback_model_checkpoint()</a></code> pour enregistrer des
 sauvegardes dans un fichier ou un répertoire spécifié.</p>
 <p>Essayons d’utiliser le même exemple que dans la section précédente :
@@ -173,7 +174,7 @@ Nous générerons d’abord quelques données.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/torch_randn.html" class="external-link">torch_randn</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/torch_randn.html" class="external-link">torch_randn</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
-<p>Définissons ensuite notre modèle :</p>
+<p>Définissons à nouveau notre modèle :</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="va">nn_linear</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/setup.html">setup</a></span><span class="op">(</span>optimizer <span class="op">=</span> <span class="va">optim_sgd</span>, loss <span class="op">=</span> <span class="va">nnf_mse_loss</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -196,8 +197,8 @@ Nous générerons d’abord quelques données.</p>
 <code>checkpoints</code> contient des fichiers avec des sauvegardes de
 l’état pour chaque epoch. Par défaut,
 <code>luz_callback_model_checkpoint</code> enregistrera l’état pour
-chaque epochs et formattera le nom en y incluant la perte résultante.
-Cela peut être configuré dans le paramètre path, voir
+chaque epochs et formattera le nom en y incluant la valeur de la perte.
+Ce formattage peut être configuré dans le paramètre path, voir
 <code><a href="../reference/luz_callback_model_checkpoint.html">?luz_callback_model_checkpoint</a></code> pour plus de détails.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_ls.html" class="external-link">dir_ls</a></span><span class="op">(</span><span class="st">"checkpoints"</span><span class="op">)</span></span>
@@ -213,8 +214,8 @@ Cela peut être configuré dans le paramètre path, voir
 <span><span class="co">#&gt; checkpoints/epoch-10-train_loss-1.002.pt</span></span></code></pre></div>
 <p>Enfin, vous pouvez charger une sauvegarde spécifique dans le modèle
 entrainé à l’aide de <code>luz_load_checkpoint</code>. Notez que la
-chargement de la sauvegarde dans un module <code>fitted</code> change
-les poids du modèle in-place.</p>
+chargement de la sauvegarde dans un module <code>fitted</code> remplace
+les poids sur le modèle en mémoire.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/luz_load_checkpoint.html">luz_load_checkpoint</a></span><span class="op">(</span><span class="va">results</span>, <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_ls.html" class="external-link">dir_ls</a></span><span class="op">(</span><span class="st">"checkpoints"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p>Vous pouvez ensuite commencer à faire des prédictions ou évaluer
@@ -224,9 +225,9 @@ une sauvegarde, vous pouvez utiliser
 <code><a href="../reference/luz_callback_resume_from_checkpoint.html">luz_callback_resume_from_checkpoint()</a></code> . Par défaut, il
 n’aura enregistré que les poids du modèle dans le fichier de sauvegarde,
 mais vous pouvez configurer pour restorer aussi les registres,
-<code>callbacks</code> et états de l’appelant et l’optimiseur. Si le
-répertoire des sauvegardes est fourni, alors l’apprentissage sera reprie
-à partir du dernier fichier de sauvegarde renvoyé par
+<code>callbacks</code> et états de l’optimiseur. Si le répertoire des
+sauvegardes existantes est indiqué, alors l’apprentissage reprendra à
+partir du dernier fichier de sauvegarde renvoyé par
 <code><a href="https://fs.r-lib.org/reference/dir_ls.html" class="external-link">fs::dir_ls</a></code>.</p>
 <p>Voici comment utiliser ce <code>callbacks</code> :</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -239,7 +240,7 @@ répertoire des sauvegardes est fourni, alors l’apprentissage sera reprie
 <span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <p><img src="checkpoints_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 <div class="section level3">
-<h3 id="etats-des-callbacks-personnalisés">Etats des <code>callbacks</code> personnalisés<a class="anchor" aria-label="anchor" href="#etats-des-callbacks-personnalis%C3%A9s"></a>
+<h3 id="états-des-callbacks-personnalisés">États des <code>callbacks</code> personnalisés<a class="anchor" aria-label="anchor" href="#%C3%A9tats-des-callbacks-personnalis%C3%A9s"></a>
 </h3>
 <p>Parfois, les rappels ont également besoin de conserver leurs états
 internes afin de continuer l’apprentissage exactement à partir là où il
@@ -247,10 +248,10 @@ s’est arrêté. Dans ce cas, les <code>callbacks</code> peuvent mettre en
 œuvre les méthodes <code>state_dict()</code> et le
 <code><a href="https://rdrr.io/pkg/torch/man/load_state_dict.html" class="external-link">load_state_dict()</a></code> qui sont appelées automatiquement lors
 des sauvegardes et rechargements.</p>
-<p>Par exemple, imaginez que vous avez un <code>callbacks</code> qui
-suit des gradients pour les poids à chaque epoch. Vous voulez utiliser
-les poids suivis pour analyser plus en profondeur la procédure
-d’apprentissage. Il pourrait être modifié comme suit:</p>
+<p>Par exemple, imaginez que vous avez crée un <code>callbacks</code>
+qui suit les gradients des poids du modèle à chaque epoch. Vous voulez
+utiliser les poids suivis pour analyser plus en profondeur la procédure
+d’apprentissage. Ce rappel pourrait être configuré comme suit:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cb_weight_grad</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/luz_callback.html">luz_callback</a></span><span class="op">(</span></span>
 <span>  <span class="st">"weight_grad"</span>,</span>
@@ -268,7 +269,7 @@ d’apprentissage. Il pourrait être modifié comme suit:</p>
 <p>Dans l’exemple ci-dessus, le champ <code>gradients</code> est un
 <strong>état</strong> dans le <code>callbacks</code>. Si l’apprentissage
 échoue pour une raison quelconque, les états seront perdues.</p>
-<p>Nous pouvons le rendre plus robuste en utilisant les méthodes
+<p>Nous pouvons le rendre persistant en utilisant les méthodes
 <code>state_dict()</code> et <code><a href="https://rdrr.io/pkg/torch/man/load_state_dict.html" class="external-link">load_state_dict()</a></code> comme suit
 :</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">

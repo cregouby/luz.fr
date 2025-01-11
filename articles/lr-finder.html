@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Utilisation de la recherche de taux d'apprentissage • luz.fr</title>
+<title>Recherche du taux d'apprentissage avec lr_finder • luz.fr</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Utilisation de la recherche de taux d'apprentissage">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Recherche du taux d'apprentissage avec lr_finder">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Passer au contenu</a>
@@ -35,7 +35,7 @@
 <li><h6 class="dropdown-header" data-toc-skip>Utiliser luz</h6></li>
     <li><a class="dropdown-item" href="../articles/get-started.html">Bien démarrer</a></li>
     <li><a class="dropdown-item" href="../articles/custom-loop.html">Boucles personnalisées</a></li>
-    <li><a class="dropdown-item" href="../articles/accelerator.html">l'API des périphériques d'accélération</a></li>
+    <li><a class="dropdown-item" href="../articles/accelerator.html">l'API des accélérateurs</a></li>
     <li><h6 class="dropdown-header" data-toc-skip>Guides</h6></li>
     <li><a class="dropdown-item" href="../articles/lr-finder.html">Recherche du taux d'apprentissage avec lr_finder</a></li>
     <li><a class="dropdown-item" href="../articles/checkpoints.html">Instantannés de modèles</a></li>
@@ -60,7 +60,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Utilisation de la recherche de taux d'apprentissage</h1>
+      <h1>Recherche du taux d'apprentissage avec lr_finder</h1>
             
       
       <small class="dont-index">Source : <a href="https://github.com/cregouby/luz.fr/blob/HEAD/vignettes/articles/lr-finder.Rmd" class="external-link"><code>vignettes/articles/lr-finder.Rmd</code></a></small>
@@ -75,26 +75,27 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://torchvision.mlverse.org" class="external-link">torchvision</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu">torch</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/torch/man/torch_manual_seed.html" class="external-link">torch_manual_seed</a></span><span class="op">(</span><span class="fl">1703</span><span class="op">)</span></span></code></pre></div>
-<p>Dans cet article, nous discutons comment trouver un bon taux
-d’apprentissage pour votre modèle. Trouver un bon taux d’apprentissage
-est essentiel pour l’apprentissage correct de votre modèle. Si il est
-trop faible, vous aurez besoin de trop d’itérations pour que votre
-fonction de perte converge, et cela pourrait être inutilisable si votre
-modèle prend trop de temps à s’exécuter. Si il est trop élevé, la
-fonction de perte peut exploser et vous n’aurez jamais réussi à
+<p>Dans cet article, nous allons discutiscuter de comment trouver un bon
+taux d’apprentissage pour votre modèle. Trouver un bon taux
+d’apprentissage est essentiel pour l’apprentissage optimal de votre
+modèle : Si il est trop faible, vous aurez besoin de trop d’itérations
+pour que votre fonction de coût converge, et cela pourrait être
+inutilisable si votre modèle prend trop de temps à ajuster. Si il est
+trop élevé, la fonction de coût peut exploser et vous aurez échoué à
 minimiser la perte.</p>
-<p>Le taux d’apprentissage peut être considéré comme un autre
-hyper-paramètre de votre modèle qui nécessite une réglage mais, il
-existe des techniques qui permettent de sélectionner un bon taux
-d’apprentissage pour votre modèle sans avoir à utiliser la stratégie
-coûteuse consistant à ajuster plusieurs modèles avec différents taux
-d’apprentissages et en choisissant ensuite le meilleur.</p>
+<p>Le taux d’apprentissage est parfois considéré comme un des
+hyper-paramètres de votre modèle comme les autres qui nécessite une
+optimisation, mais en réalité, il existe des techniques qui permettent
+de sélectionner un bon taux d’apprentissage pour votre modèle sans avoir
+à utiliser la stratégie coûteuse consistant à multiplier les modèles à
+ajuster avec différents taux d’apprentissages et en choisissant le
+meilleur à la fin.</p>
 <p>Cet <a href="https://arxiv.org/abs/1506.01186" class="external-link">article</a> de Leslie
-Smith qui est devenu populaire après que leur approche ait été mise en
+Smith, qui est devenu populaire après que son approche a été mise en
 œuvre dans la plateforme FastAI, propose de commencer avec un taux
 d’apprentissage très faible et le faire augmenter progressivement
-jusqu’à atteindre un taux d’apprentissage élevé. À chaque itération on
-enregistre la valeur de perte et à la fin on les visualise en fonction
+jusqu’à un taux d’apprentissage trop élevé. À chaque itération on
+enregistre la valeur de la perte et on visualise cette perte en fonction
 du taux d’apprentissage. On peut alors utiliser ces résultats pour
 décider d’un bon taux d’apprentissage. C’est ce que fait
 <code>lr_finder</code>, et nous allons voir comment l’utiliser.</p>
@@ -107,8 +108,8 @@ décider d’un bon taux d’apprentissage. C’est ce que fait
 <span>  download <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  transform <span class="op">=</span> <span class="va">transform_to_tensor</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>On peut maintenant définir notre modèle. On va utiliser un petit CNN
-dans le style LeNet.</p>
+<p>On va ensuite définir notre réseau. On va utiliser un petit CNN dans
+le style LeNet.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">net</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/nn_module.html" class="external-link">nn_module</a></span><span class="op">(</span></span>
 <span>  <span class="st">"net"</span>,</span>
@@ -137,11 +138,10 @@ dans le style LeNet.</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p>On peut maintenant utiliser la fonction <code>lr_finder</code> pour
 enregistrer la perte avec différents taux d’apprentissages. Il est
-important d’utiliser la rechercheur de taux d’apprentissage avec tous
-les autres hyper-paramètres du modèle fixés, car ils peuvent influencer
-le choix du taux d’apprentissage. Par exemple, selon la taille des
-batches, vous pourriez vouloir choisir différents taux
-d’apprentissages.</p>
+important d’utiliser la recherche de taux d’apprentissage avec tous les
+autres hyper-paramètres du modèle fixés, car ils peuvent influencer le
+choix du taux d’apprentissage. Par exemple, la taille des lots va vous
+conduire à différents taux d’apprentissages.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="va">net</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/setup.html">setup</a></span><span class="op">(</span></span>
 <span>  loss <span class="op">=</span> <span class="fu">torch</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/torch/man/nn_cross_entropy_loss.html" class="external-link">nn_cross_entropy_loss</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -154,7 +154,7 @@ d’apprentissages.</p>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  dataloader_options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>batch_size <span class="op">=</span> <span class="fl">32</span><span class="op">)</span>,</span>
 <span>  start_lr <span class="op">=</span> <span class="fl">1e-6</span>, <span class="co"># la plus petite valeur qui sera essayée</span></span>
-<span>  end_lr <span class="op">=</span> <span class="fl">1</span> <span class="co"># la plus grande valeur à l'essayer</span></span>
+<span>  end_lr <span class="op">=</span> <span class="fl">1</span> <span class="co"># la plus grande valeur à essayer</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">records</span><span class="op">)</span></span>
@@ -171,24 +171,30 @@ valeur de perte lissée exponentiellement.</p>
 <span><span class="co">#&gt; Error in get(paste0(generic, ".", class), envir = get_method_env()) : </span></span>
 <span><span class="co">#&gt;   objet 'type_sum.accel' introuvable</span></span></code></pre></div>
 <p><img src="lr-finder_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<p>On peut voir que avec des taux d’apprentissage faibles la perte ne
-diminue pas. À un certain point la perte commence à diminuer jusqu’à
-atteindre un point où elle commence à augmenter et enfin à exploser.</p>
-<p>Et comment choisissons-on le taux d’apprentissage en utilisant cette
-courbe? Sylvain Gugger a posé cette question dans <a href="https://sgugger.github.io/how-do-you-find-a-good-learning-rate.html" class="external-link">cet
-article</a> et répond</p>
+<p>On peut voir que pour des taux d’apprentissage faibles la perte ne
+diminue pas. À partir d’un certain point, la perte commence à diminuer
+jusqu’à atteindre un point où elle commence à augmenter et enfin à
+exploser.</p>
+<p>Et comment choisit-on le taux d’apprentissage à partir de cette
+courbe? Sylvain Gugger s’est posé la question dans <a href="https://sgugger.github.io/how-do-you-find-a-good-learning-rate.html" class="external-link">cet
+article</a> et y répond. En voici la traduction :</p>
 <blockquote>
-<p>Pas celui correspondant au minimum. Pourquoi ? Eh bien, le taux
-d’apprentissage qui correspond à la valeur minimale est déjà un peu trop
-élevé, puisque nous sommes à la limite entre l’amélioration et
-l’explosion totale. Nous voulons aller à une ordre de grandeur en
-dessous, une valeur encore agressive (pour qu’on s’apprenne vite) mais
-toujours en retrait par rapport à l’explosion.</p>
+<p>On ne choisit pas le taux d’apprentissage correspondant au minimum.
+Pourquoi ? Eh bien, le taux d’apprentissage qui correspond à la valeur
+minimale est déjà un peu trop élevé, car nous sommes, avec cette valeur,
+à la limite entre l’amélioration et l’explosion totale. Nous choisirons
+la valeur un ordre de grandeur en dessous, une valeur qui restera
+agressive (pour qu’on apprenne vite) mais toujours en retrait par
+rapport à l’explosion.</p>
 </blockquote>
-<p>Ainsi, dans notre exemple, on choisira 1e-3 au lieu de 1e-2. On peut
-utiliser le taux d’apprentissage ainsi choisi dans notre modèle
-principal avec les autres hyper-paramètres ajustés pour obtenir un bon
-score et minimiser au mieux la fonction de perte.</p>
+<p>Ainsi, dans notre exemple, on choisira
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>10</mn><mrow><mi>−</mi><mn>3</mn></mrow></msup><annotation encoding="application/x-tex">10^{-3}</annotation></semantics></math>
+au lieu de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>10</mn><mrow><mi>−</mi><mn>2</mn></mrow></msup><annotation encoding="application/x-tex">10^{-2}</annotation></semantics></math>.
+On peut maintenant fixer le taux d’apprentissage ainsi choisi dans notre
+modèle principal et conduire une optimisation des autres
+hyper-paramètres pour obtenir un bon score et minimiser au mieux la
+fonction de perte.</p>
   </main>
 </div>
 

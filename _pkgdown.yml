@@ -23,7 +23,7 @@ navbar:
         href: articles/get-started.html
       - text: Boucles personnalisées
         href: articles/custom-loop.html
-      - text: "l'API des périphériques d'accélération"
+      - text: "l'API des accélérateurs"
         href: articles/accelerator.html
       - text: "Guides"
       - text: "Recherche du taux d'apprentissage avec lr_finder"

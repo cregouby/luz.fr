@@ -1,5 +1,5 @@
 ---
-title: "Utilisation de la recherche de taux d'apprentissage"
+title: "Recherche du taux d'apprentissage avec lr_finder"
 ---
 
 ```{r, include = FALSE}
@@ -18,13 +18,14 @@ torch::torch_manual_seed(1703)
 ```
 
 
-Dans cet article, nous discutons comment trouver un bon taux d'apprentissage pour votre modèle. Trouver un bon taux d'apprentissage est essentiel pour l'apprentissage correct de votre modèle. Si il est trop faible, vous aurez besoin de trop d'itérations pour que votre fonction de perte converge, et cela pourrait être inutilisable si votre modèle prend trop de 
-temps à s'exécuter. Si il est trop élevé, la fonction de perte peut exploser et vous n'aurez jamais réussi à minimiser la perte.
+Dans cet article, nous allons discutiscuter de comment trouver un bon taux d'apprentissage pour votre modèle. Trouver un bon taux d'apprentissage est essentiel pour l'apprentissage
+optimal de votre modèle : Si il est trop faible, vous aurez besoin de trop d'itérations pour que votre fonction de coût converge, et cela pourrait être inutilisable si votre modèle prend trop de 
+temps à ajuster. Si il est trop élevé, la fonction de coût peut exploser et vous aurez échoué à minimiser la perte.
 
-Le taux d'apprentissage peut être considéré comme un autre hyper-paramètre de votre modèle qui nécessite une réglage mais, il existe des techniques qui permettent de sélectionner un bon taux d'apprentissage pour votre modèle sans avoir à utiliser la stratégie coûteuse consistant à ajuster plusieurs modèles avec différents taux d'apprentissages et en choisissant ensuite le meilleur.
+Le taux d'apprentissage est parfois considéré comme un des hyper-paramètres de votre modèle comme les autres qui nécessite une optimisation, mais en réalité, il existe des techniques qui permettent de sélectionner un bon taux d'apprentissage pour votre modèle sans avoir à utiliser la stratégie coûteuse consistant à multiplier les modèles  à ajuster avec différents taux d'apprentissages et en choisissant le meilleur à la fin.
 
-Cet [article](https://arxiv.org/abs/1506.01186) de Leslie Smith qui est devenu populaire après que leur approche ait été mise en œuvre dans la plateforme FastAI, propose de commencer avec un taux d'apprentissage très faible et le faire augmenter progressivement jusqu'à atteindre un taux d'apprentissage élevé. À chaque itération on 
-enregistre la valeur de perte et à la fin on les visualise en fonction du taux d'apprentissage. On peut alors utiliser ces résultats pour décider d'un bon taux d'apprentissage. 
+Cet [article](https://arxiv.org/abs/1506.01186) de Leslie Smith, qui est devenu populaire après que son approche a été mise en œuvre dans la plateforme FastAI, propose de commencer avec un taux d'apprentissage très faible et le faire augmenter progressivement jusqu'à un taux d'apprentissage trop élevé. À chaque itération on 
+enregistre la valeur de la perte et on visualise cette perte en fonction du taux d'apprentissage. On peut alors utiliser ces résultats pour décider d'un bon taux d'apprentissage. 
 C'est ce que fait `lr_finder`, et nous allons voir comment l'utiliser.
 
 Tout d'abord, téléchargeons et préparons les données de MNIST :
@@ -39,7 +40,7 @@ train_ds <- mnist_dataset(
 )
 ```
 
-On peut maintenant définir notre modèle. On va utiliser un petit CNN dans le style LeNet.
+On va ensuite définir notre réseau. On va utiliser un petit CNN dans le style LeNet.
 
 ```{r}
 net <- nn_module(
@@ -69,9 +70,9 @@ net <- nn_module(
 )
 ```
 
-On peut maintenant utiliser la fonction `lr_finder` pour enregistrer la perte avec différents taux d'apprentissages. Il est important d'utiliser la rechercheur de taux 
-d'apprentissage avec tous les autres hyper-paramètres du modèle fixés, car ils peuvent influencer le choix du taux d'apprentissage. Par exemple, selon la taille des batches, 
-vous pourriez vouloir choisir différents taux d'apprentissages.
+On peut maintenant utiliser la fonction `lr_finder` pour enregistrer la perte avec différents taux d'apprentissages. Il est important d'utiliser la recherche de taux 
+d'apprentissage avec tous les autres hyper-paramètres du modèle fixés, car ils peuvent influencer le choix du taux d'apprentissage. Par exemple, la taille des lots va 
+vous conduire à différents taux d'apprentissages.
 
 ```{r}
 model <- net %>% setup(
@@ -85,7 +86,7 @@ records <- lr_finder(
   verbose = FALSE,
   dataloader_options = list(batch_size = 32),
   start_lr = 1e-6, # la plus petite valeur qui sera essayée
-  end_lr = 1 # la plus grande valeur à l'essayer
+  end_lr = 1 # la plus grande valeur à essayer
 )
 
 str(records)
@@ -99,16 +100,15 @@ plot(records) +
   ggplot2::coord_cartesian(ylim = c(NA, 5))
 ```
 
-On peut voir que avec des taux d'apprentissage faibles la perte ne diminue pas. À un certain point la perte commence à diminuer jusqu'à atteindre un point où elle commence à 
-augmenter et enfin à exploser.
+On peut voir que pour des taux d'apprentissage faibles la perte ne diminue pas. À partir d'un certain point,  la perte commence à diminuer jusqu'à atteindre un point où elle commence à augmenter et enfin à exploser.
 
-Et comment choisissons-on le taux d'apprentissage en utilisant cette courbe? Sylvain Gugger a posé cette question dans [cet article](https://sgugger.github.io/how-do-you-find-a-good-learning-rate.html) 
-et répond 
+Et comment choisit-on le taux d'apprentissage à partir de cette courbe? Sylvain Gugger s'est posé la question dans [cet article](https://sgugger.github.io/how-do-you-find-a-good-learning-rate.html) 
+et y répond. En voici la traduction : 
 
-> Pas celui correspondant au minimum. Pourquoi ? Eh bien, le taux d'apprentissage qui correspond à la valeur minimale est déjà un peu trop élevé, puisque nous sommes à la limite entre l'amélioration et l'explosion totale. Nous voulons aller à une ordre de grandeur en dessous, une valeur encore agressive (pour qu'on s'apprenne vite) mais toujours en 
+> On ne choisit pas le taux d'apprentissage correspondant au minimum. Pourquoi ? Eh bien, le taux d'apprentissage qui correspond à la valeur minimale est déjà un peu trop élevé, car nous sommes, avec cette valeur, à la limite entre l'amélioration et l'explosion totale. Nous choisirons la valeur un ordre de grandeur en dessous, une valeur qui restera agressive (pour qu'on apprenne vite) mais toujours en 
 retrait par rapport à l'explosion.
 
 
-Ainsi, dans notre exemple, on choisira 1e-3 au lieu de 1e-2.
-On peut utiliser le taux d'apprentissage ainsi choisi dans notre modèle principal avec les autres hyper-paramètres ajustés pour obtenir un bon score et minimiser au mieux la fonction de perte.
+Ainsi, dans notre exemple, on choisira $10^{-3}$ au lieu de $10^{-2}$.
+On peut maintenant fixer le taux d'apprentissage ainsi choisi dans notre modèle principal et conduire une optimisation des autres hyper-paramètres pour obtenir un bon score et minimiser au mieux la fonction de perte.
 

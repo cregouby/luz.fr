@@ -29,7 +29,7 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item dropdown">
+<li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><h6 class="dropdown-header" data-toc-skip>Utiliser luz</h6></li>
@@ -63,8 +63,8 @@
       <h1>Boucles personnalisées avec luz</h1>
             
       
-      <small class="dont-index">Source : <a href="https://github.com/cregouby/luz.fr/blob/HEAD/vignettes/custom_loop.Rmd" class="external-link"><code>vignettes/custom_loop.Rmd</code></a></small>
-      <div class="d-none name"><code>custom_loop.Rmd</code></div>
+      <small class="dont-index">Source : <a href="https://github.com/cregouby/luz.fr/blob/HEAD/vignettes/custom-loop.Rmd" class="external-link"><code>vignettes/custom-loop.Rmd</code></a></small>
+      <div class="d-none name"><code>custom-loop.Rmd</code></div>
     </div>
 
     
@@ -72,20 +72,20 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://torch.mlverse.org/docs" class="external-link">torch</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mlverse.github.io/luz/" class="external-link">luz</a></span><span class="op">)</span></span></code></pre></div>
-<p>Luz est une interface d’API plus élevée pour torch conçue pour être
-très flexible, permettant ainsi d’avoir un contrôle total sur la boucle
+<p>Luz est une interface (API) de haut niveau pour torch, conçue pour
+être très flexible, et ainsi d’avoir un contrôle complêt sur la boucle
 d’entraînement.</p>
-<p>Dans la vignette “débutant”, nous avons vu les bases de luz et
-comment modifier facilement des parties de la boucle d’entraînement à
-l’aide de rappels (callbacks) et de métriques personnalisées. Dans ce
-document, nous allons décrire en détail comment luz permet à
-l’utilisateur d’avoir un contrôle très fin sur la boucle
+<p>Dans la <code><a href="../articles/get-started.html">vignette("get-started")</a></code>, nous avons vu les bases
+de luz et comment modifier facilement des parties de la boucle
+d’entraînement à l’aide de rappels (callbacks) et de métriques
+personnalisées. Dans ce document, nous allons décrire en détail comment
+luz permet à l’utilisateur d’avoir un contrôle très fin sur la boucle
 d’entraînement.</p>
 <p>Outre l’utilisation de callbacks, il existe trois autres façons
 d’utiliser luz (en fonction du niveau de contrôle nécessaire) :</p>
 <ul>
 <li><p><strong>Optimiseurs ou fonctions de perte multiples</strong> :
-Vous pouvez optimiser deux fonctions de perte chacune avec son propre
+Vous pouvez optimiser deux fonctions de perte, chacune avec son propre
 optimiseur, tout en maintenant la possibilité de ne pas modifier les
 appels <code>backward()</code> - <code>zero_grad()</code> et
 <code><a href="https://rdrr.io/r/stats/step.html" class="external-link">step()</a></code>. C’est commun dans les modèles comme les GANs
@@ -98,28 +98,29 @@ un contrôle plus grand sur la calcul de gradients. Par exemple, vous
 pouvez utiliser des ‘tailles de lot virtuelles’, où vous accumulez les
 gradients pendant quelques étapes avant d’actualiser les poids.</p></li>
 <li><p><strong>Boucles complètement flexibles</strong> : Votre boucle
-d’entraînement peut être absolument n’importe quoi, mais vous voulez
-toujours utiliser luz pour gérer le déplacement vers un périphérique des
-chargeurs de données, optimiseurs et modèles. Voir la vignette
-“accélérateur” .</p></li>
+d’entraînement peut être entièrement redessinée, et dans ce cas vous
+utiliser luz pour gérer uniquement le déplacement des chargeurs de
+données, optimiseurs et modèles vers un périphérique. Voir la
+<code><a href="../articles/accelerator.html">vignette("accelerator")</a></code>.</p></li>
 </ul>
-<p>Considérons une version simplifiée du <code>net</code> que nous avons
-implémenté dans la vignette de début :</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">nn_module</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="st">"Net"</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="at">initialize =</span> <span class="cf">function</span>() {</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    self<span class="sc">$</span>fc1 <span class="ot">&lt;-</span> nn<span class="sc">^</span><span class="fu">A_linear</span>(<span class="dv">100</span>, <span class="dv">50</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    self<span class="sc">$</span>fc2 <span class="ot">&lt;-</span> <span class="fu">nn_linear</span>(<span class="dv">50</span>, <span class="sc">^</span>A10)</span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  },</span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="at">forward =</span> <span class="cf">function</span>(x) {</span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>    x <span class="sc">%&gt;%</span> </span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>      self<span class="sc">$</span><span class="fu">fc1</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>      <span class="fu">nnf_relu</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>      self<span class="sc">$</span><span class="fu">fc2</span>()</span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>  }</span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>)</span></code></pre></div>
-<p>En utilisant l’API de luz au plus haut niveau, on peut l’entraîner
-comme suit :</p>
+<p>Considérons une version simplifiée du réseau <code>net</code> que
+nous avons implémenté dans la <code><a href="../articles/get-started.html">vignette("get-started")</a></code> :</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">net</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/nn_module.html" class="external-link">nn_module</a></span><span class="op">(</span></span>
+<span>  <span class="st">"Net"</span>,</span>
+<span>  initialize <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">fc1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/nn_linear.html" class="external-link">nn_linear</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">50</span><span class="op">)</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">fc2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/nn_linear.html" class="external-link">nn_linear</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>,</span>
+<span>  forward <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>      <span class="va">self</span><span class="op">$</span><span class="fu">fc1</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>      <span class="fu"><a href="https://rdrr.io/pkg/torch/man/nnf_relu.html" class="external-link">nnf_relu</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>      <span class="va">self</span><span class="op">$</span><span class="fu">fc2</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>En utilisant l’API de haut niveau de luz, on peut l’entraîner comme
+suit :</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fitted</span> <span class="op">&lt;-</span> <span class="va">net</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/setup.html">setup</a></span><span class="op">(</span></span>
@@ -133,30 +134,66 @@ comme suit :</p>
 <div class="section level2">
 <h2 id="optimiseurs-multiples">Optimiseurs multiples<a class="anchor" aria-label="anchor" href="#optimiseurs-multiples"></a>
 </h2>
-<p>Supposons que nous voulions faire une expérience où nous formons la
-première couche de connexion complète avec un taux d’apprentissage de
-0.1 et la deuxième avec un taux d’apprentissage de 0.01. Nous allons
-minimiser la même <code><a href="https://rdrr.io/pkg/torch/man/nn_cross_entropy_loss.html" class="external-link">nn_cross_entropy_loss()</a></code> pour les deux,
-mais pour la première couche nous voulons ajouter une régularisation
-L1.</p>
+<p>Supposons que notre expérience consiste à ajuster la première couche
+de connexion complète avec un taux d’apprentissage de 0.1 et la deuxième
+avec un taux d’apprentissage de 0.01. Nous allons minimiser la même
+<code><a href="https://rdrr.io/pkg/torch/man/nn_cross_entropy_loss.html" class="external-link">nn_cross_entropy_loss()</a></code> pour les deux couches, mais pour la
+première, disons que nous voulons ajouter une régularisation L1.</p>
+<p>Pour y arriver avec luz, on va ajouter deux méthodes à notre module
+<code>net</code> :</p>
+<ul>
+<li><p><code>set_optimizers</code>: qui renvoie une liste d’optimiseurs
+en fonction du contexte <code>ctx</code>.</p></li>
+<li><p><code>loss</code>: qui calcule une fonction de coût différente
+suivant l’optimiseur.</p></li>
+</ul>
+<p>Voyons le résultat dans le code :</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">net</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/nn_module.html" class="external-link">nn_module</a></span><span class="op">(</span></span>
 <span>  <span class="st">"Net"</span>,</span>
 <span>  initialize <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">self</span><span class="op">$</span><span class="va">fc1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/nn_linear.html" class="external-link">nn_linear</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">50</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>      <span class="fu">l1</span><span class="op">(</span><span class="op">)</span></span>
-<span>    <span class="va">self</span><span class="op">$</span><span class="va">fc2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/nn_linear.html" class="external-link">nn_linear</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">fc1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/nn_linear.html" class="external-link">nn_linear</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">50</span><span class="op">)</span></span>
+<span>    <span class="va">self</span><span class="op">$</span><span class="va">fc1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/nn_linear.html" class="external-link">nn_linear</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span>  <span class="op">}</span>,</span>
 <span>  forward <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>      <span class="va">self</span><span class="op">$</span><span class="fu">fc1</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>      <span class="fu"><a href="https://rdrr.io/pkg/torch/man/nnf_relu.html" class="external-link">nnf_relu</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>      <span class="va">self</span><span class="op">$</span><span class="fu">fc2</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>,</span>
+<span>  set_optimizers <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">lr_fc1</span> <span class="op">=</span> <span class="fl">0.1</span>, <span class="va">lr_fc2</span> <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      opt_fc1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/optim_adam.html" class="external-link">optim_adam</a></span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="va">fc1</span><span class="op">$</span><span class="va">parameters</span>, lr <span class="op">=</span> <span class="va">lr_fc1</span><span class="op">)</span>,</span>
+<span>      opt_fc2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/optim_adam.html" class="external-link">optim_adam</a></span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="va">fc2</span><span class="op">$</span><span class="va">parameters</span>, lr <span class="op">=</span> <span class="va">lr_fc2</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">}</span>,</span>
+<span>  loss <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">target</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">ctx</span><span class="op">$</span><span class="fu">model</span><span class="op">(</span><span class="va">input</span><span class="op">)</span></span>
+<span>  </span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="va">ctx</span><span class="op">$</span><span class="va">opt_name</span> <span class="op">==</span> <span class="st">"opt_fc1"</span><span class="op">)</span> </span>
+<span>      <span class="co"># ajout d'une régularisation L1 sur la couche 1</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/pkg/torch/man/nnf_cross_entropy.html" class="external-link">nnf_cross_entropy</a></span><span class="op">(</span><span class="va">pred</span>, <span class="va">target</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/torch_norm.html" class="external-link">torch_norm</a></span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="va">fc1</span><span class="op">$</span><span class="va">weight</span>, p <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>    <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">ctx</span><span class="op">$</span><span class="va">opt_name</span> <span class="op">==</span> <span class="st">"opt_fc2"</span><span class="op">)</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/pkg/torch/man/nnf_cross_entropy.html" class="external-link">nnf_cross_entropy</a></span><span class="op">(</span><span class="va">pred</span>, <span class="va">target</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>Nous pouvons finalement utiliser <code>setup</code> et
-<code>fit</code> sur ce module, mais nous ne devons plus spécifier les
-optimiseurs et les fonctions de perte.</p>
+<p>Il faut noter que l’initialisation des optimiseurs se fera avec le
+résultat de la méthode <code>set_optimizers()</code> qui est une liste.
+Et donc ici, nous aurons bien deux optimiseurs différents, appliqués
+chacuns à des paramêtres du modèle différents, et avec un taux
+d’apprentissage spécifique.</p>
+<p>La méthode <code>loss()</code> a en charge le calcul de la fonction
+de coût, pour faire la retro-propagation des gradients et mettre à jour
+les poids du modèle. Cette méthode <code>loss()</code> accède à l’objet
+<code>ctx</code> qui contient une variable <code>opt_name</code>
+décrivant l’optimiseur en cours d’utilisation. On note que cette
+fonction sera appellée une fois par optimiseur et par étape de la boucke
+d’entrainement et de la boucle de validation. Référez vous à
+<code><a href="../reference/ctx.html">help("ctx")</a></code> pour une information complète sur l’objet
+contexte.</p>
+<p>On peut maintenant utiliser <code>setup</code> et <code>fit</code>
+avec ce module, mais sans préciser ni les paramêtres d’optimiseurs ni de
+fonction de coût.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fitted</span> <span class="op">&lt;-</span> <span class="va">net</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/setup.html">setup</a></span><span class="op">(</span>metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">luz_metric_accuracy</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
@@ -171,9 +208,9 @@ d’apprentissage et de validation.</p>
 <p>Au lieu d’implémenter la méthode <code>loss()</code>, nous pouvons
 implémenter la méthode <code><a href="https://rdrr.io/r/stats/step.html" class="external-link">step()</a></code>. Cela permet de modifier en
 toute flexibilité ce qui se passe lors de l’apprentissage et de la
-validation pour chaque lot dans le jeu de données. Vous êtes maintenant
-responsable de mettre à jour les poids en faisant un pas vers les
-optimiseurs et d’effectuer une propagation de la perte.</p>
+validation pour chaque lot du jeu de données. C’est votre code qui est
+maintenant responsable de mettre à jour les poids du modèle à chaque
+appel des optimiseurs par retro-propagation des gradients.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">net</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/nn_module.html" class="external-link">nn_module</a></span><span class="op">(</span></span>
 <span>  <span class="st">"Net"</span>,</span>
@@ -202,7 +239,7 @@ optimiseurs et d’effectuer une propagation de la perte.</p>
 <span>      <span class="va">loss</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/nnf_cross_entropy.html" class="external-link">nnf_cross_entropy</a></span><span class="op">(</span><span class="va">pred</span>, <span class="va">target</span><span class="op">)</span></span>
 <span>      </span>
 <span>      <span class="kw">if</span> <span class="op">(</span><span class="va">opt_name</span> <span class="op">==</span> <span class="st">"opt_fc1"</span><span class="op">)</span> <span class="op">{</span></span>
-<span>        <span class="co"># nous avons une régularisation L1 dans la couche 1</span></span>
+<span>        <span class="co"># ajout d'une régularisation L1 sur la couche 1</span></span>
 <span>        <span class="va">loss</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/torch/man/nnf_cross_entropy.html" class="external-link">nnf_cross_entropy</a></span><span class="op">(</span><span class="va">pred</span>, <span class="va">target</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>          <span class="fu"><a href="https://rdrr.io/pkg/torch/man/torch_norm.html" class="external-link">torch_norm</a></span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="va">fc1</span><span class="op">$</span><span class="va">weight</span>, p <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span>      <span class="op">}</span></span>
@@ -221,26 +258,26 @@ optimiseurs et d’effectuer une propagation de la perte.</p>
 <ul>
 <li><p>La méthode <code><a href="https://rdrr.io/r/stats/step.html" class="external-link">step()</a></code> est utilisée pour l’apprentissage
 et la validation. Vous devez être prudent car vous ne devez modifier les
-poids que lorsque vous êtes en apprentissage. Encore une fois, vous
-pouvez obtenir des informations complètes sur l’objet de contexte avec
+poids que pendant la phase d’apprentissage. Encore une fois, vous pouvez
+obtenir des informations complètes sur l’objet de contexte avec
 <code><a href="../reference/ctx.html">help("ctx")</a></code>.</p></li>
 <li><p><code>ctx$optimizers</code> est une liste nommée contenant chaque
-optimiseur qui a été créé lorsqu’on appelait la méthode
+optimiseur qui a été créé lorsqu’on a appellé la méthode
 <code>set_optimizers()</code>.</p></li>
-<li><p>Vous devez suivre les pertes en cours de modification en les
-enregistrant dans une liste nommée dans <code>ctx$loss</code>.
-Conformément à la convention, nous utilisons le même nom que
-l’optimiseur auquel elle se réfère. Une bonne pratique consiste à les
-déconnecter avant leur sauvegarde pour réduire la consommation de
-mémoire.</p></li>
-<li><p>Les rappels qui seraient appelés dans la méthode
+<li><p>Vous devez assurer le suivi les pertes en cours de modification
+en les enregistrant dans une liste nommée dans <code>ctx$loss</code>.
+Conformément à la convention, nous réutilisons le nom que l’optimiseur
+auquel elle se réfère. Il est recommandé de les déconnecter avec
+<code>$detach()</code> avant leur sauvegarde pour réduire la
+consommation de mémoire.</p></li>
+<li><p>Les rappels qui seraient déclenchés dans la méthode
 <code><a href="https://rdrr.io/r/stats/step.html" class="external-link">step()</a></code> par défaut comme
 <code>on_train_batch_after_pred</code>,
 <code>on_train_batch_after_loss</code>, etc., ne seront pas
-automatiquement appelés. Vous pouvez toujours les appeler manuellement
-en ajoutant
-<code>ctx$call_callbacks("&lt;nom du rappel&gt;</code>)<code>à l'intérieur de votre  étape d'apprentissage. Voir le code pour</code>fit_one_batch()<code>et</code>valid_one_batch`
-pour trouver tous les rappels qui ne seront pas appelés.</p></li>
+automatiquement appelés. Vous pouvez toujours les déclencher
+manuellement en ajoutant
+<code>ctx$call_callbacks("&lt;nom du rappel&gt;</code>)<code>à l'intérieur de votre  étape d'apprentissage. Étudiez le code de</code>fit_one_batch()<code>et</code>valid_one_batch`
+pour identifier tous les rappels qui ne seront pas déclenchés.</p></li>
 <li><p>Si vous voulez que les métriques luz fonctionnent avec votre
 méthode <code><a href="https://rdrr.io/r/stats/step.html" class="external-link">step()</a></code> personnalisée, vous devez assigner
 <code>ctx$pred</code> aux prédictions du modèle car les métriques seront
@@ -252,16 +289,14 @@ toujours appelées avec
 <h2 id="étapes-suivantes">Étapes suivantes<a class="anchor" aria-label="anchor" href="#%C3%A9tapes-suivantes"></a>
 </h2>
 <p>Dans cet article, vous avez appris à personnaliser l’étape de
-formation du boucle d’apprentissage en utilisant la fonctionnalité
-multi-couche de luz.</p>
+formation du boucle d’apprentissage en utilisant les fonctionnalités en
+couche de luz.</p>
 <p>Luz permet également des modifications plus flexibles de la boucle
 d’apprentissage décrites dans le vignette “Accélérateur”
 (<code><a href="../articles/accelerator.html">vignette("accelerator")</a></code>).</p>
 <p>Vous devriez maintenant pouvoir suivre les exemples marqués avec les
 catégories ‘intermédiaire’ et ‘avancé’ dans la galerie des <a href="https://mlverse.github.io/luz/articles/examples/index.html" class="external-link">exemples</a>
 de luz</p>
-<hr>
-<p>Tous les exemples mentionnés ci-dessus sont disponibles en ligne.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table des matières"><h2>Sur cette page</h2>
     </nav></aside>

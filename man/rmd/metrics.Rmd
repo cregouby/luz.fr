@@ -2,9 +2,9 @@ Pour implémenter une nouvelle métrique `luz_metric`, il faut définir 3 métho
 
 -   `initialize` : définit l'état initial de la métrique. Cette fonction est appelée à chaque époque pour les boucles d'entraînement et de validation.
 
--   `update` : met à jour l'état interne de la métrique. Cette fonction est appelée à chaque étape d'entraînement et de validation avec les prédictions obtenues par le modèle et les valeurs cibles renvoyées par le chargeur de données.
+-   `update` : met à jour l'état interne de la métrique. Cette fonction est appelée après chaque lot d'entraînement et de validation en comparant les prédictions obtenues par le modèle et les valeurs cibles renvoyées par le chargeur de données.
 
--   `compute` : utilise l'état interne pour calculer les valeurs de la métrique. Cette fonction est appelée toutes les fois où il faut obtenir la valeur actuelle de la métrique. Par exemple, elle est appelée à chaque étape d'entraînement pour afficher les informations de progression, mais seulement appelée une fois par époque pour enregistrer sa valeur lorsqu'il n'y a pas de barre de progression.
+-   `compute` : utilise l'état interne pour calculer les valeurs de la métrique. Cette fonction est appelée toutes les fois où il faut mettre à jour la métrique. Par exemple, elle est appelée après chaque lot d'entraînement pour afficher les informations de progression, mais seulement appelée une fois par époque pour enregistrer sa valeur lorsqu'il n'y a pas de barre de progression.
 
 Vous pouvez définir un champ optionnel `abbrev` qui donne à la métrique une abréviation utilisée lors de l'affichage des informations de métrique dans la console ou dans les enregistrements. Si aucune valeur n'est fournie pour `abbrev`, le nom de classe de la métrique est utilisé.
 
@@ -16,12 +16,12 @@ luz_metric_accuracy <- luz_metric(
   # lors de l'affichage des informations de progression
   abbrev = "Acc", 
   # Initialisation pour la métrique. Les métriques sont initialisées
-  # à chaque époque, pour les entraînements et les validations.
+  # à chaque époque, pour les entraînements et pour les validations.
   initialize = function() {
     self$correct <- 0
     self$total <- 0
   },
-  # Mise à jour à chaque étape d'entraînement ou de validation.
+  # Mise à jour à chaque lot d'entraînement ou de validation.
   # La fonction update prend `preds` 
   # et `target` en paramètres et met à jour l'état interne `self`.
   update = function(preds, target) {
@@ -39,4 +39,4 @@ luz_metric_accuracy <- luz_metric(
 )
 ```
 
-**Remarque**: Il est préférable que la fonction `compute` retourne des valeurs R régulières plutôt qu'éventuellement des tenseurs torch. D'autres parties de luz s'attendent à cela et s'y attacheront.
+**Remarque**: Il est préférable que la fonction `compute` retourne des valeurs R natives plutôt qu'éventuellement des tenseurs torch. D'autres parties de luz s'attendent à des valeurs R et s'y attacheront.

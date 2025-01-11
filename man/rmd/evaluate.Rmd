@@ -42,9 +42,9 @@ fitted <- model %>% fit(
 evaluation <- fitted %>% evaluate(data = x)
 ```
 
-Une fois un modèle entraîné, vous voulez peut-être évaluer sa performance sur un autre jeu de données. Pour cela, luz fournit la fonction `?evaluate` qui prend, en entrée, un modèle ajusté et un jeu de données et calcule les métriques attachées au modèle.
+Une fois le modèle entraîné, vous voulez certainement évaluer sa performance sur un autre jeu de données. Pour cela, luz fournit la fonction `?evaluate` qui prend, en entrée, un modèle ajusté et un jeu de données et calcule les métriques attachées au modèle.
 
-L'opération `evaluate()` retourne un objet `luz_module_evaluation` que vous pouvez interroger pour des métriques à l'aide de la fonction `get_metrics()` ou simplement imprimer pour voir les résultats.
+La fonction `evaluate()` retourne un objet de type `luz_module_evaluation`. Vous pouvez l'interroger pour les métriques à l'aide de la fonction `get_metrics()` ou simplement imprimer pour voir les résultats.
 
 Par exemple :
 

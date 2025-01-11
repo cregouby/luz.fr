@@ -1,4 +1,4 @@
-La variable `ctx` est un objet utilisé dans luz pour partager des informations entre le boucle d'entraînement et les callbacks, les méthodes du modèle et les métriques. La table suivante décrit les informations disponibles par défaut dans `ctx`. D'autres rappels peuvent potentiellement modifier ces attributs ou en ajouter de nouveaux.
+La variable `ctx` est un objet utilisé dans luz pour partager des informations entre la boucle d'entraînement et les callbacks, les méthodes du modèle et les métriques. La table suivante décrit les informations disponibles par défaut dans `ctx`. D'autres rappels peuvent potentiellement modifier ces attributs ou en ajouter de nouveaux.
 
 <!-- Il est recommandé d'utiliser l'éditeur visuel RStudio pour éditer cette table. -->
 
@@ -16,16 +16,16 @@ La variable `ctx` est un objet utilisé dans luz pour partager des informations 
 | `epoch` | Époque actuelle de l'entraînement. |
 | `iter` | Itération actuelle de l'entraînement. Elle est réinitialisée à chaque époque et lorsque l'on passe de la phase d'apprentissage à la validation. |
 | `training` | `TRUE` si le modèle est en mode entraînement, `FALSE` sinon. Voir également `help("luz_callback_train_valid")`. |
-| `callbacks` | Liste des rappels qui seront appelés pendant la procédure d'entraînement. C'est l'union de la liste passée à l'argument `callbacks` et des rappels par défaut. |
+| `callbacks` | Liste des rappels qui seront déclenchés pendant la procédure d'entraînement. C'est l'union de la liste passée à l'argument `callbacks` et des rappels par défaut. |
 | `step` | Closure qui sera utilisée pour faire une étape du modèle. Elle est utilisée pour les deux phases : apprentissage et validation. Elle ne prend pas d'arguments, mais peut accéder à la variable `ctx`. |
-| `call_callbacks` | Appeler les rappels par nom. Par exemple `call_callbacks("on_train_begin")` appellera tous les rappels qui fournissent des méthodes pour ce point. |
+| `call_callbacks` | Appeler les rappels par position. Par exemple `call_callbacks("on_train_begin")` appellera tous les rappels qui fournissent des méthodes pour cette position dans la boucle d'apprentissage. |
 | `batch` | Dernier lot obtenu par le chargeur de données. Un lot est une liste() avec 2 éléments, l'un servant d'entrée et l'autre de sortie. |
 | `input` | Premier élément du dernier lot obtenu par le chargeur de données actuel. |
 | `target` | Deuxième élément du dernier lot obtenu par le chargeur de données actuel. |
-| `pred` | Dernières prédictions obtenues par `ctx$model$forward`. **Remarque** : il peut être potentiellement modifié par les rappels précédemment appelés. On notera également qu'il ne sera pas disponible si vous avez utilisé une étape d'entraînement personnalisée. |
+| `pred` | Dernières prédictions obtenues par `ctx$model$forward`. **Remarque** : elles peuvent être potentiellement modifiées par les rappels précédemment déclenchés. On notera également qu'elles ne seront pas disponibles si vous avez utilisé une étape d'entraînement personnalisée. |
 | `loss_fn` | La fonction de coût active que l'on veut minimiser pendant l'apprentissage. |
 | `loss` | Dernière valeur de coût obtenue. |
-| `handlers` | Les gestionnaires actuels, c'est-à-dire les fonctions qui sont appelées en cas d'erreur. |
+| `handlers` | Les gestionnaires d'erreur actuels, c'est-à-dire les fonctions qui sont appelées en cas d'erreur. |
 | `epoch_handlers` | Liste des gestionnaires utilisés à l'intérieur de la boucle d'époque. Ils peuvent être utilisés pour gérer des conditions spécifiques aux époques, sans nécessairement mettre fin à l'apprentissage. |
 
 : Attributs du contexte

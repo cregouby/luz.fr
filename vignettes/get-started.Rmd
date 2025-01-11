@@ -22,24 +22,24 @@ library(torch)
 
 
 Luz est une API de haut niveau pour torch qui vise à encapsuler la **boucle d'entraînement** dans un ensemble de blocs de code réutilisables.
-Luz réduit le code de gestion requis pour former un modèle avec torch et évite les erreurs fréquentes sur la séquence des appels à `zero_grad()` - `backward()` - `step()`, et simplifie également le processus de déplacement des données et des modèles entre les CPUs et la GPU.
+Luz réduit le code de gestion requis pour former un modèle avec torch et évite les erreurs fréquentes sur la séquence des appels à `zero_grad()` - `backward()` - `step()`. Il simplifie également le processus de déplacement des données et des modèles entre les CPUs et la GPU.
 Luz est conçu pour être très flexible en fournissant une API en couches qui lui permet d'être utile quel que soit le niveau de contrôle dont vous avez besoin pour votre boucle d'entraînement.
 
-Luz est fortement inspiré par d'autres framework de haut-niveau  pour l'apprentissage profond, pour citer quelques-uns:
+Luz est fortement inspiré par d'autres framework de haut-niveau  pour l'apprentissage profond, pour n'en citer que quelques-uns:
 
 - [FastAI](https://docs.fast.ai/): nous avons été fortement inspirés par la bibliothèque FastAI, en particulier l'objet `Learner` et l'API callbacks.
 
-- [Keras](https://keras.io/): Nous sommes également fortement inspirés par Keras, en particulier les noms de callback. L'interface du module `lightning` est aussi similaire à `compile`.
+- [Keras](https://keras.io/): Nous sommes également fortement inspirés par Keras, en particulier pour les noms des callback. L'interface du module `lightning` est aussi similaire à `compile`.
 
-- [PyTorch Lightning](https://lightning.ai/pages/open-source/): L'idée que le `luz_module` soit une sous-classe de `nn_module` s'inspire de l'objet **`LightningModule`** dans la `lightning`.
+- [PyTorch Lightning](https://lightning.ai/pages/open-source/): L'idée que le `luz_module` soit une sous-classe de `nn_module` s'inspire de l'objet **`LightningModule`** dans la librairie `lightning`.
 
-- [HuggingFace Accelerate](https://huggingface.co/docs/accelerate/): L'API interne de placement sur les périphériques de calcul est fortement inspirée par Accelerate, mais est beaucoup plus modeste dans les fonctionnalités.
+- [HuggingFace Accelerate](https://huggingface.co/docs/accelerate/): L'API interne de placement sur les périphériques de calcul est fortement inspirée par Accelerate, mais est beaucoup plus modeste dans ses fonctionnalités.
 
 ## Entraînement d'un `nn_module`
 
 Luz tente, autant que possible, de réutiliser les structures existantes de torch.
-Un modèle en luz est défini de la même manière que vous le définiriez si vous utilisez torch brut.
-Par exemple, voici la définition d'un CNN feed-forward qui peut être utilisé pour classer les chiffres de l'ensemble de données MNIST:
+Aussi, un réseau de neurones est défini avec luz exactement de la même manière qu'avec torch brut.
+Par exemple, voici la définition d'un réseau convolutif (CNN feed-forward) qui peut être utilisé, par exemple, pour classer les images du jeu de données MNIST:
 ```{r, eval = FALSE}
 net <- nn_module(
   "Net",
@@ -69,7 +69,7 @@ net <- nn_module(
 ```
 
 
-Nous pouvons maintenant entraîner ce modèle dans le `train_dl` et l'évaluer dans le `torch::dataloaders()` nomé `test_dl` avec:
+Nous pouvons entraîner ce réseau en lui appliquant un jeu de données via le chargeur de donnée `train_dl` et l'évaluer grace au `torch::dataloaders()` nomé `test_dl` avec:
 ```{r, eval = FALSE}
 fitted <- net %>%
   setup(
@@ -85,16 +85,16 @@ fitted <- net %>%
 ```
 
 
-Voyons en détail ce qui se passe dans ce bloc de code :
+Voyons en détail ce qui se passe dans lee précédent bloc de code :
 
 1. La fonction `setup` vous permet de configurer la fonction de coût (objectif) et l'optimiseur que vous utiliserez pour entraîner votre modèle. En option, vous pouvez passer une liste de métriques qui sont suivies pendant la procédure d'apprentissage. **Remarque** : la fonction de coût peut être n'importe quelle fonction prenant en entrée `input` et `target` et retournant une valeur de tenseur scalaire, et l'optimiseur peut être n'importe quel optimiseur de torch natif ou personnalisé, créé avec la fonction `torch::optimizer()`.
-2. La fonction `set_hparams()` permet de définir les hyper-paramètres qui doivent être passées à la méthode `initialize()` du module. Par exemple dans ce cas nous passons `num_classes = 10`.
-3. La fonction `set_opt_hparams()` vous permet de passer des hyper-paramètres utilisés par la fonction d'optimisation. Par exemple, `optim_adam()` peut prendre le paramètre `lr` spécifiant le taux d'apprentissage et nous le spécifions avec `lr = 0.003`.
-4. La méthode `fit` va prendre les spécifications du modèle fournies par `setup()` et exécuter le processus d'apprentissage en utilisant les jeux de donnée d'entraînement et de validation spécifiés dans des `torch::dataloaders()` ainsi que le nombre d'époques. **Remarque** : nous réutilisons les structures de données de base de torch pour les chargeurs de donnée, au lieu de recréer notre propre fonctionnalité de chargement de données.
-5. L ' objet retourné `fitted` contient le modèle entraîné ainsi que le registre de métriques et de pertes produites au cours de l'apprentissage. Il peut également être utilisé pour la production de prédictions et l'évaluation du modèle entraîné sur d'autres jeux de données.
+2. La fonction `set_hparams()` permet de définir les hyper-paramètres qui doivent être passées à la méthode `initialize()` du module. Par exemple, ici nous passons `num_classes = 10` qui définit la taille de la dernière couche du réseau.
+3. La fonction `set_opt_hparams()` vous permet de passer des hyper-paramètres utilisés par la fonction d'optimisation. Par exemple, l'optimiseur choisi ici `optim_adam()` peut prendre le paramètre `lr` spécifiant le taux d'apprentissage et nous le spécifions avec `lr = 0.003`.
+4. La méthode `fit` va prendre les spécifications du modèle fournies par `setup()` et exécuter la boucle d'apprentissage en utilisant les jeux de donnée d'entraînement et de validation spécifiés dans des `torch::dataloaders()` pendant le nombre d'époques. **Remarque** : nous réutilisons les structures de données de base de torch pour les chargeurs de donnée, au lieu de recréer notre propre fonctionnalité de chargement de données.
+5. L'objet retourné `fitted` contient le modèle entraîné ainsi que le registre des métriques et de la fonction de pertes produites au cours de l'apprentissage. Il pourra  être utilisé pour faire de prédictions sur des données nouvelles, et pour l'évaluation du modèle entraîné sur d'autres jeux de données.
 
-Au moment du déploiement du calcul, luz utilisera l'accélérateur le plus rapide possible; si un GPU doté de CUDA est disponible, il sera utilisé, sinon le calcul sera affecté sur la CPU.
-Il déplace également automatiquement les données, les optimisateurs et les modèles vers le périphérique sélectionné afin que vous n'ayez pas besoin de les manipuler manuellement (qui constitue une grande source d'erreurs en général).
+Au moment du lancement de la boucle de calcul, luz utilise l'accélérateur le plus rapide possible; si une carte graphique (GPU) doté de CUDA est disponible, elle sera utilisée, sinon le calcul sera affecté à la CPU.
+Il déplace également automatiquement les données, les optimisateurs et les modèles vers le périphérique sélectionné afin d'éviter de le programmer manuellement (qui constitue une grande source d'erreurs en général).
 
 Pour créer des prédictions à partir du modèle entraîné, vous pouvez utiliser la méthode `predict`:
 
@@ -105,14 +105,14 @@ predictions <- predict(fitted, test_dl)
 
 ## La boucle d'entraînement
 
-Maintenant que vous avez une idée générale de la façon d'utiliser la fonction `fit`, il est important d'avoir un aperçu de ce qui se passe à l'intérieur.
-Voici ce que `fit` exécute (en pseudocode).
-Ce n'est pas détaillé complètement, mais celà devrait vous aider à construire votre intuition:
+Maintenant que vous avez une idée générale sur la façon d'utiliser la fonction `fit`, il est important d'avoir un aperçu de ce qui se passe à l'intérieur.
+Voici le pseudocode de ce que `fit` exécute.
+Sans vous montrer l'intégralité des opérations, cela devrait vous aider à construire votre intuition:
 
 ```{r, eval = FALSE}
 # -> Initialiser les objets : modèle, optimiseurs.
-# -> Sélectionner le périphérique d'apprentissage.
-# -> Déplacer les données, le modèle et les optimiseurs vers le dispositif sélectionné.
+# -> Sélectionner le périphérique d'apprentissage (GPU, ...).
+# -> Déplacer les données, le modèle et les optimiseurs vers le périphérique sélectionné.
 # -> Lancer l'apprentissage
 for (epoch in 1:epochs) {
   # -> Procédure d'apprentissage
@@ -120,13 +120,13 @@ for (epoch in 1:epochs) {
     # -> Calculer la méthode `forward` du modèle.
     # -> Calculer la perte.
     # -> Mettre à jour les poids.
-    # -> Mettre à jour les métriques et suivre la perte.
+    # -> Enregistrer les métriques et suivre la perte.
   }
   # -> Procédure de validation
   for (batch in valid_dl) {
     # -> Calculer la méthode `forward` du modèle.
     # -> Calculer la perte.
-    # -> Mettre à jour les métriques et suivre la perte.
+    # -> Enregistrer les métriques et suivre la perte.
   }
 }
 # -> Fin de l'apprentissage
@@ -135,8 +135,8 @@ for (epoch in 1:epochs) {
 
 ## Les métriques
 
-L'une des parties les plus importantes des projets d'apprentissage automatique est le choix de la métrique d'évaluation.
-Luz permet de suivre de nombreuses métriques différentes pendant l'apprentissage avec des changements de code minimes.
+L'un des paramêtres les plus importantes des projets d'apprentissage automatique est le choix de la métrique d'évaluation.
+Luz permet de suivre de nombreuses métriques différentes pendant l'apprentissage avec un effort de codage minime.
 
 Pour suivre les métriques, il suffit de modifier le paramètre `metrics` dans la fonction `setup`:
 
@@ -153,7 +153,7 @@ fitted <- net %>%
 
 
 Luz fournit des implémentations de quelques-unes des métriques les plus utilisées.
-Si une métrique n'est pas disponible, vous pouvez toujours la mettre en place à l'aide de la fonction `luz_metric`.
+Si une métrique n'est pas disponible, vous pouvez toujours la créer à l'aide de la fonction `luz_metric()`.
 
 ```{r, child='../man/rmd/metrics.Rmd'}
 ```
@@ -164,24 +164,23 @@ Si une métrique n'est pas disponible, vous pouvez toujours la mettre en place �
 ```
 
 
-## Personnalisation avec les callbacks
+## Personnalisation avec les points d'arrêt ou callbacks
 
 Luz fournit différentes façons de personnaliser la boucle d'apprentissage, en fonction du niveau de contrôle dont vous avez besoin pendant qu'elle s'exécute.
-La façon la plus rapide et la plus « réutilisable » est via les **callbacks**. Ils permettent de créer des modifications d'apprentissage qui peuvent être utilisées dans de nombreuses situations.
+La façon la plus rapide et la plus « réutilisable » est via les rappels ou **callbacks**. Ils permettent de créer des modifications d'apprentissage qui peuvent être utiles dans diverses situations.
 
-La boucle d'apprentissage en luz a de nombreux *points d'arrêt* qui peuvent appeler des fonctions R arbitraires.
-Cette fonctionnalité vous permet de personnaliser le processus d'apprentissage sans avoir à modifier la logique générale de l'apprentissage.
+La boucle d'apprentissage de luz dispose de nombreux *rappels* qui peuvent, chacuns, appeler des fonctions R arbitraires.
+Cette fonctionnalité vous permet de personnaliser le processus d'apprentissage sans entrer dans la logique générale de l'apprentissage.
 
-Luz implémente 3 callbacks par défaut qui se produisent dans chaque procédure d'apprentissage :
+Luz implémente 3 rappels par défaut qui se produisent dans chaque procédure d'apprentissage :
 
--   **callback train-eval**: Bascule le modèle en `train()` ou `eval()` selon si la procédure est en cours de  d'entraînement ou de validation.
+-   **callback train-eval**: bascule le modèle en mode `train()` ou `eval()` selon si la procédure est en cours d'entraînement ou de validation.
 
--   **callback metrics** : évaluer les paramètres au cours du processus d'entraînement et de validation.
+-   **callback metrics** : évalue les métriques au cours du processus d'entraînement et de validation.
 
--   **callback progress** : implémente une barre de progression et imprime des informations sur la progression pendant l'apprentissage.
+-   **callback progress** : implémente une barre de progression et affiche des informations sur la progression des lots et des époques pendant l'apprentissage.
 
-Vous pouvez également mettre en place des callbacks personnalisés qui modifient ou agissent spécifiquement pour votre procédure d'apprentissage.
-Par exemple:
+Vous pouvez également mettre en place des rappels personnalisés qui modifient ou agissent spécifiquement pour votre procédure d'apprentissage, c'est ce que nous allons montrer dans l'exemple suivant.
 
 ```{r, child='../man/rmd/callbacks.Rmd'}
 ```
@@ -189,16 +188,14 @@ Par exemple:
 ```{r, child='../man/rmd/ctx.Rmd'}
 ```
 
-
-
 Les attributs de `ctx` peuvent être utilisés pour produire le comportement souhaité des callbacks.
 Vous pouvez trouver de plus amples informations sur l'objet de contexte à l'aide de `help("ctx")`. 
-Dans notre exemple, nous utilisons l'attribut `ctx$iter` pour imprimer le numéro d'itération pour chaque lot d'apprentissage.
+Dans notre exemple, nous utilisons l'attribut `ctx$iter` pour afficher le numéro d'itération pour chaque lot d'apprentissage.
 
 ## Étapes suivantes
 
 Dans cet article, vous avez appris à entraîner votre premier modèle en utilisant luz et les bases de la personnalisation en utilisant à la fois des métriques personnalisées et des callbacks.
 
-Luz permet également des modifications plus flexibles du processus d'apprentissage décrites dans `vignette("custom-loop")`.
+Luz permet également des modifications plus flexibles du processus d'apprentissage décrites dans la `vignette("custom-loop")`.
 
 Vous devriez maintenant être en mesure de suivre les exemples marqués avec la catégorie 'basique' dans la [galerie d'exemples](https://mlverse.github.io/luz/articles/examples/index.html).

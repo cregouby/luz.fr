@@ -93,7 +93,7 @@ details:
     \\code{abbrev} n'est passé, le nom de classe sera utilisé.\n\n Voyons comment implémenter 
     \\code{luz_metric_accuracy} pour voir comment implémenter une nouvelle métrique:\n\n\\if{html}
     {\\out{<div class=\"sourceCode r\">}}\\preformatted{luz_metric_accuracy <- luz_metric(\n  
-    # Un abrégé à afficher dans les barreaux de progression, ou\ n# lorsque l'on imprime la 
+    # Un résumé à afficher dans les barres de progression, ou\ n# lorsque l'on affiche la 
     progression\n  abbrev = \"Acc\", \n  # Configuration initiale pour le métrique. Les 
     métriques sont initialisées\n  # à chaque époque, pour les boucles d'entraînement et de 
     validation\n  initialize = function() {\n    self$correct <- 0\n    self$total <- 0\n  },\n  

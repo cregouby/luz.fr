@@ -3,9 +3,9 @@ title:
   translation: L'opérateur de pipe
 description:
   original: |
-    See \code{magrittr::\link[magrittr:pipe]{\%>\%}} for details.
+    See \code{magrittr::\link[magrittr:pipe]{%>%}} for details.
   translation: |
-    Voir \code{magrittr::\link[magrittr:pipe]{\%>\%}} pour les détails.
+    Voir \code{magrittr::\link[magrittr:pipe]{%>%}} pour les détails.
 untranslatable:
 - alias
 - name

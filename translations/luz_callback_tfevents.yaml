@@ -38,14 +38,14 @@ examples:
     x <- torch_randn(1000, 10)
     y <- torch_randn(1000, 1)
 
-    model <- nn_linear \%>\%
-      setup(loss = nnf_mse_loss, optimizer = optim_adam) \%>\%
-      set_hparams(in_features = 10, out_features = 1) \%>\%
+    model <- nn_linear %>%
+      setup(loss = nnf_mse_loss, optimizer = optim_adam) %>%
+      set_hparams(in_features = 10, out_features = 1) %>%
       set_opt_hparams(lr = 1e-4)
 
     tmp <- tempfile()
 
-    model \%>\% fit(list(x, y), valid_data = 0.2, callbacks = list(
+    model %>% fit(list(x, y), valid_data = 0.2, callbacks = list(
       luz_callback_tfevents(tmp, histograms = TRUE)
     ))
     }

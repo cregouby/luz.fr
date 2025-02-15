@@ -12,7 +12,7 @@ arguments:
   path:
     original: path in file system to the object.
     translation: Chemin du fichier de modèle sur le disque.
-  "...":
+  ...:
     original: currently unused.
     translation: inutilisé
   original: |
@@ -34,7 +34,7 @@ section{Warning}:
     Don't expect \code{luz_save} to work correctly if you have unserializable objects
     in the \link{ctx} like \code{torch_tensor}s and external pointers in general.
   translation: |
-    L'objet \link{ctx} est sérialisé naivement, c-à-d. que on utilise \code{\link[=saveRDS]{saveRDS()}}directement
+    L'objet \link{ctx} est sérialisé naivement, c-à-d. que l'on utilise \code{\link[=saveRDS]{saveRDS()}} directement
     pour le sérialiser. Ne comptez pas sur \code{luz_save} pour des objet non sérialisables dans 
     le \link{ctx} comme des \code{torch_tensor}s ou des pointeurs externes en général.
 seealso:

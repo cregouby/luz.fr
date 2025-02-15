@@ -61,9 +61,9 @@ examples:
     x <- torch_randn(1000, 10)
     y <- torch_randn(1000, 1)
 
-    model <- nn_linear %>%
-      setup(optimizer = optim_sgd, loss = nnf_mse_loss) %>%
-      set_hparams(in_features = 10, out_features = 1) %>%
+    model <- nn_linear \%>\%
+      setup(optimizer = optim_sgd, loss = nnf_mse_loss) \%>\%
+      set_hparams(in_features = 10, out_features = 1) \%>\%
       set_opt_hparams(lr = 0.01)
 
 
@@ -85,7 +85,7 @@ examples:
 
     # try once and the model fails
     try({
-      results <- model %>% fit(
+      results <- model \%>\% fit(
         list(x, y),
         callbacks = list(autoresume, interrupt),
         verbose = FALSE
@@ -93,7 +93,7 @@ examples:
     })
 
     # model resumes and completes
-    results <- model %>% fit(
+    results <- model \%>\% fit(
       list(x, y),
       callbacks = list(autoresume, interrupt),
       verbose = FALSE
@@ -111,9 +111,9 @@ examples:
     x <- torch_randn(1000, 10)
     y <- torch_randn(1000, 1)
 
-    model <- nn_linear %>%
-      setup(optimizer = optim_sgd, loss = nnf_mse_loss) %>%
-      set_hparams(in_features = 10, out_features = 1) %>%
+    model <- nn_linear \%>\%
+      setup(optimizer = optim_sgd, loss = nnf_mse_loss) \%>\%
+      set_hparams(in_features = 10, out_features = 1) \%>\%
       set_opt_hparams(lr = 0.01)
 
     # Simuler une erreur au milieu de l'époque 5 qui ne se produit qu'une seule fois.
@@ -133,15 +133,15 @@ examples:
 
     # Essaye une fois et observe que le modèle échoue
     try({
-      results <- model %>% fit(
+      results <- model \%>\% fit(
         list(x, y),
         callbacks = list(autoresume, interrupt),
         verbose = FALSE
       )
     })
 
-    # Le modèle reprend et l'entrâinement peut se terminer
-    results <- model %>% fit(
+    # Le modèle reprend et l'entraînement peut se terminer
+    results <- model \%>\% fit(
       list(x, y),
       callbacks = list(autoresume, interrupt),
       verbose = FALSE

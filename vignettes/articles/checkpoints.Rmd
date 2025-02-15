@@ -70,7 +70,7 @@ interrupt <- luz_callback(
 )
 ```
 
-Ccommençons par entraîner en ajoutant le `luz_callback_auto_resume()`:
+Ccommençons par entraîner le modèle en ajoutant le `luz_callback_auto_resume()`:
   
 ```{r, error=TRUE}
 autoresume <- luz_callback_auto_resume(path = "state.pt")

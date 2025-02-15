@@ -12,7 +12,7 @@ arguments:
   path:
     original: path in file system to the object.
     translation: Chemin du fichier de modèle sur le disque.
-  '...':
+  "...":
     original: currently unused.
     translation: inutilisé
   original: |

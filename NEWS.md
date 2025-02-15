@@ -1,9 +1,11 @@
-# luz.fr 0.4.0
+# luz.fr (development version)
 
-* Initial function help translation.
-
-# luz.fr 0.4.9002
+# luz.fr 0.4.9001
 
 * Vignettes translation
 * pkgdown publication to github page.
-* add function reference translation to github page 
+* initial function reference translation to github page (WiP)
+
+# luz.fr 0.4.0
+
+* Initial function help translation.

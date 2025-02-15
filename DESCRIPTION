@@ -1,6 +1,6 @@
 Package: luz.fr
 Title: Une interface de programmation de haut-niveau pour 'torch' 
-Version: 0.4.0.9000
+Version: 0.4.0.9001
 Date: 2024-05-26
 Authors@R: c(
     person("Christophe", "Regouby", email = "christophe.regouby@free.fr", role = c("aut", "cre", "cph"))

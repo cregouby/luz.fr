@@ -4,14 +4,6 @@ title:
   name:
     original: string naming the new metric.
     translation: Chaîne de caractères définissant le nom de la métrique.
-  '...':
-    original: |-
-      named list of public methods. You should implement at least
-      \code{initialize}, \code{update} and \code{compute}. See the details section for more
-      information.
-    translation: |-
-      liste nomée de méthodes publiques. Vous devez implémenter au moins
-      \code{initialize}, \code{update} et \code{compute}. Voir la section Détails pour plus d'informations.
   private:
     original: |-
       An optional list of private members, which can be functions
@@ -37,6 +29,14 @@ title:
       Un objet R6ClassGenerator duquel hériter; autrement dit, une super-classe.
       Cela est capturé comme une expression non-évaluée qui sera évaluée dans
       \code{parent_env} chaque fois qu'un objet est instancié.
+  ...:
+    original: |-
+      named list of public methods. You should implement at least
+      \code{initialize}, \code{update} and \code{compute}. See the details section for more
+      information.
+    translation: |-
+      liste nomée de méthodes publiques. Vous devez implémenter au moins
+      \code{initialize}, \code{update} et \code{compute}. Voir la section Détails pour plus d'informations.
 
 value:
   original: |
@@ -93,21 +93,22 @@ details:
     \\code{abbrev} n'est passé, le nom de classe sera utilisé.\n\n Voyons comment implémenter 
     \\code{luz_metric_accuracy} pour voir comment implémenter une nouvelle métrique:\n\n\\if{html}
     {\\out{<div class=\"sourceCode r\">}}\\preformatted{luz_metric_accuracy <- luz_metric(\n  
-    # Un résumé à afficher dans les barres de progression, ou\ n# lorsque l'on affiche la 
-    progression\n  abbrev = \"Acc\", \n  # Configuration initiale pour le métrique. Les 
-    métriques sont initialisées\n  # à chaque époque, pour les boucles d'entraînement et de 
+    # L'abbréviation qui doit appraître dans la barre de progression, ou\n# # quand on affiche la 
+    progression\n  abbrev = \"Acc\", \n  # Première initialisation de la métrique. elle sera 
+    réinitialisée\n  # à chaque époque, pour les boucles d'entraînement et de 
     validation\n  initialize = function() {\n    self$correct <- 0\n    self$total <- 0\n  },\n  
-    # Exécuter à chaque étape d'entraînement ou de validation et mettre à jour\n  
-    # l'état interne. La fonction update prend `preds` et `target` en paramètres.\n  
+    # Calcul à chaque étape de l'entraînement et de la validation, et\n  
+    # mise à jour des états internes. la fonction utilise les paramêtres \n  
+    # `preds` et `target`.\n  
     update = function(preds, target) {\n    pred <- torch::torch_argmax(preds, dim = 2)\n    
     self$correct <- self$correct + (pred == target)$\n      to(dtype = torch::torch_float())$\n      
     sum()$\n      item()\n    \   self$total <- self$total + pred$numel()\n  },\n  
-    # Utiliser l'état interne pour interroger la valeur du métrique\n  compute = function() {\n    
+    # Utilise les états interne pour le calcul de la métrique\n  compute = function() {\n    
     self$correct/self$total\n  }\n)\n}\\if{html}{\\out{</div>}}\n\n\nstrong{Note} : Il est recommandé 
     que le métrique \\code{compute} renvoie des valeurs régulières R au lieu de tenseurs torch car 
     c'est ce qui est attendu par les autres parties de luz.\n"
 examples:
-  original: |+
+  original: |-
     luz_metric_accuracy <- luz_metric(
       # An abbreviation to be shown in progress bars, or
       # when printing progress
@@ -134,8 +135,34 @@ examples:
         self$correct/self$total
       }
     )
+  translation: |-
+    luz_metric_accuracy <- luz_metric(
+      # L'abbréviation qui doit appraître dans la barre de progression, ou
+      # quand on affiche la progression
+      abbrev = "Acc",
+      # Première initialisation de la métrique. elle sera réinitialisée
+      # à chaque époque, pour les boucles l'entraînement et de validation
+      initialize = function() {
+        self$correct <- 0
+        self$total <- 0
+      },
+      # Calcul à chaque étape de l'entraînement et de la validation, et 
+      # mise à jour des états internes. la fonction utilise les paramêtres 
+      # `preds` et `target`.
+      update = function(preds, target) {
+        pred <- torch::torch_argmax(preds, dim = 2)
+        self$correct <- self$correct + (pred == target)$
+          to(dtype = torch::torch_float())$
+          sum()$
+          item()
+        self$total <- self$total + pred$numel()
+      },
+      # Utilise les états interne pour le calcul de la métrique
+      compute = function() {
+        self$correct/self$total
+      }
+    )
 
-  translation: ~
 seealso:
   original: "Other luz_metrics: \n\\code{\\link{luz_metric_accuracy}()},\n\\code{\\link{luz_metric_binary_accuracy_with_logits}()},\n\\code{\\link{luz_metric_binary_accuracy}()},\n\\code{\\link{luz_metric_binary_auroc}()},\n\\code{\\link{luz_metric_mae}()},\n\\code{\\link{luz_metric_mse}()},\n\\code{\\link{luz_metric_multiclass_auroc}()},\n\\code{\\link{luz_metric_rmse}()}\n"
   translation: "Autres métriques de luz: \n\\code{\\link{luz_metric_accuracy}()},\n\\code{\\link{luz_metric_binary_accuracy_with_logits}()},\n\\code{\\link{luz_metric_binary_accuracy}()},\n\\code{\\link{luz_metric_binary_auroc}()},\n\\code{\\link{luz_metric_mae}()},\n\\code{\\link{luz_metric_mse}()},\n\\code{\\link{luz_metric_multiclass_auroc}()},\n\\code{\\link{luz_metric_rmse}()}\n"

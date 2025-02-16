@@ -12,13 +12,14 @@ arguments:
   path:
     original: path in file system to the object.
     translation: Chemin du fichier de modèle sur le disque.
-  ...:
+  "...":
     original: currently unused.
     translation: inutilisé
-  original: |
+    
+  original: |-
     Allows saving luz fitted models to the disk. Objects can be loaded back with
     \code{\link[=luz_load]{luz_load()}}.
-  translation: |
+  translation: |-
     Enregistre un modèle entraîné luz sur disque. Les objects peuvent être restaurés avec
     \code{\link[=luz_load]{luz_load()}}.
 note:

@@ -68,7 +68,7 @@ note:
     \code{save_best_only} écrasera les modèles enregistrés si le paramètre \code{path} ne 
     différencie pas les noms des modèles par epochs.
 
-    Voir la \href{https://mlverse.github.io/luz/articles/checkpoints.html}{vignette sur les instantanés} 
+    Voir la \href{https://cregouby.github.io/luz.fr/articles/checkpoints.html}{vignette sur les instantanés} 
     pour plus de détails.
 examples:
   original: |+

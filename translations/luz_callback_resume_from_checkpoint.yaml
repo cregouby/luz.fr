@@ -34,7 +34,7 @@ note:
     Read the checkpointing article in the pkgdown website for more
     information.
   translation: |
-    Voir la \href{https://mlverse.github.io/luz/articles/checkpoints.html}{vignette sur les instantanés} 
+    Voir la \href{https://cregouby.github.io/luz.fr/articles/checkpoints.html}{vignette sur les instantanés} 
     pour plus de détails.
 seealso:
   original: "\\code{\\link[=luz_callback_model_checkpoint]{luz_callback_model_checkpoint()}}\n\nOther

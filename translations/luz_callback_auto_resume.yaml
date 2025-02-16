@@ -37,7 +37,7 @@ note:
     apportées par d'autres callbacks à \code{'on_epoch_end'}. Le \code{weight} par défaut 
     de ce callback est \code{Inf}.
 
-    Voir la \href{https://mlverse.github.io/luz/articles/checkpoints.html}{vignette sur les instantanés} 
+    Voir la \href{https://cregouby.github.io/luz.fr/articles/checkpoints.html}{vignette sur les instantanés} 
     pour plus de détails.
 section{Customizing serialization}:
   original: |

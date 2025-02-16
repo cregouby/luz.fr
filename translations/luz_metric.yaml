@@ -1,6 +1,7 @@
 title:
   original: Creates a new luz metric
   translation: Crée une nouvelle métrique luz
+arguments:
   name:
     original: string naming the new metric.
     translation: Chaîne de caractères définissant le nom de la métrique.
@@ -91,21 +92,20 @@ details:
     un champ \\code{abbrev} qui donne à la métrique un abrégé que l'on utilisera lors de l'\n
     affichage d'informations sur les métriques dans le console ou enregistrer.\nSi aucun 
     \\code{abbrev} n'est passé, le nom de classe sera utilisé.\n\n Voyons comment implémenter 
-    \\code{luz_metric_accuracy} pour voir comment implémenter une nouvelle métrique:\n\n\\if{html}
-    {\\out{<div class=\"sourceCode r\">}}\\preformatted{luz_metric_accuracy <- luz_metric(\n  
-    # L'abbréviation qui doit appraître dans la barre de progression, ou\n# # quand on affiche la 
-    progression\n  abbrev = \"Acc\", \n  # Première initialisation de la métrique. elle sera 
-    réinitialisée\n  # à chaque époque, pour les boucles d'entraînement et de 
-    validation\n  initialize = function() {\n    self$correct <- 0\n    self$total <- 0\n  },\n  
-    # Calcul à chaque étape de l'entraînement et de la validation, et\n  
-    # mise à jour des états internes. la fonction utilise les paramêtres \n  
-    # `preds` et `target`.\n  
-    update = function(preds, target) {\n    pred <- torch::torch_argmax(preds, dim = 2)\n    
-    self$correct <- self$correct + (pred == target)$\n      to(dtype = torch::torch_float())$\n      
-    sum()$\n      item()\n    \   self$total <- self$total + pred$numel()\n  },\n  
-    # Utilise les états interne pour le calcul de la métrique\n  compute = function() {\n    
-    self$correct/self$total\n  }\n)\n}\\if{html}{\\out{</div>}}\n\n\nstrong{Note} : Il est recommandé 
-    que le métrique \\code{compute} renvoie des valeurs régulières R au lieu de tenseurs torch car 
+    \\code{luz_metric_accuracy} pour voir comment implémenter une nouvelle métrique:\n\n
+    \\if{html}{\\out{<div class=\"sourceCode r\">}}\\preformatted{luz_metric_accuracy
+    <- luz_metric(\n  # L'abbréviation qui doit appraître dans la barre de progression, ou \n  # quand 
+    on affiche la progression\n  abbrev = \"Acc\", \n  # Première initialisation de la métrique. elle 
+    sera réinitialisée\n  # à chaque époque, pour les boucles l'entraînement et de validation\n  initialize
+    = function() {\n    self$correct <- 0\n    self$total <- 0\n  },\n  # Calcul à chaque étape de 
+    l'entraînement et de la validation, et\n  # mise à jour des états internes. la fonction utilise les paramêtres
+    \n  # `preds` et `target`.\n  update = function(preds, target)
+    {\n    pred <- torch::torch_argmax(preds, dim = 2)\n    self$correct <- self$correct
+    + (pred == target)$\n      to(dtype = torch::torch_float())$\n      sum()$\n      item()\n
+    \   self$total <- self$total + pred$numel()\n  },\n  # Use the internal state
+    to query the metric value\n  compute = function() {\n    self$correct/self$total\n
+    \ }\n)\n}\\if{html}{\\out{</div>}}\n\n\n\\strong{Note} : Il est recommandé 
+    que le métrique \\code{compute} renvoie des valeurs R natives au lieu de tenseurs torch car 
     c'est ce qui est attendu par les autres parties de luz.\n"
 examples:
   original: |-

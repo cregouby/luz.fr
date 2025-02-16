@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">luz.fr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Activer la navigation">
@@ -69,8 +69,8 @@
 
 <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>(dataloader, dataset ou liste) Un chargeur de données créé avec
-<code><a href="https://rdrr.io/pkg/torch/man/dataloader.html" class="external-link">torch::dataloader()</a></code> sur lequel évaluer le modèle, ou un dataset
-créé avec <code><a href="https://rdrr.io/pkg/torch/man/dataset.html" class="external-link">torch::dataset()</a></code> ou une liste. Les chargeur de donnéess
+<code><a href="https://torch.mlverse.org/docs/reference/dataloader.html" class="external-link">torch::dataloader()</a></code> sur lequel évaluer le modèle, ou un dataset
+créé avec <code><a href="https://torch.mlverse.org/docs/reference/dataset.html" class="external-link">torch::dataset()</a></code> ou une liste. Les chargeur de donnéess
 et les datasets doivent retourner une liste avec au plus 2 items.
 Le premier item sera utilisé comme prédicteurs pour le module et le second
 sera utilisé comme variable à prédire pour la fonction de perte.</p></dd>
@@ -99,7 +99,7 @@ dans la console. Par défaut, elle produira des messages s'il y a une interface 
 
 <dt id="arg-dataloader-options">dataloader_options<a class="anchor" aria-label="anchor" href="#arg-dataloader-options"></a></dt>
 <dd><p>Des options utilisées lors de la création d'un chargeur de données. Voir
-<code><a href="https://rdrr.io/pkg/torch/man/dataloader.html" class="external-link">torch::dataloader()</a></code>. Par défaut<code>shuffle=TRUE</code> pour les données d'entraînement
+<code><a href="https://torch.mlverse.org/docs/reference/dataloader.html" class="external-link">torch::dataloader()</a></code>. Par défaut<code>shuffle=TRUE</code> pour les données d'entraînement
 et <code>batch_size=32</code>. Il y aura une erreur si non <code>NULL</code> et si <code>data</code> est déja un chargeur de données.</p></dd>
 </dl></div>
     <div class="section level2">
@@ -111,7 +111,7 @@ et un jeu de données, puis calcule les métriques liées au modèle.</p>
 <p>La fonction <code>evaluate</code> retourne un objet <code>luz_module_evaluation</code>, que vous pouvez consulter
 grâce à la fonction <code><a href="get_metrics.html">get_metrics()</a></code> ou simplement <code>print</code> pour voir les résultats.</p>
 <p>Par exemple:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">evaluation</span> <span class="op">&lt;-</span> <span class="va">fitted</span> </span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">evaluation</span> <span class="op">&lt;-</span> <span class="va">fitted</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/evaluate.html">evaluate</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">valid_dl</span><span class="op">)</span></span>
 <span><span class="va">metrics</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_metrics.html">get_metrics</a></span><span class="op">(</span><span class="va">evaluation</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">evaluation</span><span class="op">)</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">## A `luz_module_evaluation`</span></span>

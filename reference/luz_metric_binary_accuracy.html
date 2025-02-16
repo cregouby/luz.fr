@@ -9,7 +9,7 @@ pour un modèle avec des probabilités en sortie. Le plus souvent, associé à t
 
     <a class="navbar-brand me-2" href="../index.html">luz.fr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Activer la navigation">
@@ -46,7 +46,7 @@ pour un modèle avec des probabilités en sortie. Le plus souvent, associé à t
 
     <div class="ref-description section level2">
     <p>Calcule la précision pour les problèmes de classification binaire
-pour un modèle avec des probabilités en sortie. Le plus souvent, associé à <code><a href="https://rdrr.io/pkg/torch/man/nn_bce_loss.html" class="external-link">torch::nn_bce_loss()</a></code>.</p>
+pour un modèle avec des probabilités en sortie. Le plus souvent, associé à <code><a href="https://torch.mlverse.org/docs/reference/nn_bce_loss.html" class="external-link">torch::nn_bce_loss()</a></code>.</p>
     </div>
 
     <div class="section level2">
@@ -80,11 +80,11 @@ pour un modèle avec des probabilités en sortie. Le plus souvent, associé à <
 
     <div class="section level2">
     <h2 id="ref-examples">Exemples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu">torch</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/torch/man/torch_is_installed.html" class="external-link">torch_is_installed</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu">torch</span><span class="fu">::</span><span class="fu"><a href="https://torch.mlverse.org/docs/reference/torch_is_installed.html" class="external-link">torch_is_installed</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://torch.mlverse.org/docs" class="external-link">torch</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">metric</span> <span class="op">&lt;-</span> <span class="fu">luz_metric_binary_accuracy</span><span class="op">(</span>threshold <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">metric</span> <span class="op">&lt;-</span> <span class="va">metric</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">metric</span><span class="op">$</span><span class="fu">update</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/torch/man/torch_rand.html" class="external-link">torch_rand</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>, <span class="fu">torch</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/torch/man/torch_randint.html" class="external-link">torch_randint</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, size <span class="op">=</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">metric</span><span class="op">$</span><span class="fu">update</span><span class="op">(</span><span class="fu"><a href="https://torch.mlverse.org/docs/reference/torch_rand.html" class="external-link">torch_rand</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>, <span class="fu">torch</span><span class="fu">::</span><span class="fu"><a href="https://torch.mlverse.org/docs/reference/torch_randint.html" class="external-link">torch_randint</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, size <span class="op">=</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">metric</span><span class="op">$</span><span class="fu">compute</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in luz_metric_binary_accuracy(threshold = 0.5):</span> impossible de trouver la fonction "luz_metric_binary_accuracy"</span>

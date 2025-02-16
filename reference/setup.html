@@ -9,7 +9,7 @@ importantes pour que le nn_modules fonctionne avec luz."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">luz.fr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Activer la navigation">
@@ -78,7 +78,7 @@ vous pouvez passer un objet luz_metric_set() pour spécifier les métriques util
 
 <dt id="arg-backward">backward<a class="anchor" aria-label="anchor" href="#arg-backward"></a></dt>
 <dd><p>(fonction) Une fonction qui prend des valeurs retournées par la fonction de coût comme paramètres.
-Elle doit appeler <code>$backward()</code> ou <code><a href="https://rdrr.io/pkg/torch/man/autograd_backward.html" class="external-link">torch::autograd_backward()</a></code>.
+Elle doit appeler <code>$backward()</code> ou <code><a href="https://torch.mlverse.org/docs/reference/autograd_backward.html" class="external-link">torch::autograd_backward()</a></code>.
 En général, vous n'avez pas besoin de définir ce paramètre sauf si vous devez personnaliser comment luz
 appelle la méthode <code>backward()</code>, par exemple, si vous devez ajouter des arguments supplémentaires à
 l'appel de la méthode. Notez que cela devient une méthode du <code>nn_module</code>, donc elle peut être utilisée

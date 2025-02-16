@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">luz.fr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Activer la navigation">
@@ -71,8 +71,8 @@
 
 <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>(dataloader, dataset ou list) Un chargeur de donnée créé avec
-<code><a href="https://rdrr.io/pkg/torch/man/dataloader.html" class="external-link">torch::dataloader()</a></code> utilisé pour l'entraînement du modèle, ou un jeu de données créé avec
-<code><a href="https://rdrr.io/pkg/torch/man/dataset.html" class="external-link">torch::dataset()</a></code> ou une liste. Les chargeurs de donnée et les jeux de données doivent renvoyer
+<code><a href="https://torch.mlverse.org/docs/reference/dataloader.html" class="external-link">torch::dataloader()</a></code> utilisé pour l'entraînement du modèle, ou un jeu de données créé avec
+<code><a href="https://torch.mlverse.org/docs/reference/dataset.html" class="external-link">torch::dataset()</a></code> ou une liste. Les chargeurs de donnée et les jeux de données doivent renvoyer
 une liste contenant au plus 2 éléments. Le premier élément sera utilisé comme entrée pour le module et
 le second comme variable à prédire pour la fonction de perte.</p></dd>
 
@@ -91,10 +91,10 @@ Les callbacks <code><a href="luz_callback_metrics.html">luz_callback_metrics()</
 <code><a href="luz_callback_train_valid.html">luz_callback_train_valid()</a></code> sont toujours ajoutés par défaut.</p></dd>
 
 <dt id="arg-valid-data">valid_data<a class="anchor" aria-label="anchor" href="#arg-valid-data"></a></dt>
-<dd><p>(dataloader, dataset, liste ou réel; optionnel) Un chargeur de donnée créé avec <code><a href="https://rdrr.io/pkg/torch/man/dataloader.html" class="external-link">torch::dataloader()</a></code>
-ou un jeu de données créé avec <code><a href="https://rdrr.io/pkg/torch/man/dataset.html" class="external-link">torch::dataset()</a></code> qui sera utilisé
+<dd><p>(dataloader, dataset, liste ou réel; optionnel) Un chargeur de donnée créé avec <code><a href="https://torch.mlverse.org/docs/reference/dataloader.html" class="external-link">torch::dataloader()</a></code>
+ou un jeu de données créé avec <code><a href="https://torch.mlverse.org/docs/reference/dataset.html" class="external-link">torch::dataset()</a></code> qui sera utilisé
 pendant la procédure de validation. Ils doivent retourner une liste contenant (input, target). Si <code>data</code>
-est un <code><a href="https://rdrr.io/pkg/torch/man/dataset.html" class="external-link">torch::dataset()</a></code> ou une liste, vous pouvez également fournir une valeur
+est un <code><a href="https://torch.mlverse.org/docs/reference/dataset.html" class="external-link">torch::dataset()</a></code> ou une liste, vous pouvez également fournir une valeur
 numérique entre 0 et 1 - et dans ce cas, une échantillonnage aléatoire avec taille correspondante à celle
 proportionnelle à partir de <code>data</code> sera utilisée pour la validation.</p></dd>
 
@@ -113,13 +113,13 @@ est <code>TRUE</code>, sinon elle ne publiera pas vers la console.</p></dd>
 
 <dt id="arg-dataloader-options">dataloader_options<a class="anchor" aria-label="anchor" href="#arg-dataloader-options"></a></dt>
 <dd><p>Options utilisées lors de la création d'un chargeur de donnée. Voir
-<code><a href="https://rdrr.io/pkg/torch/man/dataloader.html" class="external-link">torch::dataloader()</a></code>. <code>shuffle=TRUE</code> par défaut pour les données d'entraînement et
+<code><a href="https://torch.mlverse.org/docs/reference/dataloader.html" class="external-link">torch::dataloader()</a></code>. <code>shuffle=TRUE</code> par défaut pour les données d'entraînement et
 <code>batch_size=32</code> par défaut. Il y aura erreur si ce n'est pas <code>NULL</code> quand <code>data</code> est déjà un chargeur de donnée.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="valeur-de-retour">Valeur de retour<a class="anchor" aria-label="anchor" href="#valeur-de-retour"></a></h2>
     <p>Un objet entraîné qui peut être enregistré avec <code><a href="luz_save.html">luz_save()</a></code>,
-affiché avec <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> et visualisé avec <code><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot()</a></code>.</p>
+affiché avec <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> et visualisé avec <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="voir-galement">Voir également<a class="anchor" aria-label="anchor" href="#voir-galement"></a></h2>

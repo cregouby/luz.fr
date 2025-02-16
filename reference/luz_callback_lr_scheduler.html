@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">luz.fr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Activer la navigation">
@@ -43,7 +43,7 @@
     </div>
 
     <div class="ref-description section level2">
-    <p>Initialisation et exécution des <code><a href="https://rdrr.io/pkg/torch/man/lr_scheduler.html" class="external-link">torch::lr_scheduler()</a></code>s.</p>
+    <p>Initialisation et exécution des <code><a href="https://torch.mlverse.org/docs/reference/lr_scheduler.html" class="external-link">torch::lr_scheduler()</a></code>s.</p>
     </div>
 
     <div class="section level2">
@@ -61,7 +61,7 @@
 
 
 <dl><dt id="arg-lr-scheduler">lr_scheduler<a class="anchor" aria-label="anchor" href="#arg-lr-scheduler"></a></dt>
-<dd><p>Un <code><a href="https://rdrr.io/pkg/torch/man/lr_scheduler.html" class="external-link">torch::lr_scheduler()</a></code> qui sera initialisé avec
+<dd><p>Un <code><a href="https://torch.mlverse.org/docs/reference/lr_scheduler.html" class="external-link">torch::lr_scheduler()</a></code> qui sera initialisé avec
 l'optimiseur et les paramètres <code>...</code> .</p></dd>
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -101,8 +101,8 @@ optimiseur, <code>opt_name</code> n'est pas utilisé.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Exemples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu">torch</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/torch/man/torch_is_installed.html" class="external-link">torch_is_installed</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="va">cb</span> <span class="op">&lt;-</span> <span class="fu">luz_callback_lr_scheduler</span><span class="op">(</span><span class="fu">torch</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/torch/man/lr_step.html" class="external-link">lr_step</a></span>, step_size <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu">torch</span><span class="fu">::</span><span class="fu"><a href="https://torch.mlverse.org/docs/reference/torch_is_installed.html" class="external-link">torch_is_installed</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">cb</span> <span class="op">&lt;-</span> <span class="fu">luz_callback_lr_scheduler</span><span class="op">(</span><span class="fu">torch</span><span class="fu">::</span><span class="va"><a href="https://torch.mlverse.org/docs/reference/lr_step.html" class="external-link">lr_step</a></span>, step_size <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in luz_callback_lr_scheduler(torch::lr_step, step_size = 30):</span> impossible de trouver la fonction "luz_callback_lr_scheduler"</span>
 </code></pre></div>

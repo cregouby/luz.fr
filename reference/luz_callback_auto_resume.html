@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">luz.fr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Activer la navigation">
@@ -78,8 +78,8 @@ pour plus de détails.</p>
     <h2 id="customizing-serialization">Customizing serialization<a class="anchor" aria-label="anchor" href="#customizing-serialization"></a></h2>
     <p>Par défaut, le modèle, l'état de l'optimiseur et l'état des callbacks sont sérialisés.
 Les callbacks peuvent être utilisés pour personnaliser la sérialisation en implémentant les
-méthodes <code>state_dict()</code> et <code><a href="https://rdrr.io/pkg/torch/man/load_state_dict.html" class="external-link">load_state_dict()</a></code>. Si ces méthodes sont implémentées,
-alors <code>state_dict()</code> est appelée à la fin de chaque époque et <code><a href="https://rdrr.io/pkg/torch/man/load_state_dict.html" class="external-link">load_state_dict()</a></code>
+méthodes <code>state_dict()</code> et <code><a href="https://torch.mlverse.org/docs/reference/load_state_dict.html" class="external-link">load_state_dict()</a></code>. Si ces méthodes sont implémentées,
+alors <code>state_dict()</code> est appelée à la fin de chaque époque et <code><a href="https://torch.mlverse.org/docs/reference/load_state_dict.html" class="external-link">load_state_dict()</a></code>
 est appelée lorsque le modèle reprend.</p>
     </div>
 

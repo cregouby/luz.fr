@@ -15,7 +15,7 @@ luz_load()."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">luz.fr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Activer la navigation">
@@ -84,7 +84,7 @@ d'abord sérialisé avec <code>torch_save</code> avant cela.</p>
     </div>
     <div class="section level2">
     <h2 id="warning">Warning<a class="anchor" aria-label="anchor" href="#warning"></a></h2>
-    <p>L'objet <a href="ctx.html">ctx</a> est sérialisé naivement, c-à-d. que on utilise <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS()</a></code>directement
+    <p>L'objet <a href="ctx.html">ctx</a> est sérialisé naivement, c-à-d. que l'on utilise <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS()</a></code> directement
 pour le sérialiser. Ne comptez pas sur <code>luz_save</code> pour des objet non sérialisables dans
 le <a href="ctx.html">ctx</a> comme des <code>torch_tensor</code>s ou des pointeurs externes en général.</p>
     </div>

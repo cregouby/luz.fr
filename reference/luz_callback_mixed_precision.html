@@ -13,7 +13,7 @@ Pour en savoir plus, voir  ici."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">luz.fr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Activer la navigation">
@@ -49,7 +49,7 @@ Pour en savoir plus, voir  ici."></head><body>
     </div>
 
     <div class="ref-description section level2">
-    <p>Ce callback activera l'entraînement du modèle <code><a href="https://rdrr.io/pkg/torch/man/local_autocast.html" class="external-link">torch::local_autocast()</a></code>
+    <p>Ce callback activera l'entraînement du modèle <code><a href="https://torch.mlverse.org/docs/reference/local_autocast.html" class="external-link">torch::local_autocast()</a></code>
 pendant la phase <code>forward()</code> et pendant le calcul de la fonction de coût. Il désactivera ensuite l'autocast et normalisera
 la fonction de coût avant la phase <code>backward()</code> et <code>opt$step()</code>.
 Pour en savoir plus, voir  <a href="https://torch.mlverse.org/docs/articles/amp.html" class="external-link">ici</a>.</p>
@@ -65,7 +65,7 @@ Pour en savoir plus, voir  <a href="https://torch.mlverse.org/docs/articles/amp.
 
 
 <dl><dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Passé à <code><a href="https://rdrr.io/pkg/torch/man/cuda_amp_grad_scaler.html" class="external-link">torch::cuda_amp_grad_scaler()</a></code>.</p></dd>
+<dd><p>Passé à <code><a href="https://torch.mlverse.org/docs/reference/cuda_amp_grad_scaler.html" class="external-link">torch::cuda_amp_grad_scaler()</a></code>.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="valeur-de-retour">Valeur de retour<a class="anchor" aria-label="anchor" href="#valeur-de-retour"></a></h2>

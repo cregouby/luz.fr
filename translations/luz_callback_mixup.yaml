@@ -60,6 +60,7 @@ details:
     \code{loss(output, new_target) = weight * loss(output, target1) + (1-weight) * loss(output, target2)}
     \item Nous tirons des coefficients de mélange différents pour chaque paire.
     \item Nous remplaçons \code{weight} par \code{weight = max(weight, 1-weight)} pour éviter les répétitions.
+    }
 examples:
   original: |+
     if (torch::torch_is_installed()) {

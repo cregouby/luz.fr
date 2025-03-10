@@ -1,6 +1,6 @@
 title:
   original: Saves luz objects to disk
-  translation: Enregistre in objet luz sur disque
+  translation: Enregistre les objets luz sur disque
 arguments:
   obj:
     original: |-
@@ -15,7 +15,7 @@ arguments:
   "...":
     original: currently unused.
     translation: inutilisé
-    
+description:
   original: |-
     Allows saving luz fitted models to the disk. Objects can be loaded back with
     \code{\link[=luz_load]{luz_load()}}.

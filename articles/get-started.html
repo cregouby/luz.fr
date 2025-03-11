@@ -141,16 +141,16 @@ MNIST:</p>
 via le chargeur de donnée <code>train_dl</code> et l’évaluer grace au
 <code>torch::dataloaders()</code> nomé <code>test_dl</code> avec:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fitted</span> <span class="op">&lt;-</span> <span class="va">net</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">fitted</span> <span class="op">&lt;-</span> <span class="va">net</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/setup.html">setup</a></span><span class="op">(</span></span>
 <span>    loss <span class="op">=</span> <span class="fu"><a href="https://torch.mlverse.org/docs/reference/nn_cross_entropy_loss.html" class="external-link">nn_cross_entropy_loss</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    optimizer <span class="op">=</span> <span class="va">optim_adam</span>,</span>
 <span>    metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>      <span class="va">luz_metric_accuracy</span></span>
 <span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/set_hparams.html">set_hparams</a></span><span class="op">(</span>num_class <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="../reference/set_opt_hparams.html">set_opt_hparams</a></span><span class="op">(</span>lr <span class="op">=</span> <span class="fl">0.003</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/set_hparams.html">set_hparams</a></span><span class="op">(</span>num_class <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="../reference/set_opt_hparams.html">set_opt_hparams</a></span><span class="op">(</span>lr <span class="op">=</span> <span class="fl">0.003</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu">fit</span><span class="op">(</span><span class="va">train_dl</span>, epochs <span class="op">=</span> <span class="fl">10</span>, valid_data <span class="op">=</span> <span class="va">test_dl</span><span class="op">)</span></span></code></pre></div>
 <p>Voyons en détail ce qui se passe dans lee précédent bloc de code
 :</p>
@@ -249,7 +249,7 @@ un effort de codage minime.</p>
 <span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>  <span class="fu">fit</span>(...)</span></code></pre></div>
 <p>Luz fournit des implémentations de quelques-unes des métriques les
 plus utilisées. Si une métrique n’est pas disponible, vous pouvez
-toujours la créer à l’aide de la fonction <code><a href="../reference/luz_metric.html">luz_metric()</a></code>.</p>
+toujours la créer à l’aide de la fonction <code><a href="../reference/zz_metric.html">luz_metric()</a></code>.</p>
 <p>Pour implémenter une nouvelle métrique <code>luz_metric</code>, il
 faut définir 3 méthodes :</p>
 <ul>
@@ -276,7 +276,7 @@ de la métrique est utilisé.</p>
 <code>luz_metric_accuracy</code> pour mettre en œuvre une nouvelle
 métrique :</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">luz_metric_accuracy</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/luz_metric.html">luz_metric</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">luz_metric_accuracy</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/zz_metric.html">luz_metric</a></span><span class="op">(</span></span>
 <span>  <span class="co"># Une abréviation à afficher dans les barres de progression ou </span></span>
 <span>  <span class="co"># lors de l'affichage des informations de progression</span></span>
 <span>  abbrev <span class="op">=</span> <span class="st">"Acc"</span>, </span>
@@ -320,7 +320,7 @@ métriques à l’aide de la fonction <code><a href="../reference/get_metrics.ht
 simplement imprimer pour voir les résultats.</p>
 <p>Par exemple :</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">evaluation</span> <span class="op">&lt;-</span> <span class="va">fitted</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/evaluate.html">evaluate</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">valid_dl</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">evaluation</span> <span class="op">&lt;-</span> <span class="va">fitted</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/evaluate.html">evaluate</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">valid_dl</span><span class="op">)</span></span>
 <span><span class="va">metrics</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_metrics.html">get_metrics</a></span><span class="op">(</span><span class="va">evaluation</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">evaluation</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt; A `luz_module_evaluation`</span></span>
@@ -395,8 +395,8 @@ chaque époque.</p>
 <p>Une fois que le callback est défini, il peut être passé à la fonction
 <code>fit</code> via le paramètre <code>callbacks</code> :</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fitted</span> <span class="op">&lt;-</span> <span class="va">net</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/setup.html">setup</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">fitted</span> <span class="op">&lt;-</span> <span class="va">net</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/setup.html">setup</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">fit</span><span class="op">(</span><span class="va">...</span>, callbacks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="fu">print_callback</span><span class="op">(</span>message <span class="op">=</span> <span class="st">"Fini!"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span><span class="op">)</span></span></code></pre></div>

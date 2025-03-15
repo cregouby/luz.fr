@@ -1,14 +1,14 @@
 Package: luz.fr
-Title: Une interface de programmation de haut-niveau pour 'torch' 
+Title: Interface de programmation de haut-niveau pour 'torch' 
 Version: 0.4.0.9002
 Date: 2024-05-26
 Authors@R: c(
     person("Christophe", "Regouby", email = "christophe.regouby@free.fr", role = c("aut", "cre", "cph"))
     )
-Description: Une interface de haut niveau pour 'torch' fournissant des utilitaires 
-    pour réduire la quantité de code nécessaire pour réaliser les tâches courantes, 
-    abstraire les détails de 'torch' et faire fonctionner le même code à la fois sur
-    le 'CPU' et la 'GPU'. Il est suffisamment flexible pour permettre
+Description: Une interface de programmation de haut niveau pour 'torch' permettant
+    de réduire le code nécessaire pour réaliser les tâches courantes, 
+    d'abstraire les détails de 'torch' et faire fonctionner le même code à la fois sur
+    le 'CPU' et la 'GPU'. Luz est suffisamment flexible pour permettre
     d'expérimenter une large gamme de modèles. Il est fortement inspiré par 'fastai' de 
     Howard et al. (2020) <arXiv:2002.04688>, 'Keras' par Chollet et al. (2015) et 
     'PyTorch Lightning' de Falcon et al. (2019) <doi:10.5281/zenodo.3828935>.
@@ -21,7 +21,7 @@ Translates: luz (== 0.4.0.9002)
 LazyData: true
 Imports:
     luz,
-    rhelpi18n
+    rhelpi18n (>= 0.0.0.9000)
 Suggest:
     yaml
 Remotes: 
